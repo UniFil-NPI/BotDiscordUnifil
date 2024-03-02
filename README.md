@@ -25,10 +25,10 @@ git clone https://github.com/UniFil-NPI/BotDiscordUnifil.git
 ```
 git checkout -b 'nome da branch'
 ```
-### Criando o ambiente virtual
+# Criando o ambiente virtual
 Após a criação de uma nova branch no seu repositório local, é necessário criar um ambiente virtual (.venv) e instalar as dependencias do projeto nesse ambiente.
 
-## Para a criação do ambiente virtual utilizamos no cmd: 
+### Para a criação do ambiente virtual utilizamos no cmd: 
 ```
 $ cd path/do/seu/arquivo
 $ python3 -m venv bot-env
@@ -44,7 +44,7 @@ Código no PowerShell:
 ```
 $ bot-env\Scripts\activate.bat
 ```
-Antes de irmos para o proximo passa certifique-se que o ambiente virtual está ativo, no seu cmd ou powershell devem estar com o caminho:
+Certifique-se que o ambiente virtual está ativo. No seu prompt de comando ou powershell devem estar com o caminho:
 ```
 (env) C:\Users\Usuário\Desktop\Bot\bot>
 ```
