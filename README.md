@@ -17,7 +17,7 @@ Este repositório foi feito para o mantimento do Bot de Classroom com a intenç�
 ## PRÉ-REQUISITOS
 > É necessário Python 3.8 ou qualquer outra versão acima
 
-### Primeiramente devemos Clonar o repositório para sua maquina local com o comando pelo git bash:
+### Para começar, é necessário clonar o repo localmente:
 ```
 git clone https://github.com/UniFil-NPI/BotDiscordUnifil.git
 ```
@@ -28,7 +28,7 @@ git checkout -b 'nome da branch'
 ### Criando o ambiente virtual
 Após a criação de uma nova branch no seu repositório local, é necessário criar um ambiente virtual (.venv) e instalar as dependencias do projeto nesse ambiente.
 
-Para a criação do ambiente virtual utilizamos no cmd: 
+## Para a criação do ambiente virtual utilizamos no cmd: 
 ```
 $ cd path/do/seu/arquivo
 $ python3 -m venv bot-env
