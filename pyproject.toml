@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "botdiscordunifil"
+version = "0.0.1"
+description = "Yet another discord bot"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31.0"
+"discord.py" = "^2.3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
