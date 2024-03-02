@@ -5,12 +5,12 @@
 
 Desenvolvedor: [💻@GbrielZanoni](https://github.com/GbrielZanoni
 )
-![LOGO](https://avatars.githubusercontent.com/u/10983643?s=280&v=4)
+![LOGO](https://web.unifil.br/eventos/intercursos/imagens/logo.png)
 ## FAQ
 
 #### O que é isto?
 
-Este repositório foi feito para o mantimento do Bot de Classroom com a intenção de ter uma interação direta com o Estudante da UniFil.
+Este repositório foi feito para o mantimento do Bot de Classroom com a intenção de ter uma interação direta com o Aluno da UniFil.
 
 
 # Guia de instalação
