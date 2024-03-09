@@ -10,41 +10,36 @@
 
 # Índice
 
-1.	[Introdução](#introducao)	
-  1.1	Objetivo	
-  1.2	Escopo
-  1.3	Definições, Acrônimos e Abreviações	
-  1.4	Referências	
-  1.5	Visão Geral
-2.	Estabelecer Perfil do 
-Investidor ou do Usuário
-3.	Avaliando o Problema	
-4.	Entendendo o Ambiente do Usuário	
-5.	Recapitulação para Entendimento	
-6.	Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)	
-7.	Avaliando Sua Solução (se aplicável)	
+- 1.[Introdução](#introducao)	
+  - 1.1	[Objetivo](#objetivo)		
+  - 1.2	[Escopo](#escopo)	
+  - 1.3	[Definições, Acrônimos e Abreviações	](#definicoes)		
+  - 1.4	[Referências](#referencias)			
+  - 1.5	[Visão Geral](#visao) 
+- 2.	[Estabelecer Perfil do Investidor ou do Usuário](#perfl) 
+- 3.	[Avaliando o Problema](#avaliandoproblema)
+- 4.	[Entendendo o Ambiente do Usuário](#ambiente)	
+- 5.	[Recapitulação para Entendimento	](#recapitulacao) 
+- 6.	[Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)](#entradas)
+- 7.	[Avaliando Sua Solução (se aplicável)](#avaliandosolucao)
+- 8.	[Avaliando a Oportunidade](#avaliandooportunidade)
+- 9.	[Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte](#avaliandoconfiabilidade)
 
-8.	Avaliando a Oportunidade	
+  - 9.1	[Outros Requisitos](#outrosrequisitos)
 
-9.	Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte	
-
-9.1	Outros Requisitos	
-
-10.	Wrap-Up	
-
-11.	Resumo do Analista	
+- 10.	[Resumo do Analista](resumoanalista)
 
 # Pedidos do Investidor
 
-### <a name="introducao">AAa</a> 1. Introdução 
+## <a name="introducao"></a> 1. Introdução 
 
 O presente documento tem como objetivo principal fornecer uma visão abrangente dos pedidos do investidor em relação ao desenvolvimento de um bot de Discord para integração com o Google Sala de Aula. Este projeto visa aprimorar a experiência educacional por meio de funcionalidades que facilitam a interação entre alunos e professores.
 
-## 1.1 Objetivo
+## <a name="objetivo"></a> 1.1 Objetivo 
 
 - O objetivo central deste projeto é criar um bot de Discord capaz de integrar de maneira eficiente o ambiente virtual do Google Sala de Aula com a plataforma de comunicação “Discord”. A integração visa otimizar a comunicação entre alunos e professores, fornecendo funcionalidades que automatizem e aprimorem a experiência de aprendizado.
 
-## 1.2 Escopo
+## <a name="escopo"></a> 1. Escopo
 
 O escopo deste projeto abrange o desenvolvimento do bot de Discord, incorporando recursos específicos para a integração com o Google Sala de Aula. As funcionalidades incluirão, mas não estão limitadas a:
 - Envio de lembretes automáticos sobre pendências e prazos.
@@ -52,17 +47,17 @@ O escopo deste projeto abrange o desenvolvimento do bot de Discord, incorporando
 - Encaminhamento de mensagens do professor para canais específicos no  Discord.
 - Facilidade na interação entre alunos e professores.
 
-## 1.3 Definições, Acrônimos e Abreviações
+## <a name="definicoes"></a> 1.3 Definições, Acrônimos e Abreviações
 
 - Investidor: Pessoa responsável pelos recursos e decisões financeiras do projeto.
 - Bot: Aplicativo automatizado que opera dentro da plataforma Discord.
 - Google Sala de Aula: Ambiente virtual educacional desenvolvido pelo Google.
 
-## 1.4 Visão Geral
+## <a name="visao"></a> 1.4 Visão Geral
 
 > A visão geral deste documento abrange os requisitos de funcionalidade, utilidade, confiabilidade, desempenho e suportabilidade do bot. Ao compreender as necessidades reais do investidor, este projeto visa desenvolver soluções que atendam às expectativas e proporcionem uma experiência de ensino-aprendizagem aprimorada.
 
-## 2. Estabelecer Perfil do Investidor ou do Usuário
+## <a name="perfil"></a> 2. Estabelecer Perfil do Investidor ou do Usuário 
 
 - Nome:	João Vitor da Costa de Andrade	   	
 - Empresa / Segmento de Mercado: UniFil NPI.
@@ -75,7 +70,6 @@ O escopo deste projeto abrange o desenvolvimento do bot de Discord, incorporando
 #### Quais distribuíveis você produz?
 
 - Nenhum
-
 
 ### Quais problemas interferem em seu sucesso? Falha na comunicação, desafio de manter os Alunos engajados e atualizados. 
 
@@ -121,7 +115,8 @@ O escopo deste projeto abrange o desenvolvimento do bot de Discord, incorporando
 #### Problema 3: 
 - Buscamos integração entre Discord e Google Sala de Aula para comunicação instantânea e coesa.	
 
-### 4. Entendendo o Ambiente do Usuário
+## <a name="ambiente"></a> 4. Entendendo o Ambiente do Usuário
+
 #### Quem são os Usuários? 
 
 Alunos, professores e administradores educacionais.
@@ -158,18 +153,24 @@ Alunos, professores e administradores educacionais.
 
 - Manuais de uso online, tutoriais em vídeo e suporte por meio de FAQs impressas e online para atender às diferentes preferências de aprendizado.
 
-## 5. Recapitulação para Entendimento
+## <a name="recapitulacao"></a> 5. Recapitulação para Entendimento
+
 #### Você me disse que os principais problemas identificados pelo investidor são:
 
 - A necessidade de automatizar lembretes sobre pendências e prazos, visando manter os alunos atualizados de forma efetiva
 - A falta de uma ferramenta dedicada para disseminar notícias relevantes de maneira proativa.
 - A dificuldade em estabelecer uma comunicação eficaz entre professores e alunos, especialmente em ambientes virtuais.
+
 #### Isso representa os problemas que você está tendo com a solução existente? 
+
 - Sim, esses problemas refletem as lacunas e desafios que a solução atual apresenta em atender às necessidades do investidor e dos usuários.
+
 #### Quais, se houver, são outros problemas que você está tendo? 
+
 - Além dos problemas destacados, seria interessante saber se existem outras questões ou obstáculos que não foram abordados até o momento, para garantir uma compreensão abrangente das necessidades e expectativas.
 
-## 6. Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)
+## <a name="entradas"></a> 6. Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)
+
 #### Quais, se houver, problemas estão associados com:
 
  - Integração com outras plataformas educacionais além do Google Sala de Aula e Discord.
@@ -192,8 +193,10 @@ Compreender as razões subjacentes que contribuem para cada problema sugerido.
 
 Avaliar a prioridade e importância relativa desses problemas em relação aos já identificados.
 
-## 7. Avaliando Sua Solução (se aplicável)
+## <a name="avaliandosolucao"></a>  7. Avaliando Sua Solução (se aplicável)
+
 #### E se você pudesse aprimorar o sistema, o que faria?
+
 
  Automatização de lembretes sobre pendências e prazos.
   Disseminação proativa de notícias relevantes.
@@ -207,7 +210,7 @@ Avaliar a prioridade e importância relativa desses problemas em relação aos j
 - Integração efetiva - Fundamental para garantir uma comunicação fluida e coesa entre Discord e Google Sala de Aula.
 - Interface intuitiva - Crucial para garantir a adesão fácil e uma experiência positiva para todos os usuários.
 
-### 8. Avaliando a Oportunidade
+## <a name="avaliandooportunidade"></a>  8. Avaliando a Oportunidade
 
 Quem precisa deste aplicativo em sua organização?
   - Alunos, professores e administradores educacionais.
@@ -225,7 +228,7 @@ Quem precisa deste aplicativo em sua organização?
 
  - Integração bem-sucedida com as plataformas existentes, como Google Sala de Aula e Discord.
 
-## 9. Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte
+## <a name="avaliandoconfiabilidade"></a> 9. Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte 8. Avaliando a Oportunidade
 
 #### Confiabilidade:
 - Espera-se que a solução seja altamente confiável, com mínimas interrupções no serviço, garantindo uma comunicação consistente e sem falhas.
@@ -247,7 +250,9 @@ Quem precisa deste aplicativo em sua organização?
 - A distribuição não ocorrerá.
 #### Requisitos de Identificação e Empacotamento:
 -  Não há
-## 9.1 Outros Requisitos
+
+## <a name="outrosrequisitos"></a> 9.1 Outros Requisitos
+
 ####  Quais, se houver, requisitos ou padrões reguladores ou ambientais devem ser suportados?
 
 - Não há
@@ -257,12 +262,8 @@ Quem precisa deste aplicativo em sua organização?
 - A solução deve ser escalável para acomodar o crescimento futuro no número de usuários e requisitos adicionais.
 - A integração fácil com outras ferramentas educacionais pode ser um requisito adicional para maximizar a eficiência do ecossistema tecnológico da instituição.
 
-## 10. Wrap-Up
-#### Há outras perguntas que devem ser feitas a você?
-- Se eu precisar fazer outras perguntas, posso telefonar para você? 
-- Você estaria disposto a participar de uma revisão de requisitos?
+## <a name="resumoanalista"></a> 10.Resumo do Analista
 
-## 11.Resumo do Analista
 ### Automatização de Lembretes sobre Pendências e Prazos:
 #### Necessidade 
 - crítica de implementar um sistema automatizado que envie lembretes personalizados aos alunos, melhorando a pontualidade na conclusão de tarefas e prazos.
