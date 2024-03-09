@@ -4,27 +4,43 @@
 #### Histórico da Revisão
 | Data   | Versão       | Descrição  |  Autor  |
 | :---------- | :--------- | :-------------------------------- | :-------------------------------- |
-| 05/03/2024 | 1.0 | Criação do Doc.| Gabriel Zanoni |
-| 09/03/2024 | 1.1 | Conversão para M.D| Gabriel Zanoni |
+| 05/03/2024 | 1.0 | Criação do Doc.| Gabriel Zanoni(@GbrielZanoni) |
+| 09/03/2024 | 1.1 | Conversão para M.D| Gabriel Zanoni(@GbrielZanoni)|
 
 
-> Índice
 1.	Introdução	
+
 1.1	Objetivo	
-1.2	Escopo	
+
+1.2	Escopo
+
 1.3	Definições, Acrônimos e Abreviações	
+
 1.4	Referências	
-1.5	Visão Geral	
-2.	Estabelecer Perfil do Investidor ou do Usuário	
+
+1.5	Visão Geral
+
+2.	Estabelecer Perfil do 
+Investidor ou do Usuário
+
 3.	Avaliando o Problema	
+
 4.	Entendendo o Ambiente do Usuário	
+
 5.	Recapitulação para Entendimento	
+
 6.	Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)	
+
 7.	Avaliando Sua Solução (se aplicável)	
+
 8.	Avaliando a Oportunidade	
+
 9.	Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte	
+
 9.1	Outros Requisitos	
+
 10.	Wrap-Up	
+
 11.	Resumo do Analista	
 
 # Pedidos do Investidor
@@ -35,7 +51,7 @@ O presente documento tem como objetivo principal fornecer uma visão abrangente 
 
 ## 1.1 Objetivo
 
-- O objetivo central deste projeto é criar um bot de Discord capaz de integrar eficientemente o ambiente virtual do Google Sala de Aula com a plataforma de comunicação “Discord”. A integração visa otimizar a comunicação entre alunos e professores, fornecendo funcionalidades que automatizem e aprimorem a experiência de aprendizado.
+- O objetivo central deste projeto é criar um bot de Discord capaz de integrar de maneira eficiente o ambiente virtual do Google Sala de Aula com a plataforma de comunicação “Discord”. A integração visa otimizar a comunicação entre alunos e professores, fornecendo funcionalidades que automatizem e aprimorem a experiência de aprendizado.
 
 ## 1.2 Escopo
 
@@ -57,8 +73,9 @@ O escopo deste projeto abrange o desenvolvimento do bot de Discord, incorporando
 
 ## 2. Estabelecer Perfil do Investidor ou do Usuário
 
-- Nome:	Sr. Alberto Silva	   	Empresa / Segmento de Mercado: EduTech Innovations - Foco em soluções tecnológicas para otimização do ensino-aprendizagem.
-- Cargo: Diretor Tecnológico 
+- Nome:	João Vitor da Costa de Andrade	   	
+- Empresa / Segmento de Mercado: UniFil NPI.
+- Cargo: Coordenador 
 
 #### Quais são suas responsabilidades principais?  
 
@@ -66,15 +83,11 @@ O escopo deste projeto abrange o desenvolvimento do bot de Discord, incorporando
 
 #### Quais distribuíveis você produz?
 
-- Plataformas de Aprendizado	Para quem? A empresa EduTech
+- Nenhum
 
-#### Como o sucesso é medido? 
-
-Nivel de engajamento, melhorias métricas do desempenho acadêmico
 
 ### Quais problemas interferem em seu sucesso? Falha na comunicação, desafio de manter os Alunos engajados e atualizados. 
 
-### Quais, se houver, tendências tornam seu trabalho mais fácil ou mais difícil? Os avanços da tecnologia no cenário educacional. 
 ### 3.Avaliando o Problema
 #### Para quais Integrações faltam boas soluções? 
 ####  Quais são elas? 
@@ -98,7 +111,7 @@ Nivel de engajamento, melhorias métricas do desempenho acadêmico
 ### Como você o resolve agora?
 #### Problema 1: 
 
-- Gerenciamos manualmente por meio de mensagens e e-mails, mas a eficácia é inconsistente.
+- Gerenciamos manualmente por meio de mensagens e e-mails.
 #### Problema 2: 
 
 - Dependemos de e-mails e posts, mas adesão e atenção não são garantidas.
@@ -115,7 +128,7 @@ Nivel de engajamento, melhorias métricas do desempenho acadêmico
 - Buscamos uma solução integrada para disseminação proativa de notícias relevantes aos alunos.
 
 #### Problema 3: 
--Buscamos integração entre Discord e Google Sala de Aula para comunicação instantânea e coesa.	
+- Buscamos integração entre Discord e Google Sala de Aula para comunicação instantânea e coesa.	
 
 ### 4. Entendendo o Ambiente do Usuário
 #### Quem são os Usuários? 
@@ -131,12 +144,12 @@ Alunos, professores e administradores educacionais.
 
 #### Os Usuários têm Experiência com Este Tipo de Aplicativo?
 
-- A experiência varia; alguns estão familiarizados com plataformas educacionais, enquanto outros podem ser novos nesse ambiente.
+- A experiência varia; alguns estão familiarizados com o discord, enquanto outros podem ser novos nesse ambiente.
 
 #### Quais Plataformas estão em Uso? Quais são seus Planos para Plataformas Futuras? 
 
 
-- Uso predominante do Discord e Google Sala de Aula. Planos para integrações futuras com outras plataformas podem ser considerados.
+- Uso predominante do Google Sala de Aula, porém de maneira independente.
 
 #### Quais Aplicativos Adicionais Você Utiliza com os Quais Nós Precisamos Fazer Interface 
 
@@ -144,11 +157,11 @@ Alunos, professores e administradores educacionais.
 
 #### Quais são Suas Expectativas em Relação à Utilidade do Produto?
 
-- Esperam um produto que simplifique a comunicação, automatize lembretes e ofereça uma experiência integrada entre Discord e Google Sala de Aula.
+- Um produto que simplifique a comunicação, automatize lembretes e ofereça uma experiência integrada entre Discord e Google Sala de Aula.
 
 #### Quais são Suas Expectativas para o Tempo de Treinamento? 
 
-Preferem uma curva de aprendizado intuitiva. Tempo de treinamento mínimo para garantir adesão fácil.
+- Não há
 
 #### De Quais Tipos de Documentação Impressa e On-line Você Precisa? 
 
@@ -157,7 +170,7 @@ Preferem uma curva de aprendizado intuitiva. Tempo de treinamento mínimo para g
 ## 5. Recapitulação para Entendimento
 #### Você me disse que os principais problemas identificados pelo investidor são:
 
-- A necessidade de automatizar lembretes sobre pendências e prazos, isando manter os alunos atualizados de forma eficiênte
+- A necessidade de automatizar lembretes sobre pendências e prazos, visando manter os alunos atualizados de forma efetiva
 - A falta de uma ferramenta dedicada para disseminar notícias relevantes de maneira proativa.
 - A dificuldade em estabelecer uma comunicação eficaz entre professores e alunos, especialmente em ambientes virtuais.
 #### Isso representa os problemas que você está tendo com a solução existente? 
@@ -169,12 +182,12 @@ Preferem uma curva de aprendizado intuitiva. Tempo de treinamento mínimo para g
 #### Quais, se houver, problemas estão associados com:
 
  - Integração com outras plataformas educacionais além do Google Sala de Aula e Discord.
+    -  A falta da integração de ambas as plataformas é um problema latente.
  - Dificuldades relacionadas à segurança e privacidade dos dados dos alunos.
+      - A segurança dos alunos é um quesito de extrema importância, deve ser levado como um problema real.
  - Potenciais obstáculos na adesão e engajamento dos usuários.
  - Complexidade na configuração e manutenção da integração proposta.
 Para cada problema sugerido, pergunte:
-
-#### Este é um problema real?
 
  #### Quais são os motivos para este problema?
 
@@ -200,7 +213,7 @@ Avaliar a prioridade e importância relativa desses problemas em relação aos j
 
 - Automatização de lembretes - Essencial para manter os alunos atualizados e melhorar a eficiência.
 - Disseminação proativa de notícias - Importante para manter os usuários informados de forma eficaz.
-- Integração eficaz - Fundamental para garantir uma comunicação fluida e coesa entre Discord e Google Sala de Aula.
+- Integração efetiva - Fundamental para garantir uma comunicação fluida e coesa entre Discord e Google Sala de Aula.
 - Interface intuitiva - Crucial para garantir a adesão fácil e uma experiência positiva para todos os usuários.
 
 ### 8. Avaliando a Oportunidade
@@ -236,30 +249,29 @@ Quem precisa deste aplicativo em sua organização?
 #### Requisitos de Segurança:
 - Alta prioridade será dada à segurança dos dados dos alunos, exigindo criptografia robusta, controle de acesso rigoroso e conformidade com padrões de segurança relevantes.
 #### Requisitos de Instalação e Configuração:
-- A instalação e configuração devem ser intuitivas, minimizando a necessidade de suporte técnico extensivo.
+- Não há
 #### Requisitos de Licença Especiais:
-- Serão necessárias licenças específicas para garantir conformidade legal e uso adequado da solução proposta.
+- Não há
 #### Distribuição do Software:
-- A distribuição será centralizada, possivelmente por meio de download online ou instalação controlada pela instituição educacional.
+- A distribuição não ocorrerá.
 #### Requisitos de Identificação e Empacotamento:
-- Identificação clara do software, empacotamento eficiente e documentação adequada serão requisitos essenciais para facilitar a adoção e gerenciamento da solução.
-### Outros Requisitos
+-  Não há
+## 9.1 Outros Requisitos
 ####  Quais, se houver, requisitos ou padrões reguladores ou ambientais devem ser suportados?
 
-- Deve-se garantir a conformidade com regulamentações educacionais, como FERPA (Family Educational Rights and Privacy Act), para proteção da privacidade dos alunos. 
+- Não há
 
-- Padrões de segurança da informação, como ISO/IEC 27001, podem ser considerados para garantir a proteção adequada dos dados.
 ####  Você acha que há algum outro requisito que devemos saber?
-- A acessibilidade da solução deve ser considerada para atender às necessidades de todos os usuários, incluindo aqueles com deficiências visuais ou motoras.
+
 - A solução deve ser escalável para acomodar o crescimento futuro no número de usuários e requisitos adicionais.
 - A integração fácil com outras ferramentas educacionais pode ser um requisito adicional para maximizar a eficiência do ecossistema tecnológico da instituição.
-- Considerações sobre treinamento contínuo para usuários e administradores devem ser abordadas para garantir a utilização eficaz da solução ao longo do tempo.
-## 9.1 Wrap-Up
+
+## 10. Wrap-Up
 #### Há outras perguntas que devem ser feitas a você?
 - Se eu precisar fazer outras perguntas, posso telefonar para você? 
 - Você estaria disposto a participar de uma revisão de requisitos?
 
-## 10.Resumo do Analista
+## 11.Resumo do Analista
 ### Automatização de Lembretes sobre Pendências e Prazos:
 #### Necessidade 
 - crítica de implementar um sistema automatizado que envie lembretes personalizados aos alunos, melhorando a pontualidade na conclusão de tarefas e prazos.
