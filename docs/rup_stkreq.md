@@ -176,13 +176,10 @@ Alunos, professores e administradores educacionais.
 
  - Integração com outras plataformas educacionais além do Google Sala de Aula e Discord.
     -  A falta da integração de ambas as plataformas é um problema latente.
+    - Os motivos do problema são da falta de proatividade das partes.
  - Dificuldades relacionadas à segurança e privacidade dos dados dos alunos.
       - A segurança dos alunos é um quesito de extrema importância, deve ser levado como um problema real.
- - Potenciais obstáculos na adesão e engajamento dos usuários.
- - Complexidade na configuração e manutenção da integração proposta.
-Para cada problema sugerido, pergunte:
-
- #### Quais são os motivos para este problema?
+      - Os motivos deste problema são a integridade dos dados dos usuários do Bot
 
 Compreender as razões subjacentes que contribuem para cada problema sugerido.
  Como você resolve o problema atualmente?
