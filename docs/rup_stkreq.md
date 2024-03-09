@@ -8,29 +8,20 @@
 | 09/03/2024 | 1.1 | Conversão para M.D| Gabriel Zanoni(@GbrielZanoni)|
 
 
-1.	Introdução	
+# Índice
 
-1.1	Objetivo	
-
-1.2	Escopo
-
-1.3	Definições, Acrônimos e Abreviações	
-
-1.4	Referências	
-
-1.5	Visão Geral
-
+1.	[Introdução](#introducao)	
+  1.1	Objetivo	
+  1.2	Escopo
+  1.3	Definições, Acrônimos e Abreviações	
+  1.4	Referências	
+  1.5	Visão Geral
 2.	Estabelecer Perfil do 
 Investidor ou do Usuário
-
 3.	Avaliando o Problema	
-
 4.	Entendendo o Ambiente do Usuário	
-
 5.	Recapitulação para Entendimento	
-
 6.	Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)	
-
 7.	Avaliando Sua Solução (se aplicável)	
 
 8.	Avaliando a Oportunidade	
@@ -45,7 +36,7 @@ Investidor ou do Usuário
 
 # Pedidos do Investidor
 
-### 1. Introdução
+### <a name="introducao">AAa</a> 1. Introdução 
 
 O presente documento tem como objetivo principal fornecer uma visão abrangente dos pedidos do investidor em relação ao desenvolvimento de um bot de Discord para integração com o Google Sala de Aula. Este projeto visa aprimorar a experiência educacional por meio de funcionalidades que facilitam a interação entre alunos e professores.
 
