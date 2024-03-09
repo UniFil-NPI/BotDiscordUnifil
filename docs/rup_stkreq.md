@@ -27,7 +27,7 @@
 
   - 9.1	[Outros Requisitos](#outrosrequisitos)
 
-- 10.	[Resumo do Analista](#resumoanalista)
+- 10.[Resumo do Analista](#resumoanalista)
 
 # Pedidos do Investidor
 
