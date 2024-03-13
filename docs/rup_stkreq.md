@@ -10,24 +10,23 @@
 
 # Índice
 
-- 1.[Introdução](#introducao)	
-  - 1.1	[Objetivo](#objetivo)		
-  - 1.2	[Escopo](#escopo)	
-  - 1.3	[Definições, Acrônimos e Abreviações	](#definicoes)		
-  - 1.4	[Referências](#referencias)			
-  - 1.5	[Visão Geral](#visao) 
-- 2.[Estabelecer Perfil do Investidor ou do Usuário](#perfil) 
-- 3.[Avaliando o Problema](#avaliandoproblema)
-- 4.[Entendendo o Ambiente do Usuário](#ambiente)	
-- 5.[Recapitulação para Entendimento	](#recapitulacao) 
-- 6.[Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)](#entradas)
-- 7.[Avaliando Sua Solução (se aplicável)](#avaliandosolucao)
-- 8.[Avaliando a Oportunidade](#avaliandooportunidade)
-- 9.[Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte](#avaliandoconfiabilidade)
+- [1. Introdução](#introducao)	
+  - [1.1 Objetivo](#objetivo)		
+  - [1.2 Escopo](#escopo)	
+  - [1.3 Definições, Acrônimos e Abreviações](#definicoes)		
+  - [1.4 Referências](#referencias)			
+  - [1.5 Visão Geral](#visao) 
+- [2. Estabelecer Perfil do Investidor ou do Usuário](#perfil) 
+- [3. Avaliando o Problema](#avaliandoproblema)
+- [4. Entendendo o Ambiente do Usuário](#ambiente)	
+- [5. Recapitulação para Entendimento](#recapitulacao) 
+- [6. Entradas do Analista no Problema do Investidor (validar ou invalidar premissas)](#entradas)
+- [7. Avaliando Sua Solução (se aplicável)](#avaliandosolucao)
+- [8. Avaliando a Oportunidade](#avaliandooportunidade)
+- [9. Avaliando a Confiabilidade, o Desempenho e as Necessidades de Suporte](#avaliandoconfiabilidade)
+  - [9.1 Outros Requisitos](#outrosrequisitos)
+- [10. Resumo do Analista](#resumoanalista)
 
-  - 9.1	[Outros Requisitos](#outrosrequisitos)
-
-- 10.[Resumo do Analista](#resumoanalista)
 
 # Pedidos do Investidor
 
