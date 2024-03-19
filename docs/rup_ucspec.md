@@ -39,9 +39,9 @@ Este Caso de uso tem como seu objetivo o prompt inicial para o Bot retornar as i
 ## <a name="avaliandoproblema"></a> 3. Fluxos Alternativos
 
 - Verificar Nota
-  - O Aluno irá verificar uma nota específica de uma matéria. Para isto deverá específicar (selecionando de uma lista providênciada pelo Bot, além das atividades já retornadas pelos professores com nota)
+  - O Aluno irá verificar uma nota específica de uma matéria. Para isto deverá especificar (selecionando de uma lista providenciada pelo Bot, além das atividades já retornadas pelos professores com nota)
 - Verificar Material
-  - O Aluno irá verificar um material específico de uma matéria. Para isto deverá específicar (selecionando qual matéria deseja acessar)
+  - O Aluno irá verificar um material específico de uma matéria. Para isto deverá especificar (selecionando qual matéria deseja acessar)
 - Verificar Posts
   - O aluno irá verificar as notícias no Quadro de Notícias de uma matéria específica (especificada pelo aluno após o Bot disponibilizar as Matérias disponíveis do Aluno)
 - Verificar Trabalho
