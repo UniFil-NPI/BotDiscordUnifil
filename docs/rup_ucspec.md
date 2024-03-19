@@ -47,7 +47,7 @@ Este Caso de uso tem como seu objetivo o prompt inicial para o Bot retornar as i
 - Verificar Trabalho
   - O aluno irá verificar TODOS os trabalhos disponíveis para ele entregar. O Bot irá disponibilizar apenas os que estão pendentes, não os que não foram entregues ou que já tiveram seu tempo expirado.
 - Verificar Agenda
-  - O aluon irá verificar uma visão ampla da agenda de atividades de uma unidade curricular específica, disponibilizada pelo Bot, ou de todas as unidades curriculares que estão disponíveis para o aluno naquele momento.
+  - O aluno irá verificar uma visão ampla da agenda de atividades de uma unidade curricular específica, disponibilizada pelo Bot, ou de todas as unidades curriculares que estão disponíveis para o aluno naquele momento.
 
 ## <a name="ambiente"></a> 4. Subfluxos
 > Não há
