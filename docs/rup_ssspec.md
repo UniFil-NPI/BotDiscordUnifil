@@ -52,13 +52,11 @@ O escopo desta especificação abrange todas as funcionalidades relacionadas ao 
 
 #### 1.3 Definições, Acrônimos e Abreviações
 
-- **Bot:** Um bot da Plataforma Discord é um usuário não-humano que responde de forma automatizada aos inputs entregues pelo usuário do Bot. Ele é hospedado em um servidor centralizado e realiza a comunicação com a plataforma Google Classroom para interação das informações do usuário.
-- **Discord:** Plataforma de comunicação que permite acesso a chatrooms com múltiplos usuários, interação por voz e envio de imagens, arquivos, etc.
-- **Classroom:** Plataforma da Google para interação entre alunos e professores, onde materiais e atividades podem ser entregues e realizados pelos alunos e vistoriados pelos professores.
+[Glossário](rup_gloss.md)
 
 #### 1.4 Referências
 
-Refira-se ao Documento Glossário e outros documentos disponíveis para o Projeto.
+[Glossário](rup_gloss.md)
 
 #### 1.5 Visão Geral
 
@@ -70,7 +68,6 @@ Esta seção apresenta os requisitos funcionais do sistema do Bot, estruturados 
 
 #### Integração com o Google Classroom
 
-- Permitir que os usuários vinculem suas contas do Google Classroom com o Discord.
 - Visualização das salas de aula, tarefas pendentes, materiais e notificações especiais dentro do Discord.
 - Sincronização com o Calendário.
 - Envio de notificações no Discord para novas atribuições, materiais adicionados ou outras atualizações relevantes no Google Classroom.
@@ -79,29 +76,30 @@ Esta seção apresenta os requisitos funcionais do sistema do Bot, estruturados 
 ### 3. Utilidade
 
 - **Organização:** Permite a organização das tarefas dos alunos para fácil acesso através do Discord, sendo regularmente utilizada por estudantes.
-- **Eficiência:** Economiza tempo e otimiza a entrega de materiais.
 
 ### 4. Confiabilidade
 
-- **Segurança:** Garante a segurança das informações dos usuários, não armazenando dados sensíveis. A autenticação com o Google Classroom segue as melhores práticas de segurança.
+- **Segurança:** Garante a segurança das informações dos usuários, não armazenando dados sensíveis. 
 - **Disponibilidade:** O aplicativo está disponível 24 horas, 7 dias por semana.
 
 ### 5. Desempenho
 
 - **Múltiplos Usuários:** Permite a interação de múltiplos usuários simultaneamente.
+- **Tempo de Resposta:** A garantia de um tempo de resposta curto.
 
 ### 6. Suportabilidade
 
-- **Diferentes Servidores:** Permite a utilização em diversos servidores conforme necessário.
+- O código será mantido e atualizado com uma extensa longevidade. 
 
 ### 7. Restrições de Design
 
-- **Necessidade de Internet:** Requer conexão com a internet.
-- **Necessidade do Discord:** Requer acesso à plataforma Discord.
+- Requer conexão com a internet.
+- Requer acesso à plataforma Discord.
+- Requer acesso ao servidor do Discord
 
 ### 8. Documentação do Usuário e Sistema de Ajuda
 
-O bot deve ser amigável para os usuários, com foco na acessibilidade para pessoas de todas as idades, especialmente jovens.
+O bot será acessível e oferecerá suporte para todos os usuários. 
 
 ### 9. Componentes Comprados
 
@@ -116,16 +114,11 @@ O bot será hospedado em um servidor disponibilizado pelo Centro de Ensino UniFi
 
 ### 11. Requisitos de Licença
 
-Não existe uma licença de uso, pois será restrito APENAS ao servidor disponibilizado pela UniFil.
 
-### 12.. Observações Legais e Direitos Autorais
+### 12. Observações Legais e Direitos Autorais
 
-Toda autoria legal será disponibilizada para a Empresa UniFil, que hospedará o Bot e terá todos os direitos legais para sua distribuição e utilização.
+O código ficará disponível para ser modificado com os devidos créditos os autores originais. Não deverá ser vendido ou utilizado comercialmente.
 
 ### 13. Padrões Aplicáveis
 
-O único padrão aplicável será a Segurança da Informação do usuário, que não será armazenada pelo Bot ou pelo aplicativo para impedir vazamentos e má distribuição.
-
----
-
-Se precisar de mais alguma coisa, estou à disposição!
+O Padrão aplicável utilizado para o código será o PEP8 para Python.
