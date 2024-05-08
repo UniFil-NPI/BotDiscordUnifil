@@ -1,0 +1,11 @@
+									Bot de Discord
+# Diagrama de Caso de Uso
+ 
+#### Histórico da Revisão
+| Data   | Versão       | Descrição  |  Autor  |
+| :---------- | :--------- | :-------------------------------- | :-------------------------------- |
+| 18/03/2024 | 1.0 | Criação do Doc.| Gabriel Zanoni(@GbrielZanoni) |
+| 09/03/2024 | 1.1 | Conversão para M.D| Gabriel Zanoni(@GbrielZanoni)|
+| 08/05/2024 | 1.2 | Atualização no Documento | Gabriel Zanoni(@GbrielZanoni)|
+
+![O Diagrama de Caso de Uso Atualizado](https://i.imgur.com/kVriLoA.png)
