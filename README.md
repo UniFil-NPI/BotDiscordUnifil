@@ -5,6 +5,10 @@
 
 Desenvolvedor: [💻 @GbrielZanoni](https://github.com/GbrielZanoni)
 
+# Documentação
+
+Toda documentação do projoto é encontrada aqui, na pasta docs.
+
 ## FAQ
 
 ### O que é isto?
