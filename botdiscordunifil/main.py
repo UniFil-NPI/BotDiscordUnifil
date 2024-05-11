@@ -34,23 +34,37 @@ async def on_ready():
         print(f"Foram carregados {len(synced)} comando(s)")
     except Exception as e:
         print(e)
+        
+materias = [
+    {"nome": "Algoritmos e Estruturas de Dados", "professor": "Professor Exemplo", "descricao": "Introdução aos conceitos fundamentais de algoritmos e estruturas de dados."},
+    {"nome": "Programação Orientada a Objetos", "professor": "Professor Exemplo", "descricao": "Princípios e práticas da programação orientada a objetos."},
+    {"nome": "Desenvolvimento Web", "professor": "Professor Exemplo", "descricao": "Introdução ao desenvolvimento web usando HTML, CSS e JavaScript."},
+    {"nome": "Banco de Dados", "professor": "Professor Exemplo", "descricao": "Conceitos básicos de bancos de dados e linguagem SQL."},
+    {"nome": "Inteligência Artificial", "professor": "Professor Exemplo", "descricao": "Fundamentos e aplicações da inteligência artificial."}
+]
 
-class SelectCourse(discord.ui.View):
+class SelectCourse(discord.ui.View):  
     def __init__(self):
         super().__init__()
+        for materia in materias:
+            self.add_item(self.create_button(materia))
 
-    @discord.ui.button(label='<', style=discord.ButtonStyle.green, custom_id='left')
-    async def left(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await interaction.message.edit(embed=self.get_embed("Front End"), view=None)
+    def create_button(self, materia_info):
+        materia_nome = materia_info["nome"]
+        return self.button_disable(materia_nome)
 
-    @discord.ui.button(label='Back End', style=discord.ButtonStyle.grey, custom_id='materia')
-    async def materia(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await interaction.message.edit(embed=self.get_embed("Back End"), view=None)
+    class button_disable(discord.ui.Button):  
+        def __init__(self, materia_nome):
+            super().__init__(label=materia_nome)    
+            self.materia_nome = materia_nome
 
-    @discord.ui.button(label='>', style=discord.ButtonStyle.grey, custom_id='right')
-    async def right(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await interaction.message.edit(embed=self.get_embed("Back End"), view=None)
-
+        async def callback(self, interaction: discord.Interaction):
+            for materia in materias:
+                if materia["nome"].lower() == self.materia_nome.lower():
+                    embed = discord.Embed(title=materia["nome"], description=materia["descricao"], color=discord.Color.blue())
+                    embed.add_field(name="Professor", value=materia["professor"])
+                    await interaction.response.send_message(embed=embed, ephemeral=False)
+                    break
 
 @bot.tree.command(name="materia")
 async def embed_command(interaction: discord.Interaction):
@@ -58,15 +72,11 @@ async def embed_command(interaction: discord.Interaction):
     view = SelectCourse()
 
     embed = discord.Embed(title="Matérias Disponíveis", color=0x00ff00)
-    embed.add_field(name="Front End", value="Professor: X", inline=False)
-    embed.add_field(name="Back End", value="Professor: Y", inline=True)
-    embed.add_field(name="P.I", value="Professor: Z", inline=True)
-    embed.add_field(name="Redes", value="Professor: O", inline=True)
     embed.set_footer(text="Selecione a matéria que deseja visualizar")
     embed.set_author(name=user.display_name, icon_url=user.display_avatar.url)
 
     await interaction.response.send_message(embed=embed, view=view)
-
+    
 @bot.tree.command(name="calendario")
 async def calendario_command(interaction: discord.Interaction):
     user = interaction.user
@@ -116,6 +126,7 @@ async def calendario_command(interaction: discord.Interaction):
     embed.set_author(name=user.display_name, icon_url=user.display_avatar.url)
 
     await interaction.response.send_message(embed=embed, ephemeral=False)
+    
 def main():
     bot.run(TOKEN)
 
