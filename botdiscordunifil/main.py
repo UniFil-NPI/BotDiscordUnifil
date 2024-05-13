@@ -1,7 +1,7 @@
 from typing import Final
 
 import discord
-
+from discord.ext import commands
 from discord.ext import commands
 from discord import Embed, app_commands, Button, ButtonStyle
 
@@ -34,7 +34,7 @@ async def on_ready():
         print(f"Foram carregados {len(synced)} comando(s)")
     except Exception as e:
         print(e)
-        
+
 materias = [
     {"nome": "Algoritmos e Estruturas de Dados", "professor": "Professor Exemplo", "descricao": "Introdução aos conceitos fundamentais de algoritmos e estruturas de dados."},
     {"nome": "Programação Orientada a Objetos", "professor": "Professor Exemplo", "descricao": "Princípios e práticas da programação orientada a objetos."},
@@ -43,33 +43,23 @@ materias = [
     {"nome": "Inteligência Artificial", "professor": "Professor Exemplo", "descricao": "Fundamentos e aplicações da inteligência artificial."}
 ]
 
-class SelectCourse(discord.ui.View):  
+class Teste(discord.ui.View):
     def __init__(self):
         super().__init__()
-        for materia in materias:
-            self.add_item(self.create_button(materia))
+        self.value = None
 
-    def create_button(self, materia_info):
-        materia_nome = materia_info["nome"]
-        return self.button_disable(materia_nome)
+    @discord.ui.button(label='Teste', style=discord.ButtonStyle.green, custom_id='left')
+    async def teste(self, interaction: discord.Interaction, button: discord.ui.Button):
+        embed = discord.Embed(color=discord.Color.random())
+        embed.set_author(name=f"EDITOU OOOOOOOOOOOOO")
+        embed.add_field(name="EDITOOOU",value="Foooi")
+        await interaction.response.edit_message(embed=embed)
 
-    class button_disable(discord.ui.Button):  
-        def __init__(self, materia_nome):
-            super().__init__(label=materia_nome)    
-            self.materia_nome = materia_nome
-
-        async def callback(self, interaction: discord.Interaction):
-            for materia in materias:
-                if materia["nome"].lower() == self.materia_nome.lower():
-                    embed = discord.Embed(title=materia["nome"], description=materia["descricao"], color=discord.Color.blue())
-                    embed.add_field(name="Professor", value=materia["professor"])
-                    await interaction.response.send_message(embed=embed, ephemeral=False)
-                    break
 
 @bot.tree.command(name="materia")
 async def embed_command(interaction: discord.Interaction):
     user = interaction.user
-    view = SelectCourse()
+    view = Teste()
 
     embed = discord.Embed(title="Matérias Disponíveis", color=0x00ff00)
     embed.set_footer(text="Selecione a matéria que deseja visualizar")

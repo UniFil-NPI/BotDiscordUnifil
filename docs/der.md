@@ -1,5 +1,5 @@
 									Bot de Discord
-# Diagrama de Enidade Relacionamento(DER)
+# Diagrama de Entidade Relacionamento(DER)
  
 #### Histórico da Revisão
 | Data   | Versão       | Descrição  |  Autor  |
@@ -9,3 +9,5 @@
 
 
 ![AS-IS](https://i.imgur.com/utnnwBz.png)
+
+## gerar o não-lógico(conceitual)
