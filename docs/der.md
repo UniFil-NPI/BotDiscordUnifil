@@ -8,6 +8,5 @@
 | 08/05/2024 | 1.1 | Conversão para M.D| Gabriel Zanoni(@GbrielZanoni)|
 
 
-![AS-IS](https://i.imgur.com/utnnwBz.png)
-
-## gerar o não-lógico(conceitual)
+![Conc](https://i.imgur.com/utnnwBz.png)
+![Logic](https://i.imgur.com/VIi9Pou.png)
