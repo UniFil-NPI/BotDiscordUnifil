@@ -8,4 +8,4 @@
 | 08/05/2024 | 1.1 | Conversão para M.D| Gabriel Zanoni(@GbrielZanoni)|
 
 
-![AS-IS](https://i.imgur.com/HANZWy3.png)
+![AS-IS](https://i.imgur.com/9qVxWZm.png)
