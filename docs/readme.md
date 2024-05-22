@@ -6,7 +6,7 @@ A documentação Atualizada do Projeto
 - [Diagrama de Caso de Uso](rup_uc.md)
     - [Especificação do Caso de Uso](rup_ucspec.md)
 - [Diagrama de Classe](rup_class.md) 
-- [Diagrama de Sequência](rup_gloss.md)
+- [Diagrama de Sequência](rup_seq.md)
 - [Diagrama de Estado](rup_gloss.md)
 - [Diagrama de Implantação](rup_imp.md)
 
