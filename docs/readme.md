@@ -8,7 +8,7 @@ A documentação Atualizada do Projeto
 - [Diagrama de Classe](rup_class.md) 
 - [Diagrama de Sequência](rup_gloss.md)
 - [Diagrama de Estado](rup_gloss.md)
-- [Diagrama de Implantação](rup_gloss.md)
+- [Diagrama de Implantação](rup_imp.md)
 
 ## Outro
 
