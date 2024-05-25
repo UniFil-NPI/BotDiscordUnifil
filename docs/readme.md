@@ -9,6 +9,7 @@ A documentação Atualizada do Projeto
 - [Diagrama de Sequência](rup_seq.md)
 - [Diagrama de Estado](rup_gloss.md)
 - [Diagrama de Implantação](rup_imp.md)
+- [Diagrama de Workflow (AS-IS)](as_is.md)
 
 ## Outro
 
