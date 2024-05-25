@@ -38,8 +38,8 @@
 ## <a name="instrucao"></a> 2.2 Instrução sobre a Posição do Produto		
 | Para          | Aluno usuário de Discord                                              |
 | ------------- | -------------------------------------------------------------------- |
-| Que           | Estudantes da UniFil, usuários do Google Sala-de-Aula                |
-| O Bot         | É um sistema de conciliação do usuário do Discord e do Sala-de-Aula |
+| Que           | Estudantes da UniFil, usuários do Google Classroom                   |
+| O Bot         | É um sistema de conciliação do usuário do Discord e do Classroom     |
 | Que           | Faz a conciliação automática entre o Google Sala de Aula e o Discord |
 | Diferente de  | Uma API que se conecta com o Classroom e notifica o usuário no Discord |
 | Nosso produto | O diferencial de conectar diretamente o aluno específico com o seu nome e matrícula, para deixar explícito para o professor e outros alunos |
@@ -58,7 +58,7 @@
 
 ## <a name="ambiente"></a> 3.2 Ambiente do Usuário
 
-- A plataforma web estará acessível através de uma URL, permitindo que os usuários acessem de qualquer computador com conexão à internet. O aplicativo mobile estará disponível para download na Play Store e Apple Store, garantindo acesso conveniente em smartphones, com suporte para versões mais recentes do Android.
+- A plataforma web do discord é acessível através de uma URL, permitindo que os usuários acessem de qualquer computador com conexão à internet. O aplicativo mobile tamém está disponível para download na Play Store e Apple Store, garantindo acesso conveniente em smartphones, com suporte para versões mais recentes do Android.
 
 ## <a name="visao"></a> 4. Visão Geral do Produto
 
@@ -75,10 +75,9 @@
 
 | Necessidade          | Prioridade | Recursos                 | Liberação Planejada |
 | -------------------- | ---------- | ------------------------ | ------------------- |
-| Notificar Usuário    | Alta       | Interface em Python      | Primeira Versão      |
-| API interativa        | Alta       | JavaScript ou Python     | Primeira Versão      |
-| Interface do BOT      | Alta       | Python                   | Primeira Versão      |
-| Cadastro de Estudante | Alta       | Interface SQL            | Primeira Versão      |
+| Utilidades Bot       | Alta       | Python                   | Primeira Versão      |
+| Comandos do BOT      | Alta       | Python                   | Primeira Versão      |
+| Interação API Google | Alta       | Pytohn                   | Primeira Versão      |
 
 
 ## <a name="alternativas"></a> 4.4 Alternativas e Competições

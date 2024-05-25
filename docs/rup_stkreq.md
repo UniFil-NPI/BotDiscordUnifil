@@ -41,14 +41,11 @@ O presente documento tem como objetivo principal fornecer uma visão abrangente 
 ## <a name="escopo"></a> 1. Escopo
 
 O escopo deste projeto abrange o desenvolvimento do bot de Discord, incorporando recursos específicos para a integração com o Google Sala de Aula. As funcionalidades incluirão, mas não estão limitadas a:
-- Envio de lembretes automáticos sobre pendências e prazos.
 - Disponibilização de notícias relevantes.
-- Encaminhamento de mensagens do professor para canais específicos no  Discord.
 - Facilidade na interação entre alunos e professores.
 
 ## <a name="definicoes"></a> 1.3 Definições, Acrônimos e Abreviações
 
-- Investidor: Pessoa responsável pelos recursos e decisões financeiras do projeto.
 - Bot: Aplicativo automatizado que opera dentro da plataforma Discord.
 - Google Sala de Aula: Ambiente virtual educacional desenvolvido pelo Google.
 

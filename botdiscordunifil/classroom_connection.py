@@ -8,16 +8,17 @@ API_KEY = os.getenv('GOOGLE_API_KEY')
 
 def main():
     if not API_KEY:
-        print("Não tem chave de API.")
+        print("aqui")
         return
 
     service = build('classroom', 'v1', developerKey=API_KEY)
 
+    print("rodou aqui ")
     results = service.courses().list(pageSize=10).execute()
     courses = results.get('courses', [])
 
     if not courses:
-        print('Nenhum curso encontrado.')
+        print('aqui 2 .')
     else:
         print('Cursos:')
         for course in courses:
