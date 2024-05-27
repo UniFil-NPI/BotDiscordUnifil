@@ -11,8 +11,10 @@ def get_classroom_courses():
     """Fetches the first 10 courses the user has access to from the Google Classroom API."""
     creds = None
     if os.path.exists("token.json"):
+        print("O Token foi carregado com sucesso.")
         creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-    if not creds or not creds.valid:
+    else:
+        print("O Token não existe ou foi expirado.")
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
@@ -26,7 +28,7 @@ def get_classroom_courses():
 
     try:
         service = build("classroom", "v1", credentials=creds)
-        results = service.courses().list(pageSize=10).execute()
+        results = service.courses().list(pageSize=20).execute()
         courses = results.get("courses", [])
         return courses
 
@@ -38,6 +40,6 @@ if __name__ == '__main__':
     courses = get_classroom_courses()
     if courses:
         for course in courses:
-            print(course["name"])
+            print(course["enrollmentCode"])
     else:
-        print("No courses found or an error occurred.")
+        print("Nenhum curso encontrado.")
