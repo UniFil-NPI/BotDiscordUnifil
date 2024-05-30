@@ -7,5 +7,6 @@
 | 18/03/2024 | 1.0 | Criação do Doc.| Gabriel Zanoni(@GbrielZanoni) |
 | 09/03/2024 | 1.1 | Conversão para M.D| Gabriel Zanoni(@GbrielZanoni)|
 | 08/05/2024 | 1.2 | Atualização no Documento | Gabriel Zanoni(@GbrielZanoni)|
+| 30/05/2024 | 1.3 | Diagrama Refeito  | Gabriel Zanoni(@GbrielZanoni)|
 
-![O Diagrama de Caso de Uso Atualizado](https://i.imgur.com/kVriLoA.png)
+![O Diagrama de Caso de Uso Atualizado](https://i.imgur.com/CiPbI9B.png)
