@@ -36,7 +36,7 @@ class GoogleClassroomService:
         self.creds = creds
         self.service = build("classroom", "v1", credentials=self.creds)
 
-    def list_courses(self, page_size=20):
+    def list_courses(self, page_size=100):
         try:
             results = self.service.courses().list(pageSize=page_size).execute()
             courses = results.get("courses", [])

@@ -67,10 +67,13 @@ def format_course(course: Any) -> dict:
 def format_coursework(coursework: Tuple[str, Any]) -> dict:
     course_name, work = coursework
     due_date = work.get("due_date")
-    due_display = f"<t:{int(due_date.timestamp())}:F>" if due_date else "Sem data de entrega"
+    if due_date:
+        due_display = due_date.strftime("%A, %d %B %Y, %H:%M")
+    else:
+        due_display = "Sem data de entrega"
     return {
         "title": f"{course_name} - {work['title']}",
-        "description": due_display
+        "description": f"Data de entrega: {due_display}"
     }
 
 @bot.event
@@ -93,7 +96,7 @@ async def courses_command(interaction: discord.Interaction):
             await interaction.followup.send("Erro ao acessar a API do Google", ephemeral=True)
             return
 
-        paginator = Paginator(items=courses, per_page=5, title="Cursos Disponíveis", formatter=format_course)
+        paginator = Paginator(items=courses, per_page=5, title="Matérias Disponíveis", formatter=format_course)
         embed = paginator.generate_embed()
         await interaction.followup.send(embed=embed, view=paginator, ephemeral=True)
     except Exception as e:
@@ -114,10 +117,30 @@ async def coursework_command(interaction: discord.Interaction, course_id: str):
         coursework = manager.get_coursework(course_id)
 
         if coursework is None or not coursework:
-            await interaction.followup.send("ocorreu um erro ao acessar a API.", ephemeral=True)
+            await interaction.followup.send("Ocorreu um erro ao acessar a API.", ephemeral=True)
             return
 
-        paginator = Paginator(items=coursework, title=f"Atividades de {course.name}", formatter=lambda work: format_coursework((course.name, work)))
+        valid_coursework = []
+        now = datetime.datetime.now()
+
+        for work in coursework:
+            due_date = work.get("dueDate")
+            due_time = work.get("dueTime")
+            if due_date and due_time:
+                due_datetime = datetime.datetime(
+                    year=due_date["year"],
+                    month=due_date["month"],
+                    day=due_date["day"],
+                    hour=due_time.get("hours", 0),
+                    minute=due_time.get("minutes", 0)
+                )
+                if due_datetime > now:
+                    work["due_date"] = due_datetime
+                    valid_coursework.append((course.name, work))
+
+        valid_coursework.sort(key=lambda x: x[1].get("due_date"))
+
+        paginator = Paginator(items=valid_coursework, title=f"Atividades de {course.name}", formatter=lambda work: format_coursework(work))
         embed = paginator.generate_embed()
         await interaction.followup.send(embed=embed, view=paginator, ephemeral=True)
     except Exception as e:
@@ -135,6 +158,8 @@ async def calendar_command(interaction: discord.Interaction):
             return
 
         all_coursework = []
+        now = datetime.datetime.now()
+
         for course in courses:
             coursework = manager.get_coursework(course.id)
             if coursework:
@@ -149,8 +174,9 @@ async def calendar_command(interaction: discord.Interaction):
                             hour=due_time.get("hours", 0),
                             minute=due_time.get("minutes", 0)
                         )
-                        work["due_date"] = due_datetime
-                        all_coursework.append((course.name, work))
+                        if due_datetime > now:
+                            work["due_date"] = due_datetime
+                            all_coursework.append((course.name, work))
 
         all_coursework.sort(key=lambda x: x[1].get("due_date"))
 
