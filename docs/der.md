@@ -9,5 +9,5 @@
 | 30/05/2024 | 1.2 | Diagrama Refeito  | Gabriel Zanoni(@GbrielZanoni)|
 
 
-![Conc](https://i.imgur.com/b450Qch.png)
-![Logic](https://i.imgur.com/quZ8DUF.png)
+![Conc](https://i.imgur.com/GMI4wYI.png)
+![Logic](https://i.imgur.com/6SEwTM7.png)
