@@ -186,6 +186,63 @@ async def calendar_command(interaction: discord.Interaction):
     except Exception as e:
         await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
 
+import random
+
+@bot.tree.command(name="tarefa_aleatoria")
+async def random_task_command(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=True)
+    try:
+        manager = GoogleClassroomManager()
+        courses = manager.get_courses()
+
+        if courses is None or not courses:
+            await interaction.followup.send("Erro ao acessar a API do Google", ephemeral=True)
+            return
+
+        all_coursework = []
+        now = datetime.datetime.now()
+
+        for course in courses:
+            coursework = manager.get_coursework(course.id)
+            if coursework:
+                for work in coursework:
+                    due_date = work.get("dueDate")
+                    due_time = work.get("dueTime")
+                    if due_date and due_time:
+                        due_datetime = datetime.datetime(
+                            year=due_date["year"],
+                            month=due_date["month"],
+                            day=due_date["day"],
+                            hour=due_time.get("hours", 0),
+                            minute=due_time.get("minutes", 0)
+                        )
+                        if due_datetime > now:
+                            work["due_date"] = due_datetime
+                            all_coursework.append((course.name, work))
+
+        if not all_coursework:
+            await interaction.followup.send("Nenhuma tarefa pendente encontrada.", ephemeral=True)
+            return
+
+        selected_task = random.choice(all_coursework)
+        embed = discord.Embed(title="Alerta de Pendência", color=0x00ff00)
+        embed.add_field(name="Nome da Matéria", value=selected_task[0], inline=False)
+        embed.add_field(name="Nome da Atividade", value=selected_task[1]["title"], inline=False)
+        description = selected_task[1].get("description", "Sem descrição")
+        embed.add_field(name="Descrição", value=description, inline=False)
+        
+        due_date = selected_task[1].get("due_date", "Sem data de entrega")
+        if due_date != "Sem data de entrega":
+            due_timestamp = int(due_date.timestamp())
+            due_date = f"<t:{due_timestamp}:F>"  
+        embed.add_field(name="Data de Vencimento", value=due_date, inline=False)
+
+        user = interaction.user
+        await user.send(embed=embed)
+        await interaction.followup.send("tste", ephemeral=True)
+    except Exception as e:
+        await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
+
 def main():
     bot.run(TOKEN)
 

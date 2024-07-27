@@ -24,10 +24,10 @@ class GoogleClassroomAuthenticator:
                     print("O token foi gerado novamente.")
                     self.creds.refresh(Request())
                 else:
-                    print("Token inválido ou expirado. Por favor, forneça um token válido.")
+                    print("Token inválido ou expirado.")
                     return None
         else:
-            print("O Token não existe. Por favor, forneça um token válido.")
+            print("O Token não existe.")
             return None
         return self.creds
 
