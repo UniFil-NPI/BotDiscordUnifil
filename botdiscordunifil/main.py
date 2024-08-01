@@ -1,6 +1,6 @@
 from typing import List, Tuple, Any, Final
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 from discord import Embed
 import os
 from dotenv import load_dotenv
@@ -84,6 +84,7 @@ async def on_ready():
         print(f"Foram carregados {len(synced)} comando(s)")
     except Exception as e:
         print(e)
+    send_daily_message.start()
 
 @bot.tree.command(name="materias")
 async def courses_command(interaction: discord.Interaction):
@@ -242,6 +243,14 @@ async def random_task_command(interaction: discord.Interaction):
         await interaction.followup.send("tste", ephemeral=True)
     except Exception as e:
         await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
+
+@tasks.loop(minutes=1)
+async def send_daily_message():
+    now = datetime.datetime.now()
+    if now.hour == 21 and now.minute == 0:
+        channel = bot.get_channel(1210933046014902274)
+        if channel:
+            await channel.send("Mensagem diária das 21 horas")
 
 def main():
     bot.run(TOKEN)
