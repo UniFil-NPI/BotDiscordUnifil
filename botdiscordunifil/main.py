@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 from classroom_api import GoogleClassroomManager
 import datetime
+import pytz
 
 load_dotenv()
 
@@ -15,6 +16,26 @@ intents.message_content = True
 TOKEN: Final[str] = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix="!", intents=intents)
+
+def get_due_datetime(due_date, due_time):
+    timezone_utc = pytz.utc
+    timezone_local = pytz.timezone("America/Sao_Paulo")
+
+    naive_datetime = datetime.datetime(
+        year=due_date["year"],
+        month=due_date["month"],
+        day=due_date["day"],
+        hour=due_time.get("hours", 0),
+        minute=due_time.get("minutes", 0)
+    )
+
+    utc_datetime = timezone_utc.localize(naive_datetime)
+    print("Test: ", utc_datetime)
+
+    localized_datetime = utc_datetime.astimezone(timezone_local)
+    print("Test2: ", localized_datetime)
+
+    return localized_datetime
 
 class Paginator(discord.ui.View):
     def __init__(self, items: List[Any], per_page: int = 1, title: str = "Paginator", formatter: Any = None):
@@ -78,12 +99,6 @@ def format_coursework(coursework: Tuple[str, Any]) -> dict:
 
 @bot.event
 async def on_ready():
-    print(f'{bot.user} está rodando!')
-    try:
-        synced = await bot.tree.sync()
-        print(f"Foram carregados {len(synced)} comando(s)")
-    except Exception as e:
-        print(e)
     send_daily_message.start()
 
 @bot.tree.command(name="materias")
@@ -122,19 +137,13 @@ async def coursework_command(interaction: discord.Interaction, course_id: str):
             return
 
         valid_coursework = []
-        now = datetime.datetime.now()
+        now = datetime.datetime.now(pytz.timezone("America/Sao_Paulo"))
 
         for work in coursework:
             due_date = work.get("dueDate")
             due_time = work.get("dueTime")
             if due_date and due_time:
-                due_datetime = datetime.datetime(
-                    year=due_date["year"],
-                    month=due_date["month"],
-                    day=due_date["day"],
-                    hour=due_time.get("hours", 0),
-                    minute=due_time.get("minutes", 0)
-                )
+                due_datetime = get_due_datetime(due_date, due_time)
                 if due_datetime > now:
                     work["due_date"] = due_datetime
                     valid_coursework.append((course.name, work))
@@ -159,7 +168,7 @@ async def calendar_command(interaction: discord.Interaction):
             return
 
         all_coursework = []
-        now = datetime.datetime.now()
+        now = datetime.datetime.now(pytz.timezone("America/Sao_Paulo"))
 
         for course in courses:
             coursework = manager.get_coursework(course.id)
@@ -168,13 +177,7 @@ async def calendar_command(interaction: discord.Interaction):
                     due_date = work.get("dueDate")
                     due_time = work.get("dueTime")
                     if due_date and due_time:
-                        due_datetime = datetime.datetime(
-                            year=due_date["year"],
-                            month=due_date["month"],
-                            day=due_date["day"],
-                            hour=due_time.get("hours", 0),
-                            minute=due_time.get("minutes", 0)
-                        )
+                        due_datetime = get_due_datetime(due_date, due_time)
                         if due_datetime > now:
                             work["due_date"] = due_datetime
                             all_coursework.append((course.name, work))
@@ -201,7 +204,7 @@ async def random_task_command(interaction: discord.Interaction):
             return
 
         all_coursework = []
-        now = datetime.datetime.now()
+        now = datetime.datetime.now(pytz.timezone("America/Sao_Paulo"))
 
         for course in courses:
             coursework = manager.get_coursework(course.id)
@@ -210,13 +213,7 @@ async def random_task_command(interaction: discord.Interaction):
                     due_date = work.get("dueDate")
                     due_time = work.get("dueTime")
                     if due_date and due_time:
-                        due_datetime = datetime.datetime(
-                            year=due_date["year"],
-                            month=due_date["month"],
-                            day=due_date["day"],
-                            hour=due_time.get("hours", 0),
-                            minute=due_time.get("minutes", 0)
-                        )
+                        due_datetime = get_due_datetime(due_date, due_time)
                         if due_datetime > now:
                             work["due_date"] = due_datetime
                             all_coursework.append((course.name, work))
@@ -246,7 +243,7 @@ async def random_task_command(interaction: discord.Interaction):
 
 @tasks.loop(minutes=1)
 async def send_daily_message():
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(pytz.timezone("America/Sao_Paulo"))
     if now.hour == 21 and now.minute == 0:
         channel = bot.get_channel(1210933046014902274)
         if channel:
