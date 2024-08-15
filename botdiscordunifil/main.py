@@ -30,10 +30,8 @@ def get_due_datetime(due_date, due_time):
     )
 
     utc_datetime = timezone_utc.localize(naive_datetime)
-    print("Test: ", utc_datetime)
 
     localized_datetime = utc_datetime.astimezone(timezone_local)
-    print("Test2: ", localized_datetime)
 
     return localized_datetime
 

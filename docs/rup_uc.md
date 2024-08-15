@@ -10,4 +10,4 @@
 | 30/05/2024 | 1.3 | Diagrama Refeito  | Gabriel Zanoni(@GbrielZanoni)|
 | 10/08/2024 | 1.4 | Diagrama Atualizado  | Gabriel Zanoni(@GbrielZanoni)|
 
-![O Diagrama de Caso de Uso Atualizado](https://imgur.com/a/5UQXwsQ)
+![O Diagrama de Caso de Uso Atualizado](https://i.imgur.com/04khoTt.png)
