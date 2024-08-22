@@ -2,6 +2,7 @@ from typing import List, Tuple, Any, Final
 import discord
 from discord.ext import commands, tasks
 from discord import Embed
+import json     
 import os
 from dotenv import load_dotenv
 from classroom_api import GoogleClassroomManager
@@ -9,13 +10,32 @@ import datetime
 import pytz
 
 load_dotenv()
-
+NOTIFICATION_FILE = 'notifications.json'
 intents = discord.Intents.default()
 intents.message_content = True
 
 TOKEN: Final[str] = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix="!", intents=intents)
+
+def load_notification_preferences():
+    if os.path.exists(NOTIFICATION_FILE):
+        with open(NOTIFICATION_FILE, 'r') as f:
+            return json.load(f)
+    return {}
+
+def save_notification_preferences(preferences):
+    with open(NOTIFICATION_FILE, 'w') as f:
+        json.dump(preferences, f)
+
+def set_notification_preference(user_id, enabled):
+    preferences = load_notification_preferences()
+    preferences[str(user_id)] = enabled
+    save_notification_preferences(preferences)
+
+def get_notification_preference(user_id):
+    preferences = load_notification_preferences()
+    return preferences.get(str(user_id), False)
 
 def get_due_datetime(due_date, due_time):
     timezone_utc = pytz.utc
@@ -97,7 +117,11 @@ def format_coursework(coursework: Tuple[str, Any]) -> dict:
 
 @bot.event
 async def on_ready():
+    await bot.tree.sync()  
     send_daily_message.start()
+
+    loaded_commands = len(bot.tree.get_commands())
+    print(f'{loaded_commands} comandos carregados.')
 
 @bot.tree.command(name="materias")
 async def courses_command(interaction: discord.Interaction):
@@ -189,6 +213,19 @@ async def calendar_command(interaction: discord.Interaction):
         await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
 
 import random
+
+@bot.tree.command(name="notificar")
+async def notify_command(interaction: discord.Interaction):
+    user_id = interaction.user.id
+    current_preference = get_notification_preference(user_id)
+    
+    new_preference = not current_preference
+    set_notification_preference(user_id, new_preference)
+    
+    if new_preference:
+        await interaction.response.send_message("A notificação foi ativada", ephemeral=True)
+    else:
+        await interaction.response.send_message("A notificação foi desativada", ephemeral=True)
 
 @bot.tree.command(name="tarefa_aleatoria")
 async def random_task_command(interaction: discord.Interaction):

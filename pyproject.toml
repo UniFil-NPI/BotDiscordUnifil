@@ -2,7 +2,7 @@
 name = "botdiscordunifil"
 version = "0.0.1"
 description = "Yet another discord bot"
-authors = ["Your Name <you@example.com>"]
+authors = ["Gabriel Zanoni (@GbrielZanoni)"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
