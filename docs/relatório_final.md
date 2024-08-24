@@ -158,7 +158,17 @@ O diagrama de classe é uma representação da estrutura e relações das classe
 
 O Diagrama de Sequência é um diagrama usado em UML que representa a sequência de processos num programa de computador. Segue abaixo o Diagrama de Sequência do projeto:
 
-![Diagrama de Sequência](https://i.imgur.com/MZbVbSL.png)
+### Diagramas de Sequência
+
+![GERAL](https://i.imgur.com/jOaM0os.png)
+![CALENDARIO](https://i.imgur.com/pBkye7Y.png)
+![API](https://i.imgur.com/eJ40r8L.png)
+![MATERIAS](https://i.imgur.com/cYXEQHn.png)
+![NOTIFICAR](https://i.imgur.com/rfaRhgL.png)
+![OBTER_ALUNO](https://i.imgur.com/brqvb6l.png)
+![REALIZAR_COMANDO](https://i.imgur.com/bAnJ9bh.png)
+![TAREFAS](https://i.imgur.com/rCIM9ef.png)
+![VERIFICAR_PENDENCIA](https://i.imgur.com/NXaecr3.png)
 
 ---
 
