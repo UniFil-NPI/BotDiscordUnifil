@@ -149,16 +149,7 @@ if __name__ == '__main__':
     try:
         manager = GoogleClassroomManager()
         courses = manager.get_courses()
-        if courses:
-            for course in courses:
-                print(course)
-                pendings = manager.get_pendings(course.id)
-                if pendings:
-                    for pending in pendings:
-                        print(f"Pendência: {pending['student_name']} - {pending['coursework_title']} com prazo em {pending['due_date']}")
-                else:
-                    print("Nenhuma pendência encontrada.")
-        else:
+        if not courses:
             print("Nenhum curso ativo encontrado.")
     except Exception as e:
         print(e)
