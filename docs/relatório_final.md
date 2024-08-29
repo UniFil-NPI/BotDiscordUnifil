@@ -29,6 +29,7 @@
    - 7.1 [Conclusões](#71-conclusões)
    - 7.2 [Trabalhos Futuros](#72-trabalhos-futuros)
 8. [REFERÊNCIAS](#8-referências)
+8. [APÊNDICE](#8-apêndice)
 
 ---
 
@@ -225,3 +226,21 @@ Para aprimorar ainda mais o bot, planejo adicionar novas features de acordo com 
 - DOCUMENTAÇÃO DO PYTHON. Requests. 2024. <https://docs.python-requests.org/en/latest/>. Acesso em: 21 mar. 2024.
 - DISCORD. discord.py Documentation. 2024. <https://discordpy.readthedocs.io/en/stable/>. Acesso em: 21 mar. 2024.
 - DOCUMENTAÇÃO DO PYTHON. python-dot
+
+
+## 9. APÊNDICE
+
+### Diagramas
+
+- [Diagrama de Caso de Uso](rup_uc.md)
+- [Diagrama de Classe](rup_class.md) 
+- [Diagrama de Sequência](seq/rup_seq.md)
+- [Diagrama de Implantação](rup_imp.md)
+- [Diagrama de Workflow (AS-IS)](as_is.md)
+
+### Documentação 
+
+- [Especificação Complementar](rup_ssspec.md)   
+- [Visão](visao.md)
+- [Pedido do Investidor](rup_stkreq.md)
+- [Glossário](rup_gloss.md)
