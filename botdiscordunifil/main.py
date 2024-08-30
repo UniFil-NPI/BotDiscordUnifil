@@ -18,6 +18,14 @@ TOKEN: Final[str] = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+studentsToNotify = {
+    "265980379545075712": {
+        "email": "gabriel.herculano@edu.unifil.br",
+        "name": "GABRIEL ZANONI HERCULANO"
+    }
+}
+
+
 def load_notification_preferences():
     if os.path.exists(NOTIFICATION_FILE):
         with open(NOTIFICATION_FILE, 'r') as f:
@@ -273,6 +281,42 @@ async def random_task_command(interaction: discord.Interaction):
         user = interaction.user
         await user.send(embed=embed)
         await interaction.followup.send("tste", ephemeral=True)
+    except Exception as e:
+        await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
+
+@bot.tree.command(name="pendencias_todos")
+async def all_pending_tasks_command(interaction: discord.Interaction):
+    await interaction.response.defer(ephemeral=True)
+    try:
+        manager = GoogleClassroomManager()
+        courses = manager.get_courses()
+
+        if not courses:
+            await interaction.followup.send("Nenhum curso ativo encontrado.", ephemeral=True)
+            return
+
+        all_pendings = []
+
+        for course in courses:
+            pendings = await manager.get_pendings(course.id)
+            if pendings:
+                all_pendings.extend(pendings)
+
+        if not all_pendings:
+            await interaction.followup.send("Nenhuma pendência encontrada para os alunos.", ephemeral=True)
+            return
+
+        def format_pending(pending):
+            due_date = pending["due_date"].strftime("%d/%m/%Y")
+            return {
+                "title": f"{pending['student_name']} - {pending['coursework_title']}",
+                "description": f"Curso: {pending['course_id']}\nData de Entrega: {due_date}"
+            }
+
+        paginator = Paginator(items=all_pendings, per_page=5, title="Pendências de Todos os Alunos", formatter=format_pending)
+        embed = paginator.generate_embed()
+        await interaction.followup.send(embed=embed, view=paginator, ephemeral=True)
+
     except Exception as e:
         await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
 

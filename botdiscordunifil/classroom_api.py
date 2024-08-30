@@ -1,5 +1,6 @@
 import os.path
 import datetime
+import asyncio
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
@@ -116,7 +117,7 @@ class GoogleClassroomManager:
             return students_data
         return []
 
-    def get_pendings(self, course_id):
+    async def get_pendings(self, course_id):
         coursework_list = self.get_coursework(course_id)
         students = self.get_students(course_id)
 
@@ -126,8 +127,10 @@ class GoogleClassroomManager:
 
         pending_assignments = []
 
-        for coursework in coursework_list:
-            submissions = self.service.list_student_submissions(course_id, coursework['id'])
+        submission_tasks = [self._fetch_submissions(course_id, coursework['id']) for coursework in coursework_list]
+        submissions_results = await asyncio.gather(*submission_tasks)
+
+        for coursework, submissions in zip(coursework_list, submissions_results):
             due_date = coursework.get('dueDate')
             if due_date:
                 due_date = datetime.date(due_date['year'], due_date['month'], due_date['day'])
@@ -145,11 +148,51 @@ class GoogleClassroomManager:
 
         return pending_assignments  
 
-if __name__ == '__main__':
-    try:
-        manager = GoogleClassroomManager()
-        courses = manager.get_courses()
+    async def get_student_pendings_by_name(self, student_name):
+        courses = self.get_courses()
         if not courses:
             print("Nenhum curso ativo encontrado.")
+            return []
+
+        all_pending_assignments = []
+
+        pending_tasks = [self.get_pendings(course.id) for course in courses]
+        results = await asyncio.gather(*pending_tasks)
+
+        for pending_assignments in results:
+            if not pending_assignments:
+                continue
+
+            student_pendings = [
+                pending for pending in pending_assignments 
+                if student_name.lower() in pending['student_name'].lower()
+            ]
+
+            all_pending_assignments.extend(student_pendings)
+
+        return all_pending_assignments
+
+    async def _fetch_submissions(self, course_id, coursework_id):
+        try:
+            loop = asyncio.get_event_loop()
+            submissions = await loop.run_in_executor(None, self.service.list_student_submissions, course_id, coursework_id)
+            return submissions or []
+        except Exception as error:
+            print(f"An error occurred while fetching submissions: {error}")
+            return []
+
+async def main():
+    try:
+        manager = GoogleClassroomManager()
+        student_name = input("Digite o nome do aluno para buscar as pendências: ")
+        pendings = await manager.get_student_pendings_by_name(student_name)
+        if pendings:
+            for pending in pendings:
+                print(f"Aluno: {pending['student_name']} - Curso: {pending['course_id']} - Tarefa: {pending['coursework_title']} - Data de entrega: {pending['due_date']}")
+        else:
+            print(f"Nenhuma pendência encontrada para o aluno {student_name}.")
     except Exception as e:
         print(e)
+
+if __name__ == '__main__':
+    asyncio.run(main())
