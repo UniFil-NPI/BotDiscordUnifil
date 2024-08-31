@@ -1,17 +1,28 @@
 import os.path
 import datetime
 import asyncio
+import ssl  
+import google.auth.transport.requests
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+import certifi
+import httplib2
 
 SCOPES = [
-   "https://www.googleapis.com/auth/classroom.courses", 
-   "https://www.googleapis.com/auth/classroom.coursework.students", 
-   "https://www.googleapis.com/auth/classroom.announcements",
-   "https://www.googleapis.com/auth/classroom.rosters"
+    "https://www.googleapis.com/auth/classroom.courses", 
+    "https://www.googleapis.com/auth/classroom.coursework.students", 
+    "https://www.googleapis.com/auth/classroom.announcements",
+    "https://www.googleapis.com/auth/classroom.rosters", 
+    "https://www.googleapis.com/auth/classroom.profile.emails"
 ]
+
+import ssl
+import certifi
+
+ssl_context = ssl.create_default_context(cafile=certifi.where())
+ssl_context.minimum_version = ssl.TLSVersion.TLSv1_2
 
 class GoogleClassroomAuthenticator:
     def __init__(self, token_path="token.json"):
@@ -37,7 +48,7 @@ class GoogleClassroomAuthenticator:
 class GoogleClassroomService:
     def __init__(self, creds):
         self.creds = creds
-        self.service = build("classroom", "v1", credentials=self.creds)
+        self.service = build("classroom", "v1", credentials=self.creds, cache_discovery=False)
 
     def list_courses(self, page_size=100):
         try:
@@ -69,14 +80,40 @@ class GoogleClassroomService:
 
     def list_student_submissions(self, course_id, coursework_id):
         try:
+            print(f"Fetching submissions for course_id: {course_id}, coursework_id: {coursework_id}")
             results = self.service.courses().courseWork().studentSubmissions().list(
                 courseId=course_id,
-                courseWorkId=coursework_id
+                courseWorkId=coursework_id,
+                pageSize=10
             ).execute()
             submissions = results.get("studentSubmissions", [])
             return submissions
         except HttpError as error:
             print(f"An error occurred while fetching submissions: {error}")
+            return None
+
+    def get_student_by_email(self, course_id, email):
+        try:
+            students = self.list_students(course_id)
+            student = next((s for s in students if s['profile']['emailAddress'].lower() == email.lower()), None)
+            return student
+        except HttpError as error:
+            print(f"An error occurred while fetching the student by email: {error}")
+            return None
+
+    def list_student_emails(self, course_id):
+        try:
+            students = []
+            request = self.service.courses().students().list(courseId=course_id)
+            while request is not None:
+                response = request.execute()
+                students.extend(response.get('students', []))
+                request = self.service.courses().students().list_next(request, response)
+
+            emails = [student['profile']['emailAddress'] for student in students]
+            return emails
+        except HttpError as error:
+            print(f"An error occurred while fetching student emails: {error}")
             return None
 
 class Course:
@@ -97,6 +134,9 @@ class GoogleClassroomManager:
         if not self.creds:
             raise Exception("Autenticação falhou.")
         self.service = GoogleClassroomService(self.creds)
+
+    def list_student_emails(self, course_id):
+        return self.service.list_student_emails(course_id)
 
     def get_courses(self):
         courses_data = self.service.list_courses()
@@ -146,7 +186,7 @@ class GoogleClassroomManager:
                                 "course_id": course_id
                             })
 
-        return pending_assignments  
+        return pending_assignments
 
     async def get_student_pendings_by_name(self, student_name):
         courses = self.get_courses()
@@ -172,6 +212,38 @@ class GoogleClassroomManager:
 
         return all_pending_assignments
 
+    async def get_student_pendings_by_email(self, student_email):
+        courses = self.get_courses()
+        if not courses:
+            print("Nenhum curso ativo encontrado.")
+            return []
+
+        all_pending_assignments = []
+
+        for course in courses:
+            student = self.service.get_student_by_email(course.id, student_email)
+            if student:
+                coursework_list = self.get_coursework(course.id)
+                submission_tasks = [self._fetch_submissions(course.id, coursework['id']) for coursework in coursework_list]
+                submissions_results = await asyncio.gather(*submission_tasks)
+
+                for coursework, submissions in zip(coursework_list, submissions_results):
+                    due_date = coursework.get('dueDate')
+                    if due_date:
+                        due_date = datetime.date(due_date['year'], due_date['month'], due_date['day'])
+                        for submission in submissions:
+                            if submission['userId'] == student['userId'] and submission['state'] in ['NEW', 'CREATED']:
+                                all_pending_assignments.append({
+                                    "student_name": student['profile']['name']['fullName'],
+                                    "student_email": student['profile']['emailAddress'],
+                                    "coursework_title": coursework['title'],
+                                    "due_date": due_date,
+                                    "course_id": course.id,
+                                    "course_name": course.name
+                                })
+
+        return all_pending_assignments
+
     async def _fetch_submissions(self, course_id, coursework_id):
         try:
             loop = asyncio.get_event_loop()
@@ -184,13 +256,10 @@ class GoogleClassroomManager:
 async def main():
     try:
         manager = GoogleClassroomManager()
-        student_name = input("Digite o nome do aluno para buscar as pendências: ")
-        pendings = await manager.get_student_pendings_by_name(student_name)
-        if pendings:
-            for pending in pendings:
-                print(f"Aluno: {pending['student_name']} - Curso: {pending['course_id']} - Tarefa: {pending['coursework_title']} - Data de entrega: {pending['due_date']}")
-        else:
-            print(f"Nenhuma pendência encontrada para o aluno {student_name}.")
+        courses = manager.get_courses()
+        if not courses:
+            print("Falha ao carregar os classrooms.")
+            return
     except Exception as e:
         print(e)
 

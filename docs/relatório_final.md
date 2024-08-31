@@ -29,7 +29,7 @@
    - 7.1 [Conclusões](#71-conclusões)
    - 7.2 [Trabalhos Futuros](#72-trabalhos-futuros)
 8. [REFERÊNCIAS](#8-referências)
-8. [APÊNDICE](#8-apêndice)
+9. [APÊNDICE](#8-apêndice)
 
 ---
 
@@ -155,21 +155,132 @@ O diagrama de classe é uma representação da estrutura e relações das classe
 
 ![Diagrama de Classe](https://i.imgur.com/fICzfTd.png)
 
+### 3.2.1 Classe 1: `GoogleClassroomManager`
+
+- **Descrição:** 
+  - A classe `GoogleClassroomManager` é responsável por gerenciar as interações de alto nível com a API do Google Classroom. Ela utiliza a `GoogleClassroomAuthenticator` para autenticar as credenciais e cria uma instância de `GoogleClassroomService` para realizar as operações na API. Essa classe fornece métodos para listar cursos (`get_courses()`) e listar trabalhos de curso (`get_coursework(course_id)`), entre outras operações. 
+
+### 3.2.2 Classe 2: `GoogleClassroomService`
+
+- **Descrição:** 
+  - A classe `GoogleClassroomService` serve como um intermediário para realizar chamadas específicas à API do Google Classroom. Ela contém métodos que permitem listar cursos (`list_courses(page_size)`), listar trabalhos de curso (`list_coursework(course_id)`), listar estudantes (`list_students(course_id)`), e listar submissões de estudantes (`list_student_submissions(course_id, coursework_id)`). Esta classe utiliza as credenciais autenticadas para realizar essas operações.
+
+### 3.2.3 Classe 3: `GoogleClassroomAuthenticator`
+
+- **Descrição:** 
+  - A classe `GoogleClassroomAuthenticator` é responsável por autenticar o usuário com a API do Google Classroom. Ela carrega as credenciais do usuário a partir de um arquivo token e verifica se as credenciais são válidas ou se precisam ser atualizadas. Se necessário, a classe renova o token de autenticação.
+
+### 3.2.4 Classe 4: `Course`
+
+- **Descrição:** 
+  - A classe `Course` representa um curso no Google Classroom. Ela encapsula as propriedades básicas de um curso, como o ID do curso (`id`), o nome (`name`), a seção (`section`), o código de inscrição (`enrollment_code`), e outros dados relacionados ao curso (`course_data`). Além disso, possui um método `__str__()` para fornecer uma representação em string do curso, facilitando a exibição de informações.
+
+### 3.2.5 Classe 5: `Paginator`
+
+- **Descrição:** 
+  - A classe `Paginator` é utilizada para paginar e formatar os dados que serão exibidos no Discord, especialmente em mensagens que podem conter listas longas, como a de cursos ou tarefas. Ela gerencia a navegação entre as páginas de itens (`items`), mantendo o controle da página atual (`page`) e gerando os embeds do Discord para exibição. A classe também inclui métodos para atualizar os botões de navegação e lidar com interações do usuário.
+
+### Resumo das Conexões entre as Classes
+
+- **`GoogleClassroomManager`**:
+  - **Utiliza** `GoogleClassroomService` para acessar a API do Google Classroom.
+  - **Utiliza** `GoogleClassroomAuthenticator` para autenticar as credenciais.
+  - **Gera** instâncias da classe `Course` quando lista cursos.
+
+- **`GoogleClassroomService`**:
+  - **Utiliza** credenciais fornecidas por `GoogleClassroomAuthenticator` para se comunicar com a API do Google Classroom.
+
+- **`Paginator`**:
+  - **Gerencia** a paginação e a formatação dos dados para exibição no Discord.
+
 ### 3.3 Diagrama de Sequência
 
-O Diagrama de Sequência é um diagrama usado em UML que representa a sequência de processos num programa de computador. Segue abaixo o Diagrama de Sequência do projeto:
+
+![GERAL](https://i.imgur.com/jOaM0os.png)
+
+O Diagrama de Sequência é um diagrama usado em UML que representa a sequência de processos num programa de computador. Abaixo, segue uma descrição da ordem em que os eventos ocorrem no Diagrama de Sequência do projeto.
+
+### Overview do Diagrama de Sequência
+
+Este diagrama de sequência descreve a interação entre um usuário, um bot (provavelmente no Discord), o gerenciador do Google Classroom (`Gerenciador`), e a API do Google Classroom através de diversos componentes, como o `Autenticador` e os `Serviços`. Ele demonstra como as requisições fluem através do sistema desde o momento em que o usuário solicita informações até o momento em que as informações são retornadas e exibidas.
+
+#### 1. **Solicitação de Cursos** (`/cursos`)
+
+- **Usuário -> Bot:** O processo inicia quando o usuário solicita a lista de cursos disponíveis utilizando o comando `/cursos`.
+- **Bot -> Gerenciador:** O bot encaminha essa solicitação ao `Gerenciador`, chamando o método `get_courses()`.
+- **Gerenciador -> Autenticador:** O `Gerenciador` verifica as credenciais e solicita autenticação através do método `authenticate()`.
+- **Autenticador -> Autenticador:** O `Autenticador` verifica o token existente, assegurando que ainda é válido.
+- **Autenticador -> GoogleClassroomAPI:** Se o token estiver expirado ou não existir, o `Autenticador` faz uma requisição à API do Google Classroom para gerar ou renovar o token.
+- **GoogleClassroomAPI -> Autenticador:** A API retorna o token atualizado.
+- **Autenticador -> Gerenciador:** O `Autenticador` retorna as credenciais autenticadas para o `Gerenciador`.
+- **Gerenciador -> Serviços:** Com as credenciais em mãos, o `Gerenciador` cria uma nova instância de `GoogleClassroomService` e solicita a lista de cursos usando o método `list_courses()`.
+- **Serviços -> GoogleClassroomAPI:** O `Serviços` faz uma requisição para obter a lista de cursos diretamente da API do Google Classroom.
+- **GoogleClassroomAPI -> Serviços:** A API retorna a lista de cursos.
+- **Serviços -> Gerenciador:** O `Serviços` repassa a lista de cursos para o `Gerenciador`.
+- **Gerenciador -> Bot:** O `Gerenciador` retorna a lista de cursos para o Bot.
+- **Bot -> Usuário:** O bot exibe a lista de cursos para o usuário.
+
+#### 2. **Solicitação de Tarefas** (`/tarefas <course_id>`)
+
+- **Usuário -> Bot:** O usuário solicita a lista de tarefas de um curso específico utilizando o comando `/tarefas <course_id>`.
+- **Bot -> Gerenciador:** O bot encaminha a solicitação ao `Gerenciador` chamando o método `get_coursework(course_id)`.
+- **Gerenciador -> Serviços:** O `Gerenciador` solicita ao `Serviços` a lista de tarefas do curso específico através do método `list_coursework(course_id)`.
+- **Serviços -> GoogleClassroomAPI:** O `Serviços` faz a requisição para obter as tarefas diretamente da API do Google Classroom.
+- **GoogleClassroomAPI -> Serviços:** A API retorna a lista de tarefas para o curso especificado.
+- **Serviços -> Gerenciador:** O `Serviços` repassa a lista de tarefas para o `Gerenciador`.
+- **Gerenciador -> Bot:** O `Gerenciador` retorna a lista de tarefas para o Bot.
+- **Bot -> Usuário:** O bot exibe a lista de tarefas para o usuário.
+
+#### 3. **Solicitação de Calendário** (`/calendario`)
+
+- **Usuário -> Bot:** O usuário solicita o calendário de atividades utilizando o comando `/calendario`.
+- **Bot -> Gerenciador:** O bot encaminha a solicitação ao `Gerenciador` chamando o método `get_courses()` novamente para listar todos os cursos.
+- **Gerenciador -> Serviços:** O `Gerenciador` solicita ao `Serviços` a lista de cursos através do método `list_courses()`.
+- **Serviços -> GoogleClassroomAPI:** O `Serviços` faz a requisição para obter os cursos diretamente da API do Google Classroom.
+- **GoogleClassroomAPI -> Serviços:** A API retorna a lista de cursos.
+- **Serviços -> Gerenciador:** O `Serviços` repassa a lista de cursos para o `Gerenciador`.
+- **Gerenciador -> Bot:** O `Gerenciador` retorna a lista de cursos para o Bot.
+- **Bot -> Gerenciador:** O Bot então solicita todas as tarefas associadas a esses cursos chamando o método `get_coursework(course_id)` para cada curso.
+- **Gerenciador -> Serviços:** O `Gerenciador` chama `list_coursework(course_id)` para cada curso.
+- **Serviços -> GoogleClassroomAPI:** O `Serviços` faz requisições à API do Google Classroom para obter as tarefas de cada curso.
+- **GoogleClassroomAPI -> Serviços:** A API retorna as listas de tarefas.
+- **Serviços -> Gerenciador:** O `Serviços` repassa as listas de tarefas para o `Gerenciador`.
+- **Gerenciador -> Bot:** O `Gerenciador` retorna todas as tarefas para o Bot.
+- **Bot -> Usuário:** O bot exibe o calendário de atividades com todas as tarefas para o usuário.
 
 ### Diagramas de Sequência
 
-![GERAL](https://i.imgur.com/jOaM0os.png)
-![CALENDARIO](https://i.imgur.com/pBkye7Y.png)
-![API](https://i.imgur.com/eJ40r8L.png)
-![MATERIAS](https://i.imgur.com/cYXEQHn.png)
-![NOTIFICAR](https://i.imgur.com/rfaRhgL.png)
-![OBTER_ALUNO](https://i.imgur.com/brqvb6l.png)
-![REALIZAR_COMANDO](https://i.imgur.com/bAnJ9bh.png)
-![TAREFAS](https://i.imgur.com/rCIM9ef.png)
-![VERIFICAR_PENDENCIA](https://i.imgur.com/NXaecr3.png)
+### 1. **CALENDARIO**
+   - ![CALENDARIO](https://i.imgur.com/pBkye7Y.png)
+   - **Descrição**: Descreve a sequência de ações para obter e exibir o calendário de atividades de todos os cursos. O usuário solicita o calendário, e o bot faz chamadas à API para listar cursos e seus respectivos trabalhos, exibindo os dados de forma consolidada.
+
+### 2. **API**
+   - ![API](https://i.imgur.com/eJ40r8L.png)
+   - **Descrição**: Este diagrama foca nas interações detalhadas com a API do Google Classroom. Mostra como o sistema autentica e usa as credenciais para realizar várias operações, como obter listas de cursos ou trabalhos de curso.
+
+### 3. **MATERIAS**
+   - ![MATERIAS](https://i.imgur.com/cYXEQHn.png)
+   - **Descrição**: Detalha o processo de listagem de matérias (cursos) disponíveis. O usuário solicita as matérias, o bot consulta o gerenciador, que por sua vez interage com a API do Google Classroom para recuperar a lista de cursos, que é então exibida ao usuário.
+
+### 4. **NOTIFICAR**
+   - ![NOTIFICAR](https://i.imgur.com/rfaRhgL.png)
+   - **Descrição**: Descreve o processo de notificação do usuário. O bot verifica se as notificações estão ativas e, caso estejam, envia as notificações apropriadas ao usuário com base em eventos específicos, como a conclusão de um comando.
+
+### 5. **OBTER_ALUNO**
+   - ![OBTER_ALUNO](https://i.imgur.com/brqvb6l.png)
+   - **Descrição**: Mostra como o sistema recupera informações de um aluno específico com base em seu email. O processo envolve verificar a lista de alunos em um curso específico através da API para identificar o aluno correspondente.
+
+### 6. **REALIZAR_COMANDO**
+   - ![REALIZAR_COMANDO](https://i.imgur.com/bAnJ9bh.png)
+   - **Descrição**: Foca no fluxo de execução de um comando genérico pelo usuário. Dependendo do comando, o bot pode realizar uma ação diretamente ou envolver a API do Google Classroom para obter os dados necessários.
+
+### 7. **TAREFAS**
+   - ![TAREFAS](https://i.imgur.com/rCIM9ef.png)
+   - **Descrição**: Representa a sequência para listar as tarefas de um curso específico. O usuário solicita as tarefas para um determinado curso, e o bot interage com a API para recuperar e apresentar as tarefas associadas ao curso especificado.
+
+### 8. **VERIFICAR_PENDENCIA**
+   - ![VERIFICAR_PENDENCIA](https://i.imgur.com/NXaecr3.png)
+   - **Descrição**: Mostra o processo de verificação de pendências de tarefas de um aluno. O bot consulta a API do Google Classroom para identificar tarefas que ainda não foram entregues pelo aluno e então informa o usuário sobre essas pendências.
 
 ---
 

@@ -8,6 +8,11 @@ from dotenv import load_dotenv
 from classroom_api import GoogleClassroomManager
 import datetime
 import pytz
+import random
+
+email_to_discord_id = {
+    "gabriel.herculano@edu.unifil.br": "265980379545075712"
+}
 
 load_dotenv()
 NOTIFICATION_FILE = 'notifications.json'
@@ -18,13 +23,8 @@ TOKEN: Final[str] = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-studentsToNotify = {
-    "265980379545075712": {
-        "email": "gabriel.herculano@edu.unifil.br",
-        "name": "GABRIEL ZANONI HERCULANO"
-    }
-}
-
+def get_discord_id_by_email(email):
+    return email_to_discord_id.get(email)
 
 def load_notification_preferences():
     if os.path.exists(NOTIFICATION_FILE):
@@ -220,8 +220,6 @@ async def calendar_command(interaction: discord.Interaction):
     except Exception as e:
         await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
 
-import random
-
 @bot.tree.command(name="notificar")
 async def notify_command(interaction: discord.Interaction):
     user_id = interaction.user.id
@@ -234,6 +232,65 @@ async def notify_command(interaction: discord.Interaction):
         await interaction.response.send_message("A notificação foi ativada", ephemeral=True)
     else:
         await interaction.response.send_message("A notificação foi desativada", ephemeral=True)
+
+@bot.tree.command(name="listar_emails")
+async def list_emails_command(interaction: discord.Interaction, course_id: str):
+    await interaction.response.defer(ephemeral=True)
+    try:
+        manager = GoogleClassroomManager()
+        emails = manager.service.list_student_emails(course_id)
+
+        if emails is None:
+            await interaction.followup.send("Erro ao acessar a API do Google ou nenhum aluno encontrado.", ephemeral=True)
+            return
+
+        def format_email(email):
+            return {
+                "title": "Aluno",
+                "description": email
+            }
+
+        paginator = Paginator(items=emails, per_page=10, title=f"Emails dos alunos da turma {course_id}", formatter=format_email)
+        embed = paginator.generate_embed()
+        await interaction.followup.send(embed=embed, view=paginator, ephemeral=True)
+    except Exception as e:
+        await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
+
+@bot.tree.command(name="simular_notificacao")
+async def simulate_notification_command(interaction: discord.Interaction, email: str, course_id: str):
+    await interaction.response.defer(ephemeral=True)
+    try:
+        manager = GoogleClassroomManager()
+        courses = manager.get_courses()
+
+        course = next((c for c in courses if c.id == course_id), None)
+        if not course:
+            await interaction.followup.send(f"Curso com ID {course_id} não encontrado.", ephemeral=True)
+            return
+
+        pending_tasks = await manager.get_student_pendings_by_email(email)
+
+        filtered_tasks = [task for task in pending_tasks if task['course_id'] == course_id]
+
+        if not filtered_tasks:
+            await interaction.followup.send(f"Nenhuma pendência encontrada para o aluno com email {email} no curso {course.name}.", ephemeral=True)
+            return
+
+        def format_pending(pending):
+            due_date = pending["due_date"].strftime("%d/%m/%Y")
+            return {
+                "title": f"{pending['coursework_title']}",
+                "description": f"Curso: {pending['course_name']}\nData de Entrega: {due_date}"
+            }
+
+        paginator = Paginator(items=filtered_tasks, per_page=5, title=f"Pendências do Aluno {email} no curso {course.name}", formatter=format_pending)
+        embed = paginator.generate_embed()
+
+        user = interaction.user
+        await user.send(embed=embed)
+        await interaction.followup.send("As pendências foram enviadas para você em uma mensagem direta.", ephemeral=True)
+    except Exception as e:
+        await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
 
 @bot.tree.command(name="tarefa_aleatoria")
 async def random_task_command(interaction: discord.Interaction):
@@ -284,39 +341,28 @@ async def random_task_command(interaction: discord.Interaction):
     except Exception as e:
         await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
 
-@bot.tree.command(name="pendencias_todos")
-async def all_pending_tasks_command(interaction: discord.Interaction):
+@bot.tree.command(name="listar_pendencias")
+async def list_pendings_command(interaction: discord.Interaction, email: str):
     await interaction.response.defer(ephemeral=True)
     try:
         manager = GoogleClassroomManager()
-        courses = manager.get_courses()
+        pendings = await manager.get_student_pendings_by_email(email)
 
-        if not courses:
-            await interaction.followup.send("Nenhum curso ativo encontrado.", ephemeral=True)
-            return
-
-        all_pendings = []
-
-        for course in courses:
-            pendings = await manager.get_pendings(course.id)
-            if pendings:
-                all_pendings.extend(pendings)
-
-        if not all_pendings:
-            await interaction.followup.send("Nenhuma pendência encontrada para os alunos.", ephemeral=True)
+        if not pendings:
+            await interaction.followup.send(f"Nenhuma pendência encontrada para o aluno com email {email}.", ephemeral=True)
             return
 
         def format_pending(pending):
             due_date = pending["due_date"].strftime("%d/%m/%Y")
             return {
-                "title": f"{pending['student_name']} - {pending['coursework_title']}",
-                "description": f"Curso: {pending['course_id']}\nData de Entrega: {due_date}"
+                "title": f"{pending['coursework_title']}",
+                "description": f"Curso: {pending['course_name']}\nData de Entrega: {due_date}"
             }
 
-        paginator = Paginator(items=all_pendings, per_page=5, title="Pendências de Todos os Alunos", formatter=format_pending)
+        paginator = Paginator(items=pendings, per_page=5, title=f"Pendências do Aluno {email}", formatter=format_pending)
         embed = paginator.generate_embed()
-        await interaction.followup.send(embed=embed, view=paginator, ephemeral=True)
 
+        await interaction.followup.send(embed=embed, view=paginator, ephemeral=True)
     except Exception as e:
         await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
 
