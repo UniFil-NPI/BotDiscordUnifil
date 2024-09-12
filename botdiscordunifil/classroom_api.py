@@ -1,28 +1,27 @@
-import os.path
+import os
 import datetime
 import asyncio
-import ssl  
-import google.auth.transport.requests
+import ssl
+import discord
+from discord.ext import commands
+from redis_cache import RedisCache  
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import certifi
-import httplib2
 
 SCOPES = [
-    "https://www.googleapis.com/auth/classroom.courses", 
-    "https://www.googleapis.com/auth/classroom.coursework.students", 
+    "https://www.googleapis.com/auth/classroom.courses",
+    "https://www.googleapis.com/auth/classroom.coursework.students",
     "https://www.googleapis.com/auth/classroom.announcements",
-    "https://www.googleapis.com/auth/classroom.rosters", 
+    "https://www.googleapis.com/auth/classroom.rosters",
     "https://www.googleapis.com/auth/classroom.profile.emails"
 ]
 
-import ssl
-import certifi
-
 ssl_context = ssl.create_default_context(cafile=certifi.where())
 ssl_context.minimum_version = ssl.TLSVersion.TLSv1_2
+
 
 class GoogleClassroomAuthenticator:
     def __init__(self, token_path="token.json"):
@@ -44,6 +43,7 @@ class GoogleClassroomAuthenticator:
             print("O Token não existe.")
             return None
         return self.creds
+
 
 class GoogleClassroomService:
     def __init__(self, creds):
@@ -73,6 +73,7 @@ class GoogleClassroomService:
         try:
             results = self.service.courses().students().list(courseId=course_id).execute()
             students = results.get("students", [])
+            print(f"Students for course {course_id}: {students}")
             return students
         except HttpError as error:
             print(f"An error occurred while fetching students: {error}")
@@ -116,6 +117,7 @@ class GoogleClassroomService:
             print(f"An error occurred while fetching student emails: {error}")
             return None
 
+
 class Course:
     def __init__(self, course_data):
         self.id = course_data.get("id")
@@ -127,6 +129,7 @@ class Course:
     def __str__(self):
         return f"Course: {self.name}, Section: {self.section}, Enrollment Code: {self.enrollment_code}"
 
+
 class GoogleClassroomManager:
     def __init__(self):
         self.authenticator = GoogleClassroomAuthenticator()
@@ -134,43 +137,91 @@ class GoogleClassroomManager:
         if not self.creds:
             raise Exception("Autenticação falhou.")
         self.service = GoogleClassroomService(self.creds)
+        self.redis_cache = RedisCache()
 
-    def list_student_emails(self, course_id):
-        return self.service.list_student_emails(course_id)
+    async def cache_all_data(self):
+        courses = self.get_courses(force_update=True)
+        for course in courses:
+            course_id = course.id
+            self.get_students(course_id, force_update=True)
+            self.get_coursework(course_id, force_update=True)
+            await self.get_pendings(course_id, force_update=True)
 
-    def get_courses(self):
-        courses_data = self.service.list_courses()
-        if courses_data:
-            courses = [Course(course_data) for course_data in courses_data]
-            return courses
-        return []
+    def get_students(self, course_id, force_update=False):
+        if not force_update:
+            students = self.redis_cache.get_cached_students(course_id)
+            if students:
+                return students
 
-    def get_coursework(self, course_id):
-        coursework_data = self.service.list_coursework(course_id)
-        if coursework_data:
-            return coursework_data
-        return []
-
-    def get_students(self, course_id):
         students_data = self.service.list_students(course_id)
         if students_data:
+            self.redis_cache.set_cached_students(course_id, students_data)
             return students_data
         return []
 
-    async def get_pendings(self, course_id):
+    def get_courses(self, force_update=False):
+        if not force_update:
+            courses = self.redis_cache.get_cached_courses()
+            if courses:
+                return [Course(course_data) for course_data in courses]
+
+        courses_data = self.service.list_courses()
+        if courses_data:
+            self.redis_cache.set_cached_courses(courses_data)
+            return [Course(course_data) for course_data in courses_data]
+        return []
+
+    async def get_courses_for_student(self, email):
+        courses = self.service.list_courses()  
+        student_courses = []
+        
+        for course_data in courses:
+            course = Course(course_data)  
+            students = self.get_students(course.id) 
+            
+            if any(student['profile']['emailAddress'].lower() == email.lower() for student in students):
+                student_courses.append(course)  
+
+        return student_courses
+
+
+    def get_coursework(self, course_id, force_update=False):
+        if not force_update:
+            coursework = self.redis_cache.get_cached_coursework(course_id)
+            if coursework:
+                return coursework
+
+        coursework_data = self.service.list_coursework(course_id)
+        if coursework_data:
+            self.redis_cache.set_cached_coursework(course_id, coursework_data)
+            return coursework_data
+        return []
+
+    async def get_pendings(self, course_id, force_update=False):
+        if not force_update:
+            pendings = self.redis_cache.get_cached_pendings(course_id)
+            if pendings:
+                return pendings
+
         coursework_list = self.get_coursework(course_id)
         students = self.get_students(course_id)
 
         if not coursework_list or not students:
-            print("Nenhuma tarefa ou aluno encontrado.")
             return []
 
         pending_assignments = []
 
-        submission_tasks = [self._fetch_submissions(course_id, coursework['id']) for coursework in coursework_list]
-        submissions_results = await asyncio.gather(*submission_tasks)
+        for coursework in coursework_list:
+            submissions_key = f"course_{course_id}_coursework_{coursework['id']}_submissions"
+            if not force_update:
+                submissions = self.redis_cache.get_cache(submissions_key)
+            else:
+                submissions = None
 
-        for coursework, submissions in zip(coursework_list, submissions_results):
+            if not submissions:
+                submissions = await self._fetch_submissions(course_id, coursework['id'])
+                self.redis_cache.set_cache(submissions_key, submissions, expiration=3600)
+
             due_date = coursework.get('dueDate')
             if due_date:
                 due_date = datetime.date(due_date['year'], due_date['month'], due_date['day'])
@@ -186,47 +237,20 @@ class GoogleClassroomManager:
                                 "course_id": course_id
                             })
 
+        self.redis_cache.set_cached_pendings(course_id, pending_assignments)
         return pending_assignments
 
-    async def get_student_pendings_by_name(self, student_name):
-        courses = self.get_courses()
-        if not courses:
-            print("Nenhum curso ativo encontrado.")
-            return []
-
-        all_pending_assignments = []
-
-        pending_tasks = [self.get_pendings(course.id) for course in courses]
-        results = await asyncio.gather(*pending_tasks)
-
-        for pending_assignments in results:
-            if not pending_assignments:
-                continue
-
-            student_pendings = [
-                pending for pending in pending_assignments 
-                if student_name.lower() in pending['student_name'].lower()
-            ]
-
-            all_pending_assignments.extend(student_pendings)
-
-        return all_pending_assignments
-
     async def get_student_pendings_by_email(self, student_email):
-        courses = self.get_courses()
-        if not courses:
-            print("Nenhum curso ativo encontrado.")
-            return []
-
+        loop = asyncio.get_event_loop()
+        courses = await loop.run_in_executor(None, self.get_courses)
+        
         all_pending_assignments = []
-
         for course in courses:
-            student = self.service.get_student_by_email(course.id, student_email)
+            student = await loop.run_in_executor(None, self.service.get_student_by_email, course.id, student_email)
             if student:
-                coursework_list = self.get_coursework(course.id)
+                coursework_list = await loop.run_in_executor(None, self.get_coursework, course.id)
                 submission_tasks = [self._fetch_submissions(course.id, coursework['id']) for coursework in coursework_list]
                 submissions_results = await asyncio.gather(*submission_tasks)
-
                 for coursework, submissions in zip(coursework_list, submissions_results):
                     due_date = coursework.get('dueDate')
                     if due_date:
@@ -241,7 +265,6 @@ class GoogleClassroomManager:
                                     "course_id": course.id,
                                     "course_name": course.name
                                 })
-
         return all_pending_assignments
 
     async def _fetch_submissions(self, course_id, coursework_id):
@@ -250,18 +273,26 @@ class GoogleClassroomManager:
             submissions = await loop.run_in_executor(None, self.service.list_student_submissions, course_id, coursework_id)
             return submissions or []
         except Exception as error:
-            print(f"An error occurred while fetching submissions: {error}")
             return []
 
 async def main():
     try:
         manager = GoogleClassroomManager()
-        courses = manager.get_courses()
-        if not courses:
-            print("Falha ao carregar os classrooms.")
-            return
+        await manager.cache_all_data()  
+        print("Cache carregado com sucesso.")
     except Exception as e:
-        print(e)
+        print(f"Erro ao carregar o cache: {e}")
+
+
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+
+@bot.event
+async def on_ready():
+    print(f'Bot {bot.user.name} está online e sincronizado!')
+
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    bot.run(os.getenv('DISCORD_TOKEN'))

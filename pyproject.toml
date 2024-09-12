@@ -2,7 +2,8 @@
 name = "botdiscordunifil"
 version = "0.0.1"
 description = "Yet another discord bot"
-authors = ["Gabriel Zanoni (@GbrielZanoni)"]
+authors = ["Gabriel Zanoni <gabriel.herculano@edu.unifil.com>"]
+
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -17,6 +18,7 @@ google-auth-oauthlib = "^1.2.0"
 google-auth-httplib2 = "^0.2.0"
 google-api-python-client = "^2.129.0"
 pytz = "^2024.1"
+redis = "^5.0.8"
 
 
 [build-system]
