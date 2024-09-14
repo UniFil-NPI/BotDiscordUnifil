@@ -6,9 +6,8 @@ class RedisCache:
     def __init__(self, host='localhost', port=6379, db=0):
         self.client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
 
-    def set_cache(self, key, value, expiration=3600):
+    def set_cache(self, key, value, expiration=1800):  
         try:
-            # Converte o objeto 'date' em string antes de armazenar
             value_json = json.dumps(value, default=self.json_serializer)
             self.client.set(key, value_json, ex=expiration)
             print(f"Valor armazenado no cache com a chave: {key}")

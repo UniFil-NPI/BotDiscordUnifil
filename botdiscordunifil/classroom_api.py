@@ -71,12 +71,16 @@ class GoogleClassroomService:
 
     def list_students(self, course_id):
         try:
-            results = self.service.courses().students().list(courseId=course_id).execute()
-            students = results.get("students", [])
-            print(f"Students for course {course_id}: {students}")
+            students = []
+            request = self.service.courses().students().list(courseId=course_id)
+            while request is not None:
+                response = request.execute()
+                students.extend(response.get('students', []))
+                request = self.service.courses().students().list_next(request, response)
+            print(f"Total de estudantes para o curso {course_id}: {len(students)}")
             return students
         except HttpError as error:
-            print(f"An error occurred while fetching students: {error}")
+            print(f"Ocorreu um erro ao buscar os estudantes: {error}")
             return None
 
     def list_student_submissions(self, course_id, coursework_id):
@@ -140,68 +144,58 @@ class GoogleClassroomManager:
         self.redis_cache = RedisCache()
 
     async def cache_all_data(self):
-        courses = self.get_courses(force_update=True)
+        courses = self.get_courses()
         for course in courses:
             course_id = course.id
-            self.get_students(course_id, force_update=True)
-            self.get_coursework(course_id, force_update=True)
-            await self.get_pendings(course_id, force_update=True)
+            self.get_students(course_id)
+            self.get_coursework(course_id)
+            await self.get_pendings(course_id)
 
-    def get_students(self, course_id, force_update=False):
-        if not force_update:
-            students = self.redis_cache.get_cached_students(course_id)
-            if students:
-                return students
-
+    def get_courses(self):
+        courses = self.redis_cache.get_cached_courses()
+        if courses:
+            return [Course(course_data) for course_data in courses]
+        courses_data = self.service.list_courses()
+        if courses_data:
+            self.redis_cache.set_cached_courses(courses_data)
+            return [Course(course_data) for course_data in courses_data]
+        return []
+    
+    def get_students(self, course_id):
+        students = self.redis_cache.get_cached_students(course_id)
+        if students:
+            return students
         students_data = self.service.list_students(course_id)
         if students_data:
             self.redis_cache.set_cached_students(course_id, students_data)
             return students_data
         return []
 
-    def get_courses(self, force_update=False):
-        if not force_update:
-            courses = self.redis_cache.get_cached_courses()
-            if courses:
-                return [Course(course_data) for course_data in courses]
-
-        courses_data = self.service.list_courses()
-        if courses_data:
-            self.redis_cache.set_cached_courses(courses_data)
-            return [Course(course_data) for course_data in courses_data]
-        return []
-
-    async def get_courses_for_student(self, email):
-        courses = self.service.list_courses()  
-        student_courses = []
-        
-        for course_data in courses:
-            course = Course(course_data)  
-            students = self.get_students(course.id) 
-            
-            if any(student['profile']['emailAddress'].lower() == email.lower() for student in students):
-                student_courses.append(course)  
-
-        return student_courses
-
-
-    def get_coursework(self, course_id, force_update=False):
-        if not force_update:
-            coursework = self.redis_cache.get_cached_coursework(course_id)
-            if coursework:
-                return coursework
-
+    def get_coursework(self, course_id):
+        coursework = self.redis_cache.get_cached_coursework(course_id)
+        if coursework:
+            return coursework
         coursework_data = self.service.list_coursework(course_id)
         if coursework_data:
             self.redis_cache.set_cached_coursework(course_id, coursework_data)
             return coursework_data
         return []
 
-    async def get_pendings(self, course_id, force_update=False):
-        if not force_update:
-            pendings = self.redis_cache.get_cached_pendings(course_id)
-            if pendings:
-                return pendings
+    async def get_courses_for_student(self, email):
+        courses = self.get_courses()
+        student_courses = []
+        for course in courses:
+            students = self.get_students(course.id)
+            if students:
+                if any(student['profile']['emailAddress'].lower() == email.lower() for student in students):
+                    student_courses.append(course)
+        return student_courses
+
+
+    async def get_pendings(self, course_id):
+        pendings = self.redis_cache.get_cached_pendings(course_id)
+        if pendings:
+            return pendings
 
         coursework_list = self.get_coursework(course_id)
         students = self.get_students(course_id)
@@ -213,11 +207,7 @@ class GoogleClassroomManager:
 
         for coursework in coursework_list:
             submissions_key = f"course_{course_id}_coursework_{coursework['id']}_submissions"
-            if not force_update:
-                submissions = self.redis_cache.get_cache(submissions_key)
-            else:
-                submissions = None
-
+            submissions = self.redis_cache.get_cache(submissions_key)
             if not submissions:
                 submissions = await self._fetch_submissions(course_id, coursework['id'])
                 self.redis_cache.set_cache(submissions_key, submissions, expiration=3600)

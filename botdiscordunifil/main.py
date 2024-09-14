@@ -429,6 +429,16 @@ async def force_notifications_command(interaction: discord.Interaction):
     except Exception as e:
         await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
 
+@tasks.loop(minutes=30)
+async def update_cache():
+    try:
+        manager = GoogleClassroomManager()
+        await manager.cache_all_data()
+        print("Cache atualizado")
+    except Exception as e:
+        print(f"Erro ao atualizar o cache: {e}")
+
+
 @tasks.loop(minutes=1)
 async def send_daily_message():
     now = datetime.datetime.now(pytz.timezone("America/Sao_Paulo"))
