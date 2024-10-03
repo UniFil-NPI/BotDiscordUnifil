@@ -23,7 +23,7 @@
 - [Especificação do Caso de Uso: Comando "Tarefas"](uc_spec/rup_ucspec_comando_tarefas.md)
 - [Especificação do Caso de Uso: Comando "Materias"](uc_spec/rup_ucspec_comando_materias.md)
 - [Especificação do Caso de Uso: Comando "Calendario"](uc_spec/rup_ucspec_comando_calendario.md)
-- [Especificação do Caso de Uso: Discernir Aluno](uc_spec/rup_ucspec_discernir_aluno.md)
+- [Especificação do Caso de Uso: "Obter Aluno"](uc_spec/rup_ucspec_discernir_aluno.md)
 
 ### Diagramas de Sequência
 

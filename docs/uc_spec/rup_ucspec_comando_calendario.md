@@ -1,4 +1,4 @@
-# Especificação de Caso de Uso: Discernir Aluno
+# Especificação de Caso de Uso: "Obter Aluno"
 
 #### Histórico da Revisão
 | Data       | Versão | Descrição               | Autor                          |
@@ -22,7 +22,7 @@
 
 ## 1. Breve Descrição 
 
-Este caso de uso descreve a funcionalidade "Discernir Aluno" do bot no Discord, que é responsável por identificar o usuário que está interagindo com o bot, verificar seu ID do Discord, comparar com um banco de dados definido pelo stakeholder, verificar o e-mail do aluno, comparar com os e-mails presentes no Classroom, e obter as informações do aluno, como suas matérias e tarefas pendentes. Esta funcionalidade é automaticamente acionada quando o usuário executa comandos relacionados às suas informações acadêmicas, como "Atividades", "Matérias" ou "Calendário".
+Este caso de uso descreve a funcionalidade "Obter Aluno" do bot no Discord, que é responsável por identificar o usuário que está interagindo com o bot, verificar seu ID do Discord, comparar com um banco de dados definido pelo stakeholder, verificar o e-mail do aluno, comparar com os e-mails presentes no Classroom, e obter as informações do aluno, como suas matérias e tarefas pendentes. Esta funcionalidade é automaticamente acionada quando o usuário executa comandos relacionados às suas informações acadêmicas, como "Atividades", "Matérias" ou "Calendário".
 
 ## 2. Fluxo Básico de Eventos
 
