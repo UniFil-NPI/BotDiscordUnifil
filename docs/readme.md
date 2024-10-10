@@ -9,6 +9,7 @@
 - [Diagrama de Sequência](seq/rup_seq.md)
 - [Diagrama de Implantação](rup_imp.md)
 - [Diagrama de Workflow (AS-IS)](as_is.md)
+- [Diagrama de Workflow (TO-BE)](to_be.md)
 
 ### Documentação 
 

@@ -5,16 +5,12 @@ from discord.ext import commands, tasks
 from discord import Embed
 import json     
 import os
+import requests 
 from dotenv import load_dotenv
 from classroom_api import GoogleClassroomManager
 import datetime
+
 import pytz
-import random
-
-email_to_discord_id = {
-    "gabriel.herculano@edu.unifil.br": "265980379545075712"
-}
-
 load_dotenv()
 NOTIFICATION_FILE = 'notifications.json'
 intents = discord.Intents.default()
@@ -24,8 +20,18 @@ TOKEN: Final[str] = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-def get_discord_id_by_email(email):
-    return email_to_discord_id.get(email)
+def get_student_by_discord_id(discord_id):
+    try:
+        url = f"http://54.198.99.22:8000/students/bydiscord/{discord_id}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            student_data = response.json()
+            return student_data
+        else:
+            return None
+    except Exception as e:
+        print(f"Erro ao buscar dados do estudante: {e}")
+        return None
 
 def load_notification_preferences():
     if os.path.exists(NOTIFICATION_FILE):
@@ -59,7 +65,6 @@ def get_due_datetime(due_date, due_time):
     )
 
     utc_datetime = timezone_utc.localize(naive_datetime)
-
     localized_datetime = utc_datetime.astimezone(timezone_local)
 
     return localized_datetime
@@ -147,12 +152,13 @@ async def courses_command(interaction: discord.Interaction):
     await interaction.response.defer(ephemeral=True)
     
     try:
-        discord_id = str(interaction.user.id)
-        email = next((email for email, discord_id_value in email_to_discord_id.items() if discord_id_value == discord_id), None)
-        
-        if not email:
-            await interaction.followup.send("Seu e-mail não está registrado no sistema.", ephemeral=True)
+        student = get_student_by_discord_id(str(interaction.user.id))
+
+        if not student:
+            await interaction.followup.send("Você não está registrado.", ephemeral=True)
             return
+
+        email = student.get('email')
 
         manager = GoogleClassroomManager()
         courses = await manager.get_courses_for_student(email) 
@@ -173,12 +179,13 @@ async def coursework_command(interaction: discord.Interaction):
     await interaction.response.defer(ephemeral=True)
     
     try:
-        discord_id = str(interaction.user.id)
-        email = next((email for email, discord_id_value in email_to_discord_id.items() if discord_id_value == discord_id), None)
-        
-        if not email:
-            await interaction.followup.send("Seu e-mail não está registrado no sistema.", ephemeral=True)
+        student = get_student_by_discord_id(str(interaction.user.id))
+
+        if not student:
+            await interaction.followup.send("Você não está registrado.", ephemeral=True)
             return
+
+        email = student.get('email')
 
         manager = GoogleClassroomManager()
         courses = await manager.get_courses_for_student(email)  
@@ -216,12 +223,13 @@ async def calendar_command(interaction: discord.Interaction):
     await interaction.response.defer(ephemeral=True)
     
     try:
-        discord_id = str(interaction.user.id)
-        email = next((email for email, discord_id_value in email_to_discord_id.items() if discord_id_value == discord_id), None)
-        
-        if not email:
-            await interaction.followup.send("Seu e-mail não está registrado no sistema.", ephemeral=True)
+        student = get_student_by_discord_id(str(interaction.user.id))
+
+        if not student:
+            await interaction.followup.send("Você não está registrado.", ephemeral=True)
             return
+
+        email = student.get('email')
 
         manager = GoogleClassroomManager()
         courses = await manager.get_courses_for_student(email)
@@ -267,168 +275,6 @@ async def notify_command(interaction: discord.Interaction):
     else:
         await interaction.response.send_message("A notificação foi desativada", ephemeral=True)
 
-@bot.tree.command(name="listar_emails")
-async def list_emails_command(interaction: discord.Interaction, course_id: str):
-    await interaction.response.defer(ephemeral=True)
-    try:
-        manager = GoogleClassroomManager()
-        emails = manager.service.list_student_emails(course_id)
-
-        if emails is None:
-            await interaction.followup.send("Erro ao acessar a API do Google ou nenhum aluno encontrado.", ephemeral=True)
-            return
-
-        def format_email(email):
-            return {
-                "title": "Aluno",
-                "description": email
-            }
-
-        paginator = Paginator(items=emails, per_page=10, title=f"Emails dos alunos da turma {course_id}", formatter=format_email)
-        embed = paginator.generate_embed()
-        await interaction.followup.send(embed=embed, view=paginator, ephemeral=True)
-    except Exception as e:
-        await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
-
-@bot.tree.command(name="simular_notificacao")
-async def simulate_notification_command(interaction: discord.Interaction, email: str, course_id: str):
-    await interaction.response.defer(ephemeral=True)
-    try:
-        manager = GoogleClassroomManager()
-        courses = manager.get_courses()
-
-        course = next((c for c in courses if c.id == course_id), None)
-        if not course:
-            await interaction.followup.send(f"Curso com ID {course_id} não encontrado.", ephemeral=True)
-            return
-
-        pending_tasks = await manager.get_student_pendings_by_email(email)
-
-        filtered_tasks = [task for task in pending_tasks if task['course_id'] == course_id]
-
-        if not filtered_tasks:
-            await interaction.followup.send(f"Nenhuma pendência encontrada para o aluno com email {email} no curso {course.name}.", ephemeral=True)
-            return
-
-        def format_pending(pending):
-            due_date = pending["due_date"].strftime("%d/%m/%Y")
-            return {
-                "title": f"{pending['coursework_title']}",
-                "description": f"Curso: {pending['course_name']}\nData de Entrega: {due_date}"
-            }
-
-        paginator = Paginator(items=filtered_tasks, per_page=5, title=f"Pendências do Aluno {email} no curso {course.name}", formatter=format_pending)
-        embed = paginator.generate_embed()
-
-        user = interaction.user
-        await user.send(embed=embed)
-        await interaction.followup.send("As pendências foram enviadas para você em uma mensagem direta.", ephemeral=True)
-    except Exception as e:
-        await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
-
-@bot.tree.command(name="tarefa_aleatoria")
-async def random_task_command(interaction: discord.Interaction):
-    await interaction.response.defer(ephemeral=True)
-    try:
-        manager = GoogleClassroomManager()
-        courses = manager.get_courses()
-
-        if courses is None or not courses:
-            await interaction.followup.send("Erro ao acessar a API do Google", ephemeral=True)
-            return
-
-        all_coursework = []
-        now = datetime.datetime.now(pytz.timezone("America/Sao_Paulo"))
-
-        for course in courses:
-            coursework = manager.get_coursework(course.id)
-            if coursework:
-                for work in coursework:
-                    due_date = work.get("dueDate")
-                    due_time = work.get("dueTime")
-                    if due_date and due_time:
-                        due_datetime = get_due_datetime(due_date, due_time)
-                        if due_datetime > now:
-                            work["due_date"] = due_datetime
-                            all_coursework.append((course.name, work))
-
-        if not all_coursework:
-            await interaction.followup.send("Nenhuma tarefa pendente encontrada.", ephemeral=True)
-            return
-
-        selected_task = random.choice(all_coursework)
-        embed = discord.Embed(title="Alerta de Pendência", color=0x00ff00)
-        embed.add_field(name="Nome da Matéria", value=selected_task[0], inline=False)
-        embed.add_field(name="Nome da Atividade", value=selected_task[1]["title"], inline=False)
-        description = selected_task[1].get("description", "Sem descrição")
-        embed.add_field(name="Descrição", value=description, inline=False)
-        
-        due_date = selected_task[1].get("due_date", "Sem data de entrega")
-        if due_date != "Sem data de entrega":
-            due_timestamp = int(due_date.timestamp())
-            due_date = f"<t:{due_timestamp}:F>"  
-        embed.add_field(name="Data de Vencimento", value=due_date, inline=False)
-
-        user = interaction.user
-        await user.send(embed=embed)
-        await interaction.followup.send("tste", ephemeral=True)
-    except Exception as e:
-        await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
-
-@bot.tree.command(name="listar_pendencias")
-async def list_pendings_command(interaction: discord.Interaction, email: str):
-    await interaction.response.defer(ephemeral=True)
-    try:
-        manager = GoogleClassroomManager()
-        pendings = await manager.get_student_pendings_by_email(email)
-
-        if not pendings:
-            await interaction.followup.send(f"Nenhuma pendência encontrada para o aluno com email {email}.", ephemeral=True)
-            return
-
-        def format_pending(pending):
-            due_date = pending["due_date"].strftime("%d/%m/%Y")
-            return {
-                "title": f"{pending['coursework_title']}",
-                "description": f"Curso: {pending['course_name']}\nData de Entrega: {due_date}"
-            }
-
-        paginator = Paginator(items=pendings, per_page=5, title=f"Pendências do Aluno {email}", formatter=format_pending)
-        embed = paginator.generate_embed()
-
-        await interaction.followup.send(embed=embed, view=paginator, ephemeral=True)
-    except Exception as e:
-        await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
-
-@bot.tree.command(name="forcar_notificacoes")
-async def force_notifications_command(interaction: discord.Interaction):
-    await interaction.response.defer(ephemeral=True)
-    
-    try:
-        manager = GoogleClassroomManager()  
-        
-        for email, discord_id in email_to_discord_id.items():
-            user = await bot.fetch_user(discord_id)
-            
-            if user:
-                pending_tasks = await manager.get_student_pendings_by_email(email)
-                
-                if pending_tasks:
-                    message = f"Olá, você tem {len(pending_tasks)} pendência(s) no Google Classroom:\n\n"
-                    for task in pending_tasks:
-                        due_date = task["due_date"].strftime("%d/%m/%Y")
-                        message += f"- {task['coursework_title']} (Vencimento: {due_date})\n"
-                    
-                    await user.send(message)
-                    print(f"Notificação forçada enviada para {user.name} ({email})")
-                else:
-                    await interaction.followup.send(f"Sem pendências para {user.name} ({email}).", ephemeral=True)
-
-        await interaction.followup.send("Notificações forçadas enviadas para todos os usuários.", ephemeral=True)
-        
-    except Exception as e:
-        await interaction.followup.send(f"Ocorreu um erro: {e}", ephemeral=True)
-
 @tasks.loop(minutes=30)
 async def update_cache():
     try:
@@ -437,7 +283,6 @@ async def update_cache():
         print("Cache atualizado")
     except Exception as e:
         print(f"Erro ao atualizar o cache: {e}")
-
 
 @tasks.loop(minutes=1)
 async def send_daily_message():
@@ -449,21 +294,23 @@ async def send_daily_message():
 
         for user_id, is_enabled in preferences.items():
             if is_enabled:
-                email = next((email for email, discord_id in email_to_discord_id.items() if discord_id == user_id), None)
-                
-                if email:
-                    pending_tasks = await manager.get_student_pendings_by_email(email)
-                    
-                    if pending_tasks:
-                        user = await bot.fetch_user(user_id)
-                        if user:
-                            message = f"Olá, você tem {len(pending_tasks)} pendência(s) no Google Classroom:\n\n"
-                            for task in pending_tasks:
-                                due_date = task["due_date"].strftime("%d/%m/%Y")
-                                message += f"- {task['coursework_title']} (Vencimento: {due_date})\n"
-                            
-                            await user.send(message)
+                student = get_student_by_discord_id(user_id)
+                if not student:
+                    continue
 
+                email = student.get('email')
+
+                pending_tasks = await manager.get_student_pendings_by_email(email)
+                
+                if pending_tasks:
+                    user = await bot.fetch_user(int(user_id))
+                    if user:
+                        message = f"Olá, você tem {len(pending_tasks)} pendência(s) no Google Classroom:\n\n"
+                        for task in pending_tasks:
+                            due_date = task["due_date"].strftime("%d/%m/%Y")
+                            message += f"- {task['coursework_title']} (Vencimento: {due_date})\n"
+                        
+                        await user.send(message)
 
 async def main():
     try:
@@ -475,5 +322,4 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
-
     bot.run(TOKEN)

@@ -20,7 +20,9 @@
    - 3.1 [Diagrama de Caso de Uso](#31-diagrama-de-caso-de-uso)
    - 3.2 [Diagrama de Classe](#32-diagrama-de-classe)
    - 3.3 [Diagrama de Sequência](#33-diagrama-de-sequência)
-4. [WORKFLOW AS-IS NA NOTAÇÃO BPMN](#4-workflow-as-is-na-notação-bpmn)
+4. [NOTAÇÃO BPMN](#4-workflow-as-is-na-notação-bpmn)
+   - 4.1 [WORKFLOW AS-IS](#41-workflow-as-is)
+   - 4.2 [WORKFLOW TO-BE](#42-workflow-to-be)
 5. [RECURSOS E AMBIENTE DE DESENVOLVIMENTO](#5-recursos-e-ambiente-de-desenvolvimento)
    - 5.1 [Linguagem de Programação](#51-linguagem-de-programação)
    - 5.2 [Ambiente de Desenvolvimento](#52-ambiente-de-desenvolvimento)
@@ -284,11 +286,18 @@ Este diagrama de sequência descreve a interação entre um usuário, um bot (pr
 
 ---
 
-## 4. WORKFLOW AS-IS NA NOTAÇÃO BPMN
+## 4. WORKFLOW NA NOTAÇÃO BPMN
 
+### 4.1 WORKFLOW AS-IS 
 AS-IS é a visão dos processos atuais de uma organização, que mostra como uma empresa realiza suas atividades em um determinado momento. Segue na Figura abaixo o diagrama de workflow AS-IS:
 
 ![Workflow AS-IS na Notação BPMN](https://i.imgur.com/9qVxWZm.png)
+
+
+### 4.2 WORKFLOW TO-BE 
+TO-BE é a visão dos processos futuros de uma organização, que mostra como uma empresa gostaria que suas atividades em um determinado momento ficassem idealizadas. Segue na Figura abaixo o diagrama de workflow TO-BE:
+
+![Workflow TO-BE na Notação BPMN](https://i.imgur.com/aTUGJwE.png)
 
 ---
 
