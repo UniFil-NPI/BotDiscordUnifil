@@ -2,7 +2,7 @@
 
 - [Diagrama de Sequência Geral](rup_seq.md)
 - [Diagrama de Sequência: Autenticar API](rup_seq_autenticar_api.md)
-- [Diagrama de Sequência: Obter Aluno](rup_seq_obter_aluno.md)
+- [Diagrama de Sequência: Obter Aluno](rup_seq_discernir_aluno.md)
 - [Diagrama de Sequência: Materias](rup_seq_materias.md)
 - [Diagrama de Sequência: Tarefas](rup_seq_tarefas.md)
 - [Diagrama de Sequência: Calendário](rup_seq_calendario.md)
