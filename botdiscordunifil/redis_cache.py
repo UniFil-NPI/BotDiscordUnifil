@@ -26,7 +26,6 @@ class RedisCache:
             print(f"Erro ao recuperar do cache: {e}")
             return None
     def json_serializer(self, obj):
-        """ Função auxiliar para serializar tipos complexos """
         if isinstance(obj, date):
             return obj.isoformat()
         raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
