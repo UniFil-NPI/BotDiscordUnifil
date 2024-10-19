@@ -1,4 +1,4 @@
-# Especificação de Caso de Uso: Discernir Aluno
+# Especificação de Caso de Uso: Obter Aluno
 
 #### Histórico da Revisão
 | Data       | Versão | Descrição           | Autor                            |

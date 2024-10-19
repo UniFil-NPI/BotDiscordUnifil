@@ -3,7 +3,8 @@
 #### Histórico da Revisão
 | Data       | Versão | Descrição                   | Autor                             |
 |------------|--------|-----------------------------|-----------------------------------|
-| 22/08/2024 | 1.0    | Criação do Doc.              | Gabriel Zanoni (@GbrielZanoni)    |
+| 22/08/2024 | 1.0    | Criação do Doc.             | Gabriel Zanoni (@GbrielZanoni)    |
+| 19/10/2024 | 1.0    | Correção                    | Gabriel Zanoni (@GbrielZanoni)    |
 
 # Índice
 

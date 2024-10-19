@@ -9,5 +9,6 @@
 | 08/05/2024 | 1.2 | Atualização no Documento | Gabriel Zanoni(@GbrielZanoni)|
 | 30/05/2024 | 1.3 | Diagrama Refeito  | Gabriel Zanoni(@GbrielZanoni)|
 | 10/08/2024 | 1.4 | Diagrama Atualizado  | Gabriel Zanoni(@GbrielZanoni)|
+| 19/10/2024 | 1.5 | Diagrama Atualizado  | Gabriel Zanoni (@GbrielZanoni)    |
 
-![O Diagrama de Caso de Uso Atualizado](https://i.imgur.com/04khoTt.png)
+![O Diagrama de Caso de Uso Atualizado](https://i.imgur.com/tDQM0qv.png)
