@@ -1,74 +1,117 @@
-									Bot de Discord
 # Especificação de Caso de Uso: Realizar Comando
- 
-#### Histórico da Revisão
-| Data   | Versão       | Descrição  |  Autor  |
-| :---------- | :--------- | :-------------------------------- | :-------------------------------- |
-| 18/03/2024 | 1.0 | Criação do Doc.| Gabriel Zanoni(@GbrielZanoni) |
-| 09/03/2024 | 1.1 | Conversão para M.D| Gabriel Zanoni(@GbrielZanoni)|
 
+#### Histórico da Revisão
+| Data       | Versão | Descrição                              | Autor                             |
+|------------|--------|----------------------------------------|-----------------------------------|
+| 18/03/2024 | 1.0    | Criação do Documento                   | Gabriel Zanoni (@GbrielZanoni)    |
+| 09/03/2024 | 1.1    | Conversão para Markdown                | Gabriel Zanoni (@GbrielZanoni)    |
+| 24/10/2024 | 1.2    | Atualização com centralização de comandos | Gabriel Zanoni (@GbrielZanoni) |
 
 # Índice
 
 - [1. Breve Descrição](#introducao)	
-- [2. Fluxo Básico de Eventos](#perfil) 
-- [3. Fluxos Alternativos](#avaliandoproblema)
-- [4. Subfluxos](#ambiente)	
-- [5. Cenários Chave](#recapitulacao) 
-- [6. Condições Prévias](#entradas)
-- [7. Condições Posteriores](#avaliandosolucao)
-- [8. Pontos de Extensão](#avaliandooportunidade)
-- [9. Requisitos Especiais](#avaliandoconfiabilidade)
-- [10. Informações Especiais](#resumoanalista)
+- [2. Fluxo Básico de Eventos](#fluxo-basico-de-eventos) 
+- [3. Fluxos Alternativos](#fluxos-alternativos)
+- [4. Subfluxos](#subfluxos)	
+- [5. Cenários Chave](#cenarios-chave) 
+- [6. Condições Prévias](#condicoes-previas)
+- [7. Condições Posteriores](#condicoes-posteriores)
+- [8. Pontos de Extensão](#pontos-de-extensao)
+- [9. Requisitos Especiais](#requisitos-especiais)
+- [10. Informações Especiais](#informacoes-especiais)
 
+# Especificação Complementar
 
-# Espécificação Complementar
+## <a name="introducao"></a> 1. Breve Descrição
 
-## <a name="introducao"></a> 1. Breve Descrição 
+Este Caso de Uso descreve a funcionalidade do comando geral "Realizar Comando", que centraliza e abrange os seguintes comandos do bot no Discord:
+- **Notificar**: liga ou desliga as notificações de pendências acadêmicas.
+- **Calendário**: exibe uma visão ampla das atividades do usuário.
+- **Tarefas**: exibe as atividades recentes e pendentes do usuário.
+- **Matérias**: lista todas as matérias cadastradas e ativas do usuário.
 
-Este Caso de uso tem como seu objetivo o prompt inicial para o Bot retornar as informações desejadas pelo usuário
+O objetivo é permitir que o usuário utilize esses comandos de forma unificada e eficiente.
 
-## <a name="perfil"></a> 2. Fluxo Básico de Eventos
+## <a name="fluxo-basico-de-eventos"></a> 2. Fluxo Básico de Eventos
 
-1. O usuário loga no Discord
-2. O usuário entra no chat específico do servidor do Discord ou nas mensagens privadas do Bot
-3. O usuário usa o prompt de chat e digita um comando começado com "/"
-4. O usuário preenche o prompt com o comando desejado. 
-5. O bot responde o usuário com as informações adicionais ou com a mensagem desejada. 
+1. O usuário faz login no Discord.
+2. O usuário acessa o chat específico do servidor ou mensagens privadas do bot.
+3. O usuário digita um comando iniciado por "/" seguido de um dos seguintes comandos: `/Notificar`, `/Calendário`, `/Tarefas`, ou `/Matérias`.
+4. O bot processa o comando e responde ao usuário com as informações solicitadas.
 
-## <a name="avaliandoproblema"></a> 3. Fluxos Alternativos
+## <a name="fluxos-alternativos"></a> 3. Fluxos Alternativos
 
-- Materias
-  - O Aluno irá verificar todas as suas materias disponíveis
-- Tarefas
-  - O aluno irá verificar TODOS os trabalhos disponíveis para ele entregar. O Bot irá disponibilizar apenas os que estão pendentes, não os que não foram entregues ou que já tiveram seu tempo expirado.
-- Agenda
-  - O aluno irá verificar uma visão ampla da agenda de atividades de uma unidade curricular específica, disponibilizada pelo Bot, ou de todas as unidades curriculares que estão disponíveis para o aluno naquele momento.
+### 3.1. Comando Notificar
+   - O usuário utiliza o comando `/Notificar` para ativar ou desativar as notificações de pendências acadêmicas.
+   - O bot confirma se as notificações foram ativadas ou desativadas com sucesso.
 
-## <a name="ambiente"></a> 4. Subfluxos
-Não há
-## <a name="recapitulacao"></a> 5. Cenários Chave
+### 3.2. Comando Calendário
+   - O usuário utiliza o comando `/Calendário` para exibir uma visão ampla das atividades de uma unidade curricular específica ou de todas as unidades disponíveis.
+   - O bot retorna a agenda com as atividades organizadas por data.
 
-> Este caso de uso é acionado no momento em que o Ator (usuário) interage com o sistema, com a intenção de realizar um comando no bot. 
+### 3.3. Comando Tarefas
+   - O usuário utiliza o comando `/Tarefas` para visualizar todas as atividades pendentes.
+   - O bot exibe as atividades que ainda não foram concluídas ou que estão com o prazo próximo.
 
-## <a name="entradas"></a> 6. Condições Prévias
--  É Necessário que o usuário tenha uma conta de Discord
-   - Automáticamente, que esteja logado nela em seu dispositivo tecnológico (mobile ou não)
--  É necessário que o usuário esteja no mesmo ambiente que o Bot, seja ele um servidor compartilhado ou 		esteja nas mensagens particulares do Bot
-   - O bot poderá ser distribuido em um ou mais servidores. O usuário deverá compartilhar um ambiente com ele para poder usa-lo
--  É necessário que o 	usuário tenha linkado a sua conta do Classroom com a do Discord, para que o 	Bot saiba exatamente das suas informações.
-    - Isto será feito utilizando um método não-definido, que provavelmente será um comando adicional.
-## <a name="avaliandosolucao"></a>  7. Condições Posteriores
+### 3.4. Comando Matérias
+   - O usuário utiliza o comando `/Matérias` para listar todas as matérias em que está inscrito.
+   - O bot exibe uma lista com as matérias ativas do usuário.
 
-Não há
+## <a name="subfluxos"></a> 4. Subfluxos
 
-## <a name="avaliandooportunidade"></a>  8. Pontos de Extensão
+Não há subfluxos adicionais.
 
-> Não há
+## <a name="cenarios-chave"></a> 5. Cenários Chave
 
-## <a name="avaliandoconfiabilidade"></a> 9. Requisitos Especiais
-> Disponíveis no documento [Especificação Suplementar](rup_supdoc.md)
+Este caso de uso é acionado quando o usuário interage com o sistema para executar qualquer um dos quatro comandos: Notificar, Calendário, Tarefas ou Matérias. Dependendo do comando, o bot realiza a ação solicitada e retorna a resposta apropriada ao usuário.
 
-## <a name="resumoanalista"></a> 10. Informaçõse Adicionais
+## <a name="condicoes-previas"></a> 6. Condições Prévias
 
-![O fluxograma do Caso de Uso](https://i.imgur.com/7NNdZcd.png)
+- O usuário deve ter uma conta no Discord.
+  - Consequentemente, o usuário deve estar logado no Discord.
+- O usuário deve estar no mesmo ambiente que o bot (um servidor compartilhado ou nas mensagens privadas com o bot).
+- O usuário deve ter vinculado sua conta do Classroom com o Discord, para que o bot possa acessar suas informações acadêmicas.
+
+## <a name="condicoes-posteriores"></a> 7. Condições Posteriores
+
+- O bot deve atualizar as preferências do usuário, se aplicável (por exemplo, no caso de ativação/desativação de notificações).
+
+## <a name="pontos-de-extensao"></a> 8. Pontos de Extensão
+
+- Futuramente, o bot poderá ter comandos adicionais, como personalização de notificações ou novos comandos para informações acadêmicas mais detalhadas.
+
+## <a name="requisitos-especiais"></a> 9. Requisitos Especiais
+
+Os requisitos especiais estão disponíveis no documento [Especificação Suplementar](rup_supdoc.md).
+
+## <a name="informacoes-especiais"></a> 10. Informações Especiais
+
+### Comando: **/Notificar**
+- **Descrição**: Liga ou desliga as notificações automáticas do bot, informando o usuário sobre suas pendências acadêmicas, como atividades próximas do vencimento.
+- **Funcionalidade**:
+  - Quando ativado, o usuário recebe notificações periódicas sobre prazos importantes e tarefas pendentes.
+  - Quando desativado, o usuário não recebe notificações até que ative novamente.
+- **Resultado**: O bot atualiza o status de notificação do usuário e confirma a alteração através de uma mensagem, informando se as notificações foram habilitadas ou desabilitadas.
+
+### Comando: **/Calendário**
+- **Descrição**: Exibe uma visão ampla das atividades programadas no calendário acadêmico do usuário, agrupadas por unidade curricular ou por todas as matérias.
+- **Funcionalidade**:
+  - O usuário pode consultar atividades futuras, como prazos de entrega, provas e eventos acadêmicos.
+  - O comando pode ser utilizado com uma unidade curricular específica ou para exibir todas as atividades relacionadas às matérias inscritas.
+- **Resultado**: O bot retorna uma lista detalhada de todas as atividades, incluindo datas e descrições, organizadas por ordem cronológica.
+
+### Comando: **/Tarefas**
+- **Descrição**: Lista todas as tarefas pendentes do usuário, priorizando aquelas com prazos mais próximos.
+- **Funcionalidade**:
+  - O usuário visualiza as atividades que ainda estão dentro do prazo para entrega.
+  - O foco é em tarefas recentes, ajudando o usuário a gerenciar suas pendências de curto prazo.
+- **Resultado**: O bot exibe uma lista de tarefas pendentes com datas de vencimento e o status atual (não entregue, próxima do prazo, etc.).
+
+### Comando: **/Matérias**
+- **Descrição**: Lista todas as matérias cadastradas e ativas do usuário, conforme suas inscrições no Classroom.
+- **Funcionalidade**:
+  - O usuário pode visualizar as matérias em que está matriculado no momento.
+  - Isso ajuda o usuário a ter uma visão clara das disciplinas ativas que ele está cursando.
+- **Resultado**: O bot retorna uma lista com todas as matérias ativas, incluindo nome e detalhes das unidades curriculares.
+
+![O fluxograma do Caso de Uso](https://i.imgur.com/tgMEn1J.png)
