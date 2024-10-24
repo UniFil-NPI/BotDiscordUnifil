@@ -9,3 +9,6 @@
 - [Diagrama de Sequência: Verificar Pendências](rup_seq_verificar_pendencias.md)
 - [Diagrama de Sequência: Notificar Usuário](rup_seq_notificar.md)
 - [Diagrama de Sequência: Realizar Comando](rup_seq_realizar_comando.md)
+- [Diagrama de Sequência: Atualizar Cache](rup_seq_atualizar_cache.md)
+- [Diagrama de Sequência: Utilizar Cache](rup_seq_utilizar_cache.md)
+- [Diagrama de Sequência: Obter Aluno](rup_seq_obter_aluno.md)

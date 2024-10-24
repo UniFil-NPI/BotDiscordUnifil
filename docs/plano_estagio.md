@@ -75,7 +75,7 @@ Dessa forma, a proposta do sistema não apenas atende às necessidades dos aluno
 
 Na UML, os diagramas de caso de uso modelam o comportamento de um sistema e ajudam a capturar os requisitos do sistema. Segue abaixo o Diagrama de Caso de Uso do projeto:
 
-![O Diagrama de Caso de Uso Atualizado](https://i.imgur.com/04khoTt.png)
+![O Diagrama de Caso de Uso Atualizado](https://i.imgur.com/tgMEn1J.png)
 
 ---
 

@@ -134,7 +134,7 @@ Os requisitos não funcionais descrevem os atributos de qualidade que o sistema 
 
 Na UML, os diagramas de caso de uso modelam o comportamento de um sistema e ajudam a capturar os requisitos do sistema. Segue abaixo o Diagrama de Caso de Uso do projeto:
 
-![Diagrama de Caso de Uso](https://i.imgur.com/04khoTt.png)
+![Diagrama de Caso de Uso](https://i.imgur.com/tgMEn1J.png)
 
 ### 3.1.1 Obter Aluno
 
@@ -364,3 +364,14 @@ Para aprimorar ainda mais o bot, planejo adicionar novas features de acordo com 
 - [Visão](visao.md)
 - [Pedido do Investidor](rup_stkreq.md)
 - [Glossário](rup_gloss.md)
+
+### Especificações de Caso de Uso
+
+- [Especificação do Caso de Uso: Realizar Comando](rup_ucspec_realizar_comando.md)
+- [Especificação do Caso de Uso: "Obter Aluno"](rup_ucspec_obter_aluno.md)
+- [Especificação do Caso de Uso: Notificar Usuário](rup_ucspec_notificar_usuario.md)
+- [Especificação do Caso de Uso: Comando "Notificar"](rup_ucspec_comando_notificar.md)
+- [Especificação do Caso de Uso: Utilizar Cache](rup_ucspec_utilizar_cache.md)
+- [Especificação do Caso de Uso: Verificar Pendências](rup_ucspec_verificar_pendencias.md)
+- [Especificação do Caso de Uso: Atualizar Cache](rup_ucspec_atualizar_cache.md)
+- [Especificação do Caso de Uso: Autenticar API](rup_ucspec_autenticar_api.md)

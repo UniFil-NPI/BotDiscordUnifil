@@ -1,6 +1,7 @@
 ## Aqui é possível encontrar todos os documentos atualizados do projeto.
 
 - [Plano de Estágio](plano_estagio.md)
+- [Relatório Final](relatório_final.md)
 
 ### Diagramas
 
@@ -20,20 +21,23 @@
 
 ### Especificações de Caso de Uso
 
-- [Especificação do Caso de Uso: Realizar Comando](uc_spec/rup_ucspec_realizar_comando.md)
-- [Especificação do Caso de Uso: Comando "Tarefas"](uc_spec/rup_ucspec_comando_tarefas.md)
-- [Especificação do Caso de Uso: Comando "Materias"](uc_spec/rup_ucspec_comando_materias.md)
-- [Especificação do Caso de Uso: Comando "Calendario"](uc_spec/rup_ucspec_comando_calendario.md)
-- [Especificação do Caso de Uso: "Obter Aluno"](uc_spec/rup_ucspec_discernir_aluno.md)
+- [Especificação do Caso de Uso: Realizar Comando](rup_ucspec_realizar_comando.md)
+- [Especificação do Caso de Uso: "Obter Aluno"](rup_ucspec_obter_aluno.md)
+- [Especificação do Caso de Uso: Notificar Usuário](rup_ucspec_notificar_usuario.md)
+- [Especificação do Caso de Uso: Comando "Notificar"](rup_ucspec_comando_notificar.md)
+- [Especificação do Caso de Uso: Utilizar Cache](rup_ucspec_utilizar_cache.md)
+- [Especificação do Caso de Uso: Verificar Pendências](rup_ucspec_verificar_pendencias.md)
+- [Especificação do Caso de Uso: Atualizar Cache](rup_ucspec_atualizar_cache.md)
+- [Especificação do Caso de Uso: Autenticar API](rup_ucspec_autenticar_api.md)
 
 ### Diagramas de Sequência
 
-- [Diagrama de Sequência Geral](seq/rup_seq.md)
-- [Diagrama de Sequência: Autenticar API](seq/rup_seq_autenticar_api.md)
-- [Diagrama de Sequência: Obter Aluno](seq/rup_seq_discernir_aluno.md)
-- [Diagrama de Sequência: Materias](seq/rup_seq_materias.md)
-- [Diagrama de Sequência: Tarefas](seq/rup_seq_tarefas.md)
-- [Diagrama de Sequência: Calendário](seq/rup_seq_calendario.md)
-- [Diagrama de Sequência: Verificar Pendências](seq/rup_seq_verificar_pendencias.md)
-- [Diagrama de Sequência: Notificar Usuário](seq/rup_seq_notificar.md)
-- [Diagrama de Sequência: Realizar Comando](seq/rup_seq_realizar_comando.md)
+- [Diagrama de Sequência Geral](rup_seq.md)
+- [Diagrama de Sequência: Autenticar API](rup_seq_autenticar_api.md)
+- [Diagrama de Sequência: Obter Aluno](rup_seq_obter_aluno.md)
+- [Diagrama de Sequência: Materias](rup_seq_materias.md)
+- [Diagrama de Sequência: Tarefas](rup_seq_tarefas.md)
+- [Diagrama de Sequência: Calendário](rup_seq_calendario.md)
+- [Diagrama de Sequência: Verificar Pendências](rup_seq_verificar_pendencias.md)
+- [Diagrama de Sequência: Notificar Usuário](rup_seq_notificar.md)
+- [Diagrama de Sequência: Realizar Comando](rup_seq_realizar_comando.md)
