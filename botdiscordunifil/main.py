@@ -20,6 +20,12 @@ TOKEN: Final[str] = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+adminIDs = {
+    265980379545075712: True,
+    557250319680012328: True
+}
+
+
 class StudentRegistrationModal(discord.ui.Modal, title="Registrar Novo Aluno"):
     name = discord.ui.TextInput(label="Nome Completo", placeholder="Nome Sobenome", required=True)
     personal_email = discord.ui.TextInput(label="Email Pessoal", placeholder="email@pessoal.com", required=True)
@@ -305,6 +311,10 @@ async def notify_command(interaction: discord.Interaction):
 
 @bot.tree.command(name="registrar_aluno", description="Registra um novo aluno no sistema")
 async def register_student(interaction: discord.Interaction):
+    if interaction.user.id not in adminIDs:
+        await interaction.response.send_message("Você não tem permissão para usar este comando.", ephemeral=True)
+        return
+    
     await interaction.response.send_modal(StudentRegistrationModal())
 
 @tasks.loop(minutes=30)

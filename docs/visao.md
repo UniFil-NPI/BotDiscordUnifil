@@ -23,7 +23,6 @@
     - [4.4 Alternativas e Competição](#alternativas)
 - [5. Outros Requisitos](#outros) 
 
-
 ## <a name="introducao"></a> 1. Introdução 
 
 ## <a name="posicionamento"></a> 2. Posicionameno 

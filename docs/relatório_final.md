@@ -197,58 +197,7 @@ O diagrama de classe é uma representação da estrutura e relações das classe
 
 ### 3.3 Diagrama de Sequência
 
-
-![GERAL](https://i.imgur.com/jOaM0os.png)
-
 O Diagrama de Sequência é um diagrama usado em UML que representa a sequência de processos num programa de computador. Abaixo, segue uma descrição da ordem em que os eventos ocorrem no Diagrama de Sequência do projeto.
-
-### Overview do Diagrama de Sequência
-
-Este diagrama de sequência descreve a interação entre um usuário, um bot (provavelmente no Discord), o gerenciador do Google Classroom (`Gerenciador`), e a API do Google Classroom através de diversos componentes, como o `Autenticador` e os `Serviços`. Ele demonstra como as requisições fluem através do sistema desde o momento em que o usuário solicita informações até o momento em que as informações são retornadas e exibidas.
-
-#### 1. **Solicitação de Cursos** (`/cursos`)
-
-- **Usuário -> Bot:** O processo inicia quando o usuário solicita a lista de cursos disponíveis utilizando o comando `/cursos`.
-- **Bot -> Gerenciador:** O bot encaminha essa solicitação ao `Gerenciador`, chamando o método `get_courses()`.
-- **Gerenciador -> Autenticador:** O `Gerenciador` verifica as credenciais e solicita autenticação através do método `authenticate()`.
-- **Autenticador -> Autenticador:** O `Autenticador` verifica o token existente, assegurando que ainda é válido.
-- **Autenticador -> GoogleClassroomAPI:** Se o token estiver expirado ou não existir, o `Autenticador` faz uma requisição à API do Google Classroom para gerar ou renovar o token.
-- **GoogleClassroomAPI -> Autenticador:** A API retorna o token atualizado.
-- **Autenticador -> Gerenciador:** O `Autenticador` retorna as credenciais autenticadas para o `Gerenciador`.
-- **Gerenciador -> Serviços:** Com as credenciais em mãos, o `Gerenciador` cria uma nova instância de `GoogleClassroomService` e solicita a lista de cursos usando o método `list_courses()`.
-- **Serviços -> GoogleClassroomAPI:** O `Serviços` faz uma requisição para obter a lista de cursos diretamente da API do Google Classroom.
-- **GoogleClassroomAPI -> Serviços:** A API retorna a lista de cursos.
-- **Serviços -> Gerenciador:** O `Serviços` repassa a lista de cursos para o `Gerenciador`.
-- **Gerenciador -> Bot:** O `Gerenciador` retorna a lista de cursos para o Bot.
-- **Bot -> Usuário:** O bot exibe a lista de cursos para o usuário.
-
-#### 2. **Solicitação de Tarefas** (`/tarefas <course_id>`)
-
-- **Usuário -> Bot:** O usuário solicita a lista de tarefas de um curso específico utilizando o comando `/tarefas <course_id>`.
-- **Bot -> Gerenciador:** O bot encaminha a solicitação ao `Gerenciador` chamando o método `get_coursework(course_id)`.
-- **Gerenciador -> Serviços:** O `Gerenciador` solicita ao `Serviços` a lista de tarefas do curso específico através do método `list_coursework(course_id)`.
-- **Serviços -> GoogleClassroomAPI:** O `Serviços` faz a requisição para obter as tarefas diretamente da API do Google Classroom.
-- **GoogleClassroomAPI -> Serviços:** A API retorna a lista de tarefas para o curso especificado.
-- **Serviços -> Gerenciador:** O `Serviços` repassa a lista de tarefas para o `Gerenciador`.
-- **Gerenciador -> Bot:** O `Gerenciador` retorna a lista de tarefas para o Bot.
-- **Bot -> Usuário:** O bot exibe a lista de tarefas para o usuário.
-
-#### 3. **Solicitação de Calendário** (`/calendario`)
-
-- **Usuário -> Bot:** O usuário solicita o calendário de atividades utilizando o comando `/calendario`.
-- **Bot -> Gerenciador:** O bot encaminha a solicitação ao `Gerenciador` chamando o método `get_courses()` novamente para listar todos os cursos.
-- **Gerenciador -> Serviços:** O `Gerenciador` solicita ao `Serviços` a lista de cursos através do método `list_courses()`.
-- **Serviços -> GoogleClassroomAPI:** O `Serviços` faz a requisição para obter os cursos diretamente da API do Google Classroom.
-- **GoogleClassroomAPI -> Serviços:** A API retorna a lista de cursos.
-- **Serviços -> Gerenciador:** O `Serviços` repassa a lista de cursos para o `Gerenciador`.
-- **Gerenciador -> Bot:** O `Gerenciador` retorna a lista de cursos para o Bot.
-- **Bot -> Gerenciador:** O Bot então solicita todas as tarefas associadas a esses cursos chamando o método `get_coursework(course_id)` para cada curso.
-- **Gerenciador -> Serviços:** O `Gerenciador` chama `list_coursework(course_id)` para cada curso.
-- **Serviços -> GoogleClassroomAPI:** O `Serviços` faz requisições à API do Google Classroom para obter as tarefas de cada curso.
-- **GoogleClassroomAPI -> Serviços:** A API retorna as listas de tarefas.
-- **Serviços -> Gerenciador:** O `Serviços` repassa as listas de tarefas para o `Gerenciador`.
-- **Gerenciador -> Bot:** O `Gerenciador` retorna todas as tarefas para o Bot.
-- **Bot -> Usuário:** O bot exibe o calendário de atividades com todas as tarefas para o usuário.
 
 ### Diagramas de Sequência
 
@@ -276,7 +225,7 @@ Este diagrama de sequência descreve a interação entre um usuário, um bot (pr
    - ![VERIFICAR_PENDENCIA](https://i.imgur.com/NXaecr3.png)
    - **Descrição**: Descreve a sequência de ações para a verificação de pendências de tarefas de um aluno. O bot consulta a API do Google Classroom para identificar tarefas que ainda não foram entregues pelo aluno e então informa o usuário sobre essas pendências.
 
-### 6. **NOTIFICAR USUÁRIO**
+### 7. **NOTIFICAR USUÁRIO**
    - ![VERIFICAR_PENDENCIA](https://i.imgur.com/0mbuP1i.png)
    - **Descrição**: Descreve a sequência de ações para o envio de notificações automáticas de pendências acadêmicas ao usuário. O bot consulta as preferências de notificação do usuário, verifica as atividades pendentes no Google Classroom e, se as notificações estiverem ativadas, envia uma mensagem direta ao usuário com suas pendências.
 
@@ -363,11 +312,10 @@ Para aprimorar ainda mais o bot, planejo adicionar novas features de acordo com 
 
 ### Especificações de Caso de Uso
 
-- [Especificação do Caso de Uso: Realizar Comando](rup_ucspec_realizar_comando.md)
-- [Especificação do Caso de Uso: "Obter Aluno"](rup_ucspec_obter_aluno.md)
-- [Especificação do Caso de Uso: Notificar Usuário](rup_ucspec_notificar_usuario.md)
-- [Especificação do Caso de Uso: Comando "Notificar"](rup_ucspec_comando_notificar.md)
-- [Especificação do Caso de Uso: Utilizar Cache](rup_ucspec_utilizar_cache.md)
-- [Especificação do Caso de Uso: Verificar Pendências](rup_ucspec_verificar_pendencias.md)
-- [Especificação do Caso de Uso: Atualizar Cache](rup_ucspec_atualizar_cache.md)
-- [Especificação do Caso de Uso: Autenticar API](rup_ucspec_autenticar_api.md)
+- [Especificação do Caso de Uso: Realizar Comando](uc_spec/rup_ucspec_realizar_comando.md)
+- [Especificação do Caso de Uso: "Obter Aluno"](uc_spec/rup_ucspec_obter_aluno.md)
+- [Especificação do Caso de Uso: Notificar Usuário](uc_spec/rup_ucspec_notificar_usuario.md)
+- [Especificação do Caso de Uso: Utilizar Cache](uc_spec/rup_ucspec_utilizar_cache.md)
+- [Especificação do Caso de Uso: Verificar Pendências](uc_spec/rup_ucspec_verificar_pendencias.md)
+- [Especificação do Caso de Uso: Atualizar Cache](uc_spec/rup_ucspec_atualizar_cache.md)
+- [Especificação do Caso de Uso: Autenticar API](uc_spec/rup_ucspec_autenticar_api.md)
