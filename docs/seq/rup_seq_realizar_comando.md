@@ -7,4 +7,4 @@
 | 22/08/2024 | 1.0 | Criação  | Gabriel Zanoni(@GbrielZanoni)|
 
 
-![AS-IS](https://i.imgur.com/bAnJ9bh.png)
+![AS-IS](https://i.imgur.com/VZzDSXc.png)

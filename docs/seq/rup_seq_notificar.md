@@ -4,7 +4,7 @@
 #### Histórico da Revisão
 | Data   | Versão       | Descrição  |  Autor  |
 | :---------- | :--------- | :-------------------------------- | :-------------------------------- |
-| 22/08/2024 | 1.0 | Criação  | Gabriel Zanoni(@GbrielZanoni)|
+| 26/10/2024 | 1.0 | Criação  | Gabriel Zanoni(@GbrielZanoni)|
 
 
-![AS-IS](https://i.imgur.com/rfaRhgL.png)
+![AS-IS](https://i.imgur.com/0mbuP1i.png)

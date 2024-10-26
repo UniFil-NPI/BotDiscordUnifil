@@ -110,15 +110,13 @@ O Diagrama de Sequência é um diagrama usado em UML que representa a sequência
 
 ### Diagramas de Sequência
 
-![GERAL](https://i.imgur.com/jOaM0os.png)
-![CALENDARIO](https://i.imgur.com/pBkye7Y.png)
-![API](https://i.imgur.com/eJ40r8L.png)
-![MATERIAS](https://i.imgur.com/cYXEQHn.png)
-![NOTIFICAR](https://i.imgur.com/rfaRhgL.png)
-![OBTER_ALUNO](https://i.imgur.com/brqvb6l.png)
-![REALIZAR_COMANDO](https://i.imgur.com/bAnJ9bh.png)
-![TAREFAS](https://i.imgur.com/rCIM9ef.png)
+![ATUALIZAR_CACHE](https://i.imgur.com/3piruwa.png)
+![AUTENTICAR_API](https://i.imgur.com/eJ40r8L.png)
+![OBTER_ALUNO](https://i.imgur.com/4Bg9Ah0.png)
+![REALIZAR_COMANDO](https://i.imgur.com/VZzDSXc.png)
+![UTILIZAR_CACHE](https://i.imgur.com/X1UkR9S.png)
 ![VERIFICAR_PENDENCIA](https://i.imgur.com/NXaecr3.png)
+![NOTIFICAR_USUARIO](https://i.imgur.com/0mbuP1i.png)
 
 ---
 

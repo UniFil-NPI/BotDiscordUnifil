@@ -252,37 +252,33 @@ Este diagrama de sequência descreve a interação entre um usuário, um bot (pr
 
 ### Diagramas de Sequência
 
-### 1. **CALENDARIO**
-   - ![CALENDARIO](https://i.imgur.com/pBkye7Y.png)
-   - **Descrição**: Descreve a sequência de ações para obter e exibir o calendário de atividades de todos os cursos. O usuário solicita o calendário, e o bot faz chamadas à API para listar cursos e seus respectivos trabalhos, exibindo os dados de forma consolidada.
+### 1. **ATUALIZAR CACHE**
+   - ![ATUALIZAR_CACHE](https://i.imgur.com/3piruwa.png)
+   - **Descrição**: Descreve a sequência de ações para a atualização do cache do redis com o conteúdo disponível no classroom, se repete a cada 30 minutos para ficar atualizado com os dados do classroom.
 
-### 2. **API**
+### 2. **AUTENTICAR API**
    - ![API](https://i.imgur.com/eJ40r8L.png)
-   - **Descrição**: Este diagrama foca nas interações detalhadas com a API do Google Classroom. Mostra como o sistema autentica e usa as credenciais para realizar várias operações, como obter listas de cursos ou trabalhos de curso.
+   - **Descrição**: Descreve a sequência de ações para a autenticação com a API do google classroom.
 
-### 3. **MATERIAS**
-   - ![MATERIAS](https://i.imgur.com/cYXEQHn.png)
-   - **Descrição**: Detalha o processo de listagem de matérias (cursos) disponíveis. O usuário solicita as matérias, o bot consulta o gerenciador, que por sua vez interage com a API do Google Classroom para recuperar a lista de cursos, que é então exibida ao usuário.
+### 3. **OBTER ALUNOS**
+   - ![OBTER_ALUNO](https://i.imgur.com/4Bg9Ah0.png)
+   - **Descrição**: Descreve a sequência de ações para a obtenção de um aluno com base no seu ID do discord e uma requisição de uma API externa.
 
-### 4. **NOTIFICAR**
-   - ![NOTIFICAR](https://i.imgur.com/rfaRhgL.png)
-   - **Descrição**: Descreve o processo de notificação do usuário. O bot verifica se as notificações estão ativas e, caso estejam, envia as notificações apropriadas ao usuário com base em eventos específicos, como a conclusão de um comando.
+### 4. **REALIZAR_COMANDO**
+   - ![REALIZAR_COMANDO](https://i.imgur.com/VZzDSXc.png)
+   - **Descrição**: Descreve a sequência de ações para a realização de um comando, entre os diversos comandos disponíveis e especifica cada uma das suas ações.
 
-### 5. **OBTER_ALUNO**
-   - ![OBTER_ALUNO](https://i.imgur.com/brqvb6l.png)
-   - **Descrição**: Mostra como o sistema recupera informações de um aluno específico com base em seu email. O processo envolve verificar a lista de alunos em um curso específico através da API para identificar o aluno correspondente.
+### 5. **UTILIZAR CACHE**
+   - ![TAREFAS](https://i.imgur.com/X1UkR9S.png)
+   - **Descrição**: Descve a sequência de ações para a utilização da classe do cache redis e a obtenção ou manipulação dos seus dados armazenados.
 
-### 6. **REALIZAR_COMANDO**
-   - ![REALIZAR_COMANDO](https://i.imgur.com/bAnJ9bh.png)
-   - **Descrição**: Foca no fluxo de execução de um comando genérico pelo usuário. Dependendo do comando, o bot pode realizar uma ação diretamente ou envolver a API do Google Classroom para obter os dados necessários.
-
-### 7. **TAREFAS**
-   - ![TAREFAS](https://i.imgur.com/rCIM9ef.png)
-   - **Descrição**: Representa a sequência para listar as tarefas de um curso específico. O usuário solicita as tarefas para um determinado curso, e o bot interage com a API para recuperar e apresentar as tarefas associadas ao curso especificado.
-
-### 8. **VERIFICAR_PENDENCIA**
+### 6. **VERIFICAR PENDENCIA**
    - ![VERIFICAR_PENDENCIA](https://i.imgur.com/NXaecr3.png)
-   - **Descrição**: Mostra o processo de verificação de pendências de tarefas de um aluno. O bot consulta a API do Google Classroom para identificar tarefas que ainda não foram entregues pelo aluno e então informa o usuário sobre essas pendências.
+   - **Descrição**: Descreve a sequência de ações para a verificação de pendências de tarefas de um aluno. O bot consulta a API do Google Classroom para identificar tarefas que ainda não foram entregues pelo aluno e então informa o usuário sobre essas pendências.
+
+### 6. **NOTIFICAR USUÁRIO**
+   - ![VERIFICAR_PENDENCIA](https://i.imgur.com/0mbuP1i.png)
+   - **Descrição**: Descreve a sequência de ações para o envio de notificações automáticas de pendências acadêmicas ao usuário. O bot consulta as preferências de notificação do usuário, verifica as atividades pendentes no Google Classroom e, se as notificações estiverem ativadas, envia uma mensagem direta ao usuário com suas pendências.
 
 ---
 
