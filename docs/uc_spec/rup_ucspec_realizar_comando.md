@@ -29,6 +29,7 @@ Este Caso de Uso descreve a funcionalidade do comando geral "Realizar Comando", 
 - **Calendário**: exibe uma visão ampla das atividades do usuário.
 - **Tarefas**: exibe as atividades recentes e pendentes do usuário.
 - **Matérias**: lista todas as matérias cadastradas e ativas do usuário.
+- **Registrar Aluno**: permite que administradores registrem um novo aluno no sistema.
 
 O objetivo é permitir que o usuário utilize esses comandos de forma eficiente.
 
@@ -36,7 +37,7 @@ O objetivo é permitir que o usuário utilize esses comandos de forma eficiente.
 
 1. O usuário faz login no Discord.
 2. O usuário acessa o chat específico do servidor ou mensagens privadas do bot.
-3. O usuário digita um comando iniciado por "/" seguido de um dos seguintes comandos: `/Notificar`, `/Calendário`, `/Tarefas`, ou `/Matérias`.
+3. O usuário digita um comando iniciado por "/" seguido de um dos seguintes comandos: `/Notificar`, `/Calendário`, `/Tarefas`, `/Matérias`, ou `/Registrar_aluno`.
 4. O bot processa o comando e responde ao usuário com as informações solicitadas.
 
 ## <a name="fluxos-alternativos"></a> 3. Fluxos Alternativos
@@ -57,13 +58,18 @@ O objetivo é permitir que o usuário utilize esses comandos de forma eficiente.
    - O usuário utiliza o comando `/Matérias` para listar todas as matérias em que está inscrito.
    - O bot exibe uma lista com as matérias ativas do usuário.
 
+### 3.5. Comando Registrar Aluno
+   - O administrador utiliza o comando `/Registrar_aluno` para abrir um modal de cadastro de aluno.
+   - O bot apresenta um formulário para o preenchimento dos dados necessários.
+   - Após o envio do formulário, o bot informa se o aluno foi registrado com sucesso ou se ocorreu algum erro.
+
 ## <a name="subfluxos"></a> 4. Subfluxos
 
 Não há subfluxos adicionais.
 
 ## <a name="cenarios-chave"></a> 5. Cenários Chave
 
-Este caso de uso é acionado quando o usuário interage com o sistema para executar qualquer um dos quatro comandos: Notificar, Calendário, Tarefas ou Matérias. Dependendo do comando, o bot realiza a ação solicitada e retorna a resposta apropriada ao usuário.
+Este caso de uso é acionado quando o usuário interage com o sistema para executar qualquer um dos cinco comandos: Notificar, Calendário, Tarefas, Matérias ou Registrar Aluno. Dependendo do comando, o bot realiza a ação solicitada e retorna a resposta apropriada ao usuário.
 
 ## <a name="condicoes-previas"></a> 6. Condições Prévias
 
@@ -75,6 +81,7 @@ Este caso de uso é acionado quando o usuário interage com o sistema para execu
 ## <a name="condicoes-posteriores"></a> 7. Condições Posteriores
 
 - O bot deve atualizar as preferências do usuário, se aplicável (por exemplo, no caso de ativação/desativação de notificações).
+- O cadastro de aluno deve ser salvo na base de dados, caso aplicável.
 
 ## <a name="pontos-de-extensao"></a> 8. Pontos de Extensão
 
@@ -113,5 +120,12 @@ Os requisitos especiais estão disponíveis no documento [Especificação Suplem
   - O usuário pode visualizar as matérias em que está matriculado no momento.
   - Isso ajuda o usuário a ter uma visão clara das disciplinas ativas que ele está cursando.
 - **Resultado**: O bot retorna uma lista com todas as matérias ativas, incluindo nome e detalhes das unidades curriculares.
+
+### Comando: **/Registrar_aluno**
+- **Descrição**: Permite que um administrador registre um novo aluno no sistema.
+- **Funcionalidade**:
+  - Ao ser executado, o comando exibe um modal para o preenchimento de dados de um novo aluno, incluindo nome, email, ID de registro, e ID do Discord.
+  - Apenas administradores podem utilizar este comando.
+- **Resultado**: Após o preenchimento e envio do formulário, o bot confirma o sucesso ou erro no registro do aluno no sistema.
 
 ![O Diagrama de Caso de Uso](https://i.imgur.com/tgMEn1J.png)
