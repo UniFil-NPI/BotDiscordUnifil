@@ -309,6 +309,7 @@ Para aprimorar ainda mais o bot, planejo adicionar novas features de acordo com 
 - [Visão](visao.md)
 - [Pedido do Investidor](rup_stkreq.md)
 - [Glossário](rup_gloss.md)
+- [DER](der.md)
 
 ### Especificações de Caso de Uso
 

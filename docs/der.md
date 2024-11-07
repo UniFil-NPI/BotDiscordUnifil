@@ -7,7 +7,11 @@
 | 04/05/2024 | 1.0 | Criação do Diagrama| Gabriel Zanoni(@GbrielZanoni) |
 | 08/05/2024 | 1.1 | Conversão para M.D| Gabriel Zanoni(@GbrielZanoni)|
 | 30/05/2024 | 1.2 | Diagrama Refeito  | Gabriel Zanoni(@GbrielZanoni)|
+| 07/11/2024 | 1.0 | Atualização | Gabriel Zanoni(@GbrielZanoni)|
 
+#### Lógico
+![Logic](https://i.imgur.com/m2v6WbP.png)
 
-![Conc](https://i.imgur.com/GMI4wYI.png)
-![Logic](https://i.imgur.com/6SEwTM7.png)
+#### Conceitual
+![Conc](https://i.imgur.com/mCGjQlb.png)
+
