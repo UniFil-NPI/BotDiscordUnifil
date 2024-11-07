@@ -11,4 +11,4 @@
 | 19/10/2024 | 1.4 | Diagrama Refeito  | Gabriel Zanoni(@GbrielZanoni)|
 
 
-![AS-IS](https://i.imgur.com/J6kMj7S.png)
+![rup_seq_geral](https://i.imgur.com/J6kMj7S.png)

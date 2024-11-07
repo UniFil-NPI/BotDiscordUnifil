@@ -31,7 +31,7 @@
    - 7.1 [Conclusões](#71-conclusões)
    - 7.2 [Trabalhos Futuros](#72-trabalhos-futuros)
 8. [REFERÊNCIAS](#8-referências)
-9. [APÊNDICE](#8-apêndice)
+9. [APÊNDICE](#9 -apêndice)
 
 ---
 

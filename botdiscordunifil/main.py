@@ -25,7 +25,6 @@ adminIDs = {
     557250319680012328: True
 }
 
-
 class StudentRegistrationModal(discord.ui.Modal, title="Registrar Novo Aluno"):
     name = discord.ui.TextInput(label="Nome Completo", placeholder="Nome Sobenome", required=True)
     personal_email = discord.ui.TextInput(label="Email Pessoal", placeholder="email@pessoal.com", required=True)
@@ -326,10 +325,10 @@ async def update_cache():
     except Exception as e:
         print(f"Erro ao atualizar o cache: {e}")
 
-@tasks.loop(minutes=1)
+@tasks.loop(hours=24)
 async def send_daily_message():
     now = datetime.datetime.now(pytz.timezone("America/Sao_Paulo"))
-
+    print("rodou")
     if now.hour == 12 and now.minute == 0:
         preferences = load_notification_preferences() 
         manager = GoogleClassroomManager()  

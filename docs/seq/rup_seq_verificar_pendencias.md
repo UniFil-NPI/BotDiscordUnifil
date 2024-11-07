@@ -7,4 +7,4 @@
 | 22/08/2024 | 1.0 | Criação  | Gabriel Zanoni(@GbrielZanoni)|
 
 
-![AS-IS](https://i.imgur.com/NXaecr3.png)
+![rup_seq_verificar_pendencia](https://i.imgur.com/NXaecr3.png)

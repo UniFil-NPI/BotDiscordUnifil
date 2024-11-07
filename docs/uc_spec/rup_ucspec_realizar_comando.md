@@ -30,7 +30,7 @@ Este Caso de Uso descreve a funcionalidade do comando geral "Realizar Comando", 
 - **Tarefas**: exibe as atividades recentes e pendentes do usuário.
 - **Matérias**: lista todas as matérias cadastradas e ativas do usuário.
 
-O objetivo é permitir que o usuário utilize esses comandos de forma unificada e eficiente.
+O objetivo é permitir que o usuário utilize esses comandos de forma eficiente.
 
 ## <a name="fluxo-basico-de-eventos"></a> 2. Fluxo Básico de Eventos
 
@@ -69,8 +69,8 @@ Este caso de uso é acionado quando o usuário interage com o sistema para execu
 
 - O usuário deve ter uma conta no Discord.
   - Consequentemente, o usuário deve estar logado no Discord.
-- O usuário deve estar no mesmo ambiente que o bot (um servidor compartilhado ou nas mensagens privadas com o bot).
-- O usuário deve ter vinculado sua conta do Classroom com o Discord, para que o bot possa acessar suas informações acadêmicas.
+- O usuário deve estar no mesmo servidor.
+- O usuário deve ter cadastro na API de gerenciamento de alunos.
 
 ## <a name="condicoes-posteriores"></a> 7. Condições Posteriores
 
@@ -87,13 +87,13 @@ Os requisitos especiais estão disponíveis no documento [Especificação Suplem
 ## <a name="informacoes-especiais"></a> 10. Informações Especiais
 
 ### Comando: **/Notificar**
-- **Descrição**: Liga ou desliga as notificações automáticas do bot, informando o usuário sobre suas pendências acadêmicas, como atividades próximas do vencimento.
+- **Descrição**: Liga ou desliga as notificações automáticas do bot.
 - **Funcionalidade**:
   - Quando ativado, o usuário recebe notificações periódicas sobre prazos importantes e tarefas pendentes.
   - Quando desativado, o usuário não recebe notificações até que ative novamente.
 - **Resultado**: O bot atualiza o status de notificação do usuário e confirma a alteração através de uma mensagem, informando se as notificações foram habilitadas ou desabilitadas.
 
-### Comando: **/Calendário**
+### Comando: **/Calendario**
 - **Descrição**: Exibe uma visão ampla das atividades programadas no calendário acadêmico do usuário, agrupadas por unidade curricular ou por todas as matérias.
 - **Funcionalidade**:
   - O usuário pode consultar atividades futuras, como prazos de entrega, provas e eventos acadêmicos.
@@ -107,11 +107,11 @@ Os requisitos especiais estão disponíveis no documento [Especificação Suplem
   - O foco é em tarefas recentes, ajudando o usuário a gerenciar suas pendências de curto prazo.
 - **Resultado**: O bot exibe uma lista de tarefas pendentes com datas de vencimento e o status atual (não entregue, próxima do prazo, etc.).
 
-### Comando: **/Matérias**
+### Comando: **/Materias**
 - **Descrição**: Lista todas as matérias cadastradas e ativas do usuário, conforme suas inscrições no Classroom.
 - **Funcionalidade**:
   - O usuário pode visualizar as matérias em que está matriculado no momento.
   - Isso ajuda o usuário a ter uma visão clara das disciplinas ativas que ele está cursando.
 - **Resultado**: O bot retorna uma lista com todas as matérias ativas, incluindo nome e detalhes das unidades curriculares.
 
-![O fluxograma do Caso de Uso](https://i.imgur.com/tgMEn1J.png)
+![O Diagrama de Caso de Uso](https://i.imgur.com/tgMEn1J.png)

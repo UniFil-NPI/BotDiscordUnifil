@@ -5,6 +5,7 @@
 | Data   | Versão       | Descrição  |  Autor  |
 | :---------- | :--------- | :-------------------------------- | :-------------------------------- |
 | 22/08/2024 | 1.0 | Criação  | Gabriel Zanoni(@GbrielZanoni)|
+| 07/11/2024 | 1.0 | Criação  | Gabriel Zanoni(@GbrielZanoni)|
 
 
-![AS-IS](https://i.imgur.com/eJ40r8L.png)
+![rup_seq_autenticar](https://i.imgur.com/jbVFPd7.png)
