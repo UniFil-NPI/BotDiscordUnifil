@@ -48,11 +48,11 @@ O objetivo é permitir que o usuário utilize esses comandos de forma eficiente.
 
 ### 3.2. Comando Calendário
    - O usuário utiliza o comando `/Calendário` para exibir uma visão ampla das atividades de uma unidade curricular específica ou de todas as unidades disponíveis.
-   - O bot retorna a agenda com as atividades organizadas por data.
+   - O bot retorna a agenda com as atividades organizadas por data, de forma completa.
 
 ### 3.3. Comando Tarefas
    - O usuário utiliza o comando `/Tarefas` para visualizar todas as atividades pendentes.
-   - O bot exibe as atividades que ainda não foram concluídas ou que estão com o prazo próximo.
+   - O bot exibe as atividades que ainda não foram concluídas ou que estão com o prazo próximo e organiza a data de forma relativa, para fácil entendimento.
 
 ### 3.4. Comando Matérias
    - O usuário utiliza o comando `/Matérias` para listar todas as matérias em que está inscrito.

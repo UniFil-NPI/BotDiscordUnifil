@@ -8,6 +8,8 @@ import os
 import requests 
 from dotenv import load_dotenv
 from classroom_api import GoogleClassroomManager
+from discord.utils import format_dt
+
 import datetime
 
 import pytz
@@ -150,16 +152,19 @@ def format_course(course: Any) -> dict:
         "description": f'Descrição: {course.course_data.get("descriptionHeading", "Sem descrição")}\nCódigo: {course.course_data.get("enrollmentCode", "Nenhum Código")}'
     }
 
-def format_coursework(coursework: Tuple[str, Any]) -> dict:
+def format_coursework(coursework: Tuple[str, Any], relative: bool = True) -> dict:
     course_name, work = coursework
     due_date = work.get("due_date")
+    description = work.get("description", "Sem descrição disponível")
+
     if due_date:
-        due_display = due_date.strftime("%A, %d %B %Y, %H:%M")
+        due_display = format_dt(due_date, style='R' if relative else 'F')
     else:
         due_display = "Sem data de entrega"
+    
     return {
         "title": f"{course_name} - {work['title']}",
-        "description": f"Data de entrega: {due_display}"
+        "description": f"Data de entrega: {due_display}\nDescrição: {description}"
     }
 
 @bot.event
@@ -244,7 +249,7 @@ async def coursework_command(interaction: discord.Interaction):
 
         all_coursework.sort(key=lambda x: x[1].get("due_date"))
 
-        paginator = Paginator(items=all_coursework, per_page=5, title="Atividades Pendentes", formatter=format_coursework)
+        paginator = Paginator(items=all_coursework, per_page=5, title="Atividades Pendentes", formatter=lambda x: format_coursework(x, relative=True))  
         embed = paginator.generate_embed()
         await interaction.followup.send(embed=embed, view=paginator, ephemeral=True)
         
@@ -288,7 +293,7 @@ async def calendar_command(interaction: discord.Interaction):
 
         all_coursework.sort(key=lambda x: x[1].get("due_date"))
 
-        paginator = Paginator(items=all_coursework, per_page=10, title="Calendário de Atividades", formatter=format_coursework)
+        paginator = Paginator(items=all_coursework, per_page=10, title="Calendário de Atividades", formatter=lambda x: format_coursework(x, relative=False)) 
         embed = paginator.generate_embed()
         await interaction.followup.send(embed=embed, view=paginator, ephemeral=True)
         
@@ -316,7 +321,7 @@ async def register_student(interaction: discord.Interaction):
     
     await interaction.response.send_modal(StudentRegistrationModal())
 
-@tasks.loop(minutes=30)
+@tasks.loop(minutes=1)
 async def update_cache():
     try:
         manager = GoogleClassroomManager()
