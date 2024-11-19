@@ -279,7 +279,7 @@ Neste trabalho, foi possível observar a importância da integração entre plat
 
 ### 7.2 Trabalhos Futuros
 
-Para aprimorar ainda mais o bot, planejo adicionar novas features de acordo com o ciclo de feedback entregue pelos usuários. Aprimorando cada vez mais o sistema.
+Para aprimorar ainda mais o bot, planejo adicionar novas features de acordo com o ciclo de feedback entregue pelos usuários. Aprimorando cada vez mais o sistema, o maior alvo atual é a possibilidade de implementar a entrega de trabalhos através do próprio discord, permitindo que o usuário solte attachments para a entrega de trabalhos - também focando em algo para o professor.
 
 ---
 
