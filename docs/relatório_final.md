@@ -93,19 +93,19 @@ As seguintes tecnologias serão utilizadas no desenvolvimento do projeto:
 Os requisitos funcionais descrevem as funcionalidades específicas que o sistema deve ter para atender às necessidades dos usuários e stakeholders.
 
 1. **Autenticação com o Google Classroom:**
-   - O sistema deve permitir que os usuários façam login usando suas credenciais do Google para acessar suas contas do Google Classroom.
+   - O sistema deve permitir que os usuários do Google Classroom sejam identificados.
 
 2. **Recebimento de Notificações:**
-   - O bot deve ser capaz de enviar notificações no Discord sobre novas tarefas, atualizações de turmas e eventos programados no Google Classroom.
+   - O bot deve ser capaz de enviar notificações no Discord sobre novas tarefas.
 
 3. **Listagem de Tarefas:**
-   - O bot deve listar as tarefas pendentes de uma turma específica no Google Classroom.
+   - O bot deve listar as tarefas pendentes do Google Classroom.
 
 4. **Consulta a Materiais:**
-   - O bot deve permitir que os usuários consultem materiais de estudo postados no Google Classroom diretamente no Discord.
+   - O bot deve permitir que os usuários consultem materiais postados no Google Classroom diretamente no Discord.
 
 5. **Lembretes Automáticos:**
-   - O bot deve enviar lembretes automáticos sobre prazos de entrega e eventos programados.
+   - O bot deve enviar lembretes automáticos sobre prazos de entrega.
 
 ### 2.3 Requisitos Não Funcionais
 
@@ -115,10 +115,10 @@ Os requisitos não funcionais descrevem os atributos de qualidade que o sistema 
    - O bot deve ser fácil de usar, com comandos claros e intuitivos para os usuários.
 
 2. **Desempenho:**
-   - O bot deve responder às solicitações dos usuários em tempo hábil, sem atrasos perceptíveis.
+   - O bot deve responder às solicitações dos usuários sem atrasos perceptíveis.
 
 3. **Segurança:**
-   - As credenciais dos usuários e outras informações sensíveis devem ser armazenadas e transmitidas de forma segura, utilizando criptografia.
+   - O sistema não deverá armazenar nenhuma informação sensível ou importante. Também deverá limpar todo o cache após dado tempo.
 
 4. **Escalabilidade:**
    - O sistema deve ser capaz de lidar com um número crescente de usuários sem perda de desempenho.
