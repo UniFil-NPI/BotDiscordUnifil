@@ -23,19 +23,31 @@
 
 ## 1. Breve Descrição
 
-O caso de uso "Notificar Usuário" tem como objetivo enviar notificações para o usuário sobre suas pendências ou eventos importantes relacionados ao Google Classroom. O envio das notificações é condicionado pelas preferências de notificações do usuário, que podem estar ativadas ou desativadas nas configurações do bot.
+O caso de uso "Notificar Usuário" tem como objetivo enviar notificações para o usuário sobre suas pendências, matérias e outros assuntos relacionados ao Google Classroom. O caso de uso levará em consideração que ele irá enviar uma mensagem formatada para o usuário com base no conteúdo, formulando diferentes páginas com o meio para a sua navegação. 
 
-## 2. Fluxo Básico de Eventos
+# Especificação de Caso de Uso: Notificar Usuário
 
-1. **Verificar Preferências de Notificação:**
-   - O sistema verifica as preferências de notificações do usuário armazenadas no bot.
+## Fluxo Básico de Eventos
 
-2. **Notificações Ativadas:**
-   - Se as notificações estiverem ativadas, o sistema prepara e envia uma notificação ao usuário sobre suas pendências ou eventos importantes.
-   - A notificação é enviada via mensagem privada (DM) no Discord.
+1. **Obter Informação**
+   - O sistema identifica o contexto da notificação (ex.: pendências, calendário de atividades ou matérias disponíveis).
+   - As informações são recuperadas e processadas.
+   - A classe `Paginator` é utilizada para formatar os dados em uma mensagem estruturada e legível para o usuário.
+   - Exemplos de conteúdos formatados:
+     - **Matérias**: Lista de matérias disponíveis e suas descrições.
+     - **Pendências**: Atividades pendentes com título, descrição e prazos formatados.
+     - **Calendário**: Eventos e tarefas ordenados por data.
 
-3. **Notificações Desativadas:**
-   - Se as notificações estiverem desativadas, o sistema não envia nenhuma notificação e finaliza o processo.
+2. **Notificar Usuário com Base no Conteúdo**
+   - A mensagem é preparada com base no conteúdo recuperado.
+   - O sistema verifica o método de notificação apropriado (mensagem efêmera ou DM no Discord).
+
+3. **Enviar uma Notificação Efêmera ou DM**
+   - **Notificação Efêmera**:
+     - Se o comando foi executado diretamente pelo usuário em um canal público, uma mensagem efêmera é enviada (visível apenas para o usuário).
+   - **Mensagem Direta (DM)**:
+     - Se o fluxo de notificação é automático ou acionado por outro contexto, a mensagem é enviada diretamente como DM ao usuário.
+   - Caso ocorra erro ao enviar a DM (ex.: o usuário bloqueou o bot), o erro é registrado, e o sistema tentará reenviar posteriormente.
 
 ## 3. Fluxos Alternativos
 
@@ -49,12 +61,14 @@ O caso de uso "Notificar Usuário" tem como objetivo enviar notificações para 
 
 ## 5. Cenários Chave
 
-Este caso de uso é acionado quando o sistema detecta eventos importantes ou pendências acadêmicas que precisam ser notificadas ao usuário e verifica se as notificações estão ativadas nas preferências do bot.
+Este caso de uso é acionado por outros casos de uso que precisam do envio da informação para o usuário, enviando para ele o conteúdo bruto que será formatado por sí e pela classe do Paginator.
 
 ## 6. Condições Prévias
 
-- O usuário deve ter interagido previamente com o bot e configurado suas preferências de notificações.
-- O bot deve ter permissão para enviar mensagens privadas ao usuário no Discord.
+- O usuário deve ter interagido previamente com o bot e utilizado um de seus comandos
+- O usuário poderá ter configurado suas preferências de notificações para receber uma notificação automática.
+- O Bot deverá ter acesso ao canal ou meio na qual o usuário realizou o comando
+- O bot deve ter permissão para enviar mensagens privadas ao usuário no Discord caso ele deseje receber uma notificação automática.
 
 ## 7. Condições Posteriores
 
@@ -71,4 +85,4 @@ Este caso de uso é acionado quando o sistema detecta eventos importantes ou pen
 
 ## 10. Informações Especiais
 
-- Este caso de uso depende diretamente das preferências de notificação configuradas pelo usuário no bot. É importante garantir que essas preferências sejam fáceis de configurar e alterar.
+- Este caso de uso abrange tanto o envio de mensagens formatadas para o bot como qualquer notificação. Que será formatada devidamente e enviada, tanto automáticamente como pelo resultado de um comando do usuário, indiferente do conteúdo.

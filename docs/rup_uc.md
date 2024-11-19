@@ -13,4 +13,4 @@
 | 24/10/2024 | 1.5 | Diagrama Atualizado  | Gabriel Zanoni (@GbrielZanoni)    |
 | 07/11/2024 | 1.5 | Diagrama Atualizado  | Gabriel Zanoni (@GbrielZanoni)    |
 
-![O Diagrama de Caso de Uso Atualizado](https://i.imgur.com/6rZSwb6.png)
+![O Diagrama de Caso de Uso Atualizado](https://i.imgur.com/fz1plR3.png)

@@ -2,6 +2,10 @@ import redis
 import json
 from datetime import date
 
+# docker exec -it my-redis redis-cli
+# FLUSHALL
+# GET "active_courses"
+
 class RedisCache:
     def __init__(self, host='localhost', port=6379, db=0):
         self.client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)

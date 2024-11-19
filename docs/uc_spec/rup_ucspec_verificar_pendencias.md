@@ -88,4 +88,4 @@ Este caso de uso é acionado diariamente por uma tarefa agendada, que verifica a
 
 ## 10. Informações Especiais
 
-- Este caso de uso é parte de uma tarefa automatizada que roda diariamente para garantir que os alunos estejam sempre informados sobre suas pendências acadêmicas.
+- Este caso de uso é parte de uma tarefa automatizada que roda diariamente para garantir que os alunos estejam sempre informados sobre suas pendências acadêmicas. Ele será notificado com base no outro caso de uso 'Notificar Usuário', que irá formatar a mensagem adequadamente.
