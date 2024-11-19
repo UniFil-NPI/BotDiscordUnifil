@@ -143,12 +143,12 @@ Na UML, os diagramas de caso de uso modelam o comportamento de um sistema e ajud
 
 ### 3.1.2 Verificar Pendências
 
-- **Descrição:** Este caso de uso permite ao sistema verificar todas as pendências de um aluno, como trabalhos que ainda não foram realizados e que precisam ser entregues até a data limite. A funcionalidade é crucial para ajudar os alunos a manterem-se organizados e informados sobre suas responsabilidades acadêmicas, evitando esquecimentos e atrasos na entrega de trabalhos.
+- **Descrição:** Este caso de uso roda automáticamente diariamente, ele verifica as pendências e as notificações registradas do bot para avisar usuários que ligaram a notificação automática para serem notificados sobre tais pendências.
 - **Especificação:** [Especificação do Caso de Uso: Verificar Pendência](uc_spec/rup_ucspec_verificar_pendencias.md)
 
 ### 3.1.3 Notificar Usuário
 
-- **Descrição:** Este caso de uso permite ao sistema notificar um usuário de forma privada sobre eventos acadêmicos, como prazos de entrega e atualizações de turma, desde que o usuário tenha ativado as notificações com o bot. A notificação é enviada diretamente ao usuário através do Discord, ajudando-o a manter-se atualizado e organizado.
+- **Descrição:** Este caso de uso será responsável pela formatação e notificação do usuário. Também notifica de forma privada o usuário e apenas para ele.
 - -**Especificação:** [Especificação do Caso de Uso: Verificar Pendência](uc_spec/rup_ucspec_notificar.md)
 
 ### 3.2 Diagrama de Classe
@@ -193,7 +193,7 @@ O diagrama de classe é uma representação da estrutura e relações das classe
   - **Utiliza** credenciais fornecidas por `GoogleClassroomAuthenticator` para se comunicar com a API do Google Classroom.
 
 - **`Paginator`**:
-  - **Gerencia** a paginação e a formatação dos dados para exibição no Discord.
+  - **Gerencia** a paginação e a formatação dos dados para exibição no Discord através de um embed.
 
 ### 3.3 Diagrama de Sequência
 
