@@ -27,37 +27,63 @@ adminIDs = {
     557250319680012328: True
 }
 
+class StudentRegistrationModal(discord.ui.Modal):
+    def __init__(self):
+        super().__init__(title="Registrar Novo Aluno")
+        
+        self.name = discord.ui.TextInput(
+            label="Nome Completo",
+            placeholder="Nome Sobrenome",
+            required=True
+        )
+        self.personal_email = discord.ui.TextInput(
+            label="Email Pessoal",
+            placeholder="email@pessoal.com",
+            required=True
+        )
+        self.registration_id = discord.ui.TextInput(
+            label="ID de Registro",
+            placeholder="5",
+            required=True
+        )
+        self.email = discord.ui.TextInput(
+            label="Email Institucional",
+            placeholder="email@edu.unifil.br",
+            required=True
+        )
+        self.discord_id = discord.ui.TextInput(
+            label="ID do Discord",
+            placeholder="123456789012345678",
+            required=True
+        )
+
+        self.add_item(self.name)
+        self.add_item(self.personal_email)
+        self.add_item(self.registration_id)
+        self.add_item(self.email)
+        self.add_item(self.discord_id)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        student_data = {
+            "name": self.name.value,
+            "personal_email": self.personal_email.value,
+            "registration_id": self.registration_id.value,
+            "email": self.email.value,
+            "discord_id": self.discord_id.value,
+        }
+
+        url = "http://54.198.99.22:8000/students/"
+        response = requests.post(url, json=student_data)
+
+        if response.status_code in [200, 201]:
+            await interaction.response.send_message("Aluno registrado com sucesso!", ephemeral=True)
+        else:
+            await interaction.response.send_message(f"Erro ao registrar aluno: {response.text}", ephemeral=True)
+
 async def register_student_function(interaction: discord.Interaction):
-    modal = discord.ui.Modal(
-        title="Registrar Novo Aluno",
-        components=[
-            discord.ui.TextInput(label="Nome Completo", placeholder="Nome Sobrenome", required=True, custom_id="name"),
-            discord.ui.TextInput(label="Email Pessoal", placeholder="email@pessoal.com", required=True, custom_id="personal_email"),
-            discord.ui.TextInput(label="ID de Registro", placeholder="5", required=True, custom_id="registration_id"),
-            discord.ui.TextInput(label="Email Institucional", placeholder="email@edu.unifil.br", required=True, custom_id="email"),
-            discord.ui.TextInput(label="ID do Discord", placeholder="123456789012345678", required=True, custom_id="discord_id")
-        ]
-    )
+    modal = StudentRegistrationModal()
     await interaction.response.send_modal(modal)
     
-    def check_response(modal_interaction: discord.Interaction):
-        return modal_interaction.custom_id == "student_registration"
-
-    modal_interaction = await interaction.client.wait_for("modal_submit", check=check_response)
-    student_data = {
-        "name": modal_interaction.data["components"][0]["value"],
-        "personal_email": modal_interaction.data["components"][1]["value"],
-        "registration_id": modal_interaction.data["components"][2]["value"],
-        "email": modal_interaction.data["components"][3]["value"],
-        "discord_id": modal_interaction.data["components"][4]["value"]
-    }
-    url = "http://54.198.99.22:8000/students/"
-    response = requests.post(url, json=student_data)
-    if response.status_code in [200, 201]:
-        await modal_interaction.response.send_message("Aluno registrado com sucesso!", ephemeral=True)
-    else:
-        await modal_interaction.response.send_message(f"Erro ao registrar aluno: {response.text}", ephemeral=True)
-
 def get_student_by_discord_id(discord_id):
     try:
         url = f"http://54.198.99.22:8000/students/bydiscord/{discord_id}"
