@@ -106,7 +106,10 @@ Os requisitos funcionais descrevem as funcionalidades específicas que o sistema
    - O bot deve permitir que os usuários consultem materiais postados no Google Classroom diretamente no Discord.
 
 5. **Lembretes Automáticos:**
-   - O bot deve enviar lembretes automáticos sobre prazos de entrega.
+   - O bot deve enviar lembretes automáticos sobre prazos de entrega na verificação de pendência.
+
+6. **Gerenciamento de dados:** 
+   - O bot deverá armazenar as informações em um cache, que permite uma maior eficiência nas consultas da API
 
 ### 2.3 Requisitos Não Funcionais
 
