@@ -8,6 +8,6 @@
 | 24/10/2024 | 1.1 | Conversão para M.D| Gabriel Zanoni(@GbrielZanoni)|
 | 07/11/2024 | 1.2 | Atualização | Gabriel Zanoni(@GbrielZanoni)|
 
-![rup_seq_obter](https://i.imgur.com/uL5SGLT.png)
+![rup_seq_obter](https://i.imgur.com/O84PaCy.png)
 
 

@@ -222,11 +222,11 @@ O Diagrama de Sequência é um diagrama usado em UML que representa a sequência
    - **Descrição**: Descve a sequência de ações para a utilização da classe do cache redis e a obtenção ou manipulação dos seus dados armazenados.
 
 ### 6. **VERIFICAR PENDENCIA**
-   - ![VERIFICAR_PENDENCIA](https://i.imgur.com/NXaecr3.png)
+   - ![VERIFICAR_PENDENCIA](https://i.imgur.com/NsFywL9.png)
    - **Descrição**: Descreve a sequência de ações para a verificação de pendências de tarefas de um aluno. O bot consulta a API do Google Classroom para identificar tarefas que ainda não foram entregues pelo aluno e então informa o usuário sobre essas pendências.
 
 ### 7. **NOTIFICAR USUÁRIO**
-   - ![VERIFICAR_PENDENCIA](https://i.imgur.com/0mbuP1i.png)
+   - ![VERIFICAR_PENDENCIA](https://i.imgur.com/jGckY0X.png)
    - **Descrição**: Descreve a sequência de ações para o envio de notificações automáticas de pendências acadêmicas ao usuário. O bot consulta as preferências de notificação do usuário, verifica as atividades pendentes no Google Classroom e, se as notificações estiverem ativadas, envia uma mensagem direta ao usuário com suas pendências.
 
 ---
