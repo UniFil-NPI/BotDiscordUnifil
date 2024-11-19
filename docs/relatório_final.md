@@ -82,6 +82,7 @@ As seguintes tecnologias serão utilizadas no desenvolvimento do projeto:
 - **Requests**: Para realizar chamadas HTTP. [Requests Documentation](https://docs.python-requests.org/en/latest/).
 - **discord.py**: Biblioteca para integração com o Discord. [discord.py Documentation](https://discordpy.readthedocs.io/en/stable/).
 - **python-dotenv**: Para gerenciar variáveis de ambiente. [python-dotenv Documentation](https://saurabhdaware.github.io/python-dotenv/).
+- **redis**: Para o cache dos dados [redis](https://redis-py.readthedocs.io/en/stable/)
 - **discord-py-slash-command**: Para criar comandos de barra no Discord. [discord-py-slash-command Documentation](https://discord-py-slash-command.readthedocs.io/en/latest/).
 - **discord-py-interactions**: Para gerenciar interações no Discord. [discord-py-interactions Documentation](https://discord-py-interactions.readthedocs.io/en/latest/).
 - **Google Auth**: Para autenticação com o Google. [Google Auth Documentation](https://google-auth.readthedocs.io/en/latest/).
