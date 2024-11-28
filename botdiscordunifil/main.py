@@ -9,6 +9,7 @@ import requests
 from dotenv import load_dotenv
 from classroom_api import GoogleClassroomManager
 from discord.utils import format_dt
+import random
 
 import datetime
 
@@ -83,7 +84,7 @@ class StudentRegistrationModal(discord.ui.Modal):
 async def register_student_function(interaction: discord.Interaction):
     modal = StudentRegistrationModal()
     await interaction.response.send_modal(modal)
-    
+
 def get_student_by_discord_id(discord_id):
     try:
         url = f"http://54.198.99.22:8000/students/bydiscord/{discord_id}"
@@ -198,7 +199,7 @@ def format_coursework(coursework: Tuple[str, Any], relative: bool = True) -> dic
 
 @bot.event
 async def on_ready():
-    print(f'Bot {bot.user.name} está online e sincronizado!')
+    print(f"Bot {bot.user.name} está online e sincronizado!")
 
     try:    
         await main()
@@ -213,7 +214,7 @@ async def on_ready():
 
     if not send_daily_message.is_running():
         send_daily_message.start()
-
+        
 @bot.tree.command(name="materias")
 async def courses_command(interaction: discord.Interaction):
     await interaction.response.defer(ephemeral=True)
@@ -358,33 +359,40 @@ async def update_cache():
     except Exception as e:
         print(f"Erro ao atualizar o cache: {e}")
 
-@tasks.loop(hours=24)
+@tasks.loop(time=datetime.time(hour=12, tzinfo=pytz.timezone("America/Sao_Paulo")))
 async def send_daily_message():
-    now = datetime.datetime.now(pytz.timezone("America/Sao_Paulo"))
-    print("rodou")
-    if now.hour == 12 and now.minute == 0:
+    try:
+        print("Executando notificação diária...")
         preferences = load_notification_preferences() 
-        manager = GoogleClassroomManager()  
+        manager = GoogleClassroomManager() 
+        now = datetime.datetime.now(pytz.timezone("America/Sao_Paulo"))
+        two_days_from_now = now + datetime.timedelta(days=2)
 
         for user_id, is_enabled in preferences.items():
-            if is_enabled:
+            if is_enabled:  
                 student = get_student_by_discord_id(user_id)
                 if not student:
                     continue
 
-                email = student.get('email')
-
+                email = student.get("email")
                 pending_tasks = await manager.get_student_pendings_by_email(email)
-                
-                if pending_tasks:
+
+                tasks_due_soon = [
+                    task for task in pending_tasks
+                    if task["due_date"] <= two_days_from_now
+                ]
+
+                if tasks_due_soon:
                     user = await bot.fetch_user(int(user_id))
                     if user:
-                        message = f"Olá, você tem {len(pending_tasks)} pendência(s) no Google Classroom:\n\n"
-                        for task in pending_tasks:
+                        message = f"Olá, você tem {len(tasks_due_soon)} pendência(s) no Google Classroom:\n\n"
+                        for task in tasks_due_soon:
                             due_date = task["due_date"].strftime("%d/%m/%Y")
                             message += f"- {task['coursework_title']} (Vencimento: {due_date})\n"
                         
                         await user.send(message)
+    except Exception as e:
+        print(f"Erro ao enviar mensagens diárias: {e}")
 
 async def main():
     try:

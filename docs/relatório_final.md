@@ -37,15 +37,13 @@
 
 ## 1. INTRODUÇÃO
 
-A necessidade deste projeto surgiu a partir de uma demanda clara do stakeholder: criar uma ferramenta que permita a interação entre o Discord e o Google Classroom. A ideia não é substituir o Classroom, mas sim facilitar a vida dos usuários ao integrar as funcionalidades das duas plataformas, tornando possível receber notificações e realizar algumas operações do Classroom diretamente pelo Discord.
+A proposta deste projeto surgiu a partir de uma demanda identificada: desenvolver uma solução que integre o Discord ao Google Classroom, permitindo a interação entre as duas plataformas. O objetivo não é substituir o Classroom, mas otimizar o acesso às suas funcionalidades, como notificações e operações básicas, diretamente no Discord.
 
-O ponto de partida foi a observação de que muitos estudantes já usam o Discord como uma ferramenta de comunicação e colaboração. Isso levou à pergunta: "Por que não integrar essa ferramenta, já tão popular, com o Google Classroom, que é amplamente utilizado nas atividades acadêmicas?"
+Observou-se que muitos estudantes utilizam o Discord como principal meio de comunicação e colaboração. Essa realidade motivou a iniciativa de integrar essa ferramenta amplamente difundida com o Google Classroom, um recurso essencial no ambiente acadêmico.
 
-Dessa reflexão nasceu a proposta de desenvolver um bot para o Discord que permite acessar certas funcionalidades do Google Classroom, tudo sem precisar sair do ambiente familiar do Discord. Com essa integração, a interação dos alunos com os recursos acadêmicos se tornaria mais simples e conveniente.
+Dessa forma, foi concebido o desenvolvimento de um bot para o Discord capaz de acessar funcionalidades do Google Classroom, simplificando a interação dos usuários com recursos educacionais. Essa integração visa facilitar o acesso às informações acadêmicas, tornando o processo mais prático e eficiente.
 
-O projeto se concentra em criar essa integração de forma prática e direta. O desenvolvimento do bot envolverá etapas como pesquisa, planejamento, desenvolvimento de código e integração de APIs. O foco é sempre na usabilidade e na eficiência, para que a ferramenta realmente faça a diferença no dia a dia dos estudantes.
-
-O objetivo final é entregar uma solução que torne o uso do Google Classroom mais acessível e dinâmico para quem já usa o Discord, ajudando a tornar o processo de aprendizagem mais integrado e colaborativo.
+O projeto abrange etapas de pesquisa, planejamento, codificação e integração de APIs, priorizando a usabilidade e a eficiência. O objetivo final é oferecer uma solução que torne o uso do Google Classroom mais acessível e dinâmico, promovendo uma experiência acadêmica mais integrada e colaborativa.
 
 ### 1.1 PROPOSTA E OBJETIVOS
 
@@ -138,7 +136,9 @@ Os requisitos não funcionais descrevem os atributos de qualidade que o sistema 
 
 Na UML, os diagramas de caso de uso modelam o comportamento de um sistema e ajudam a capturar os requisitos do sistema. Segue abaixo o Diagrama de Caso de Uso do projeto:
 
+**Figura 1 - Diagrama de Caso de Uso** 
 ![Diagrama de Caso de Uso](https://i.imgur.com/tgMEn1J.png)
+*Fonte: Autor.*
 
 ### 3.1.1 Obter Aluno
 
@@ -159,7 +159,9 @@ Na UML, os diagramas de caso de uso modelam o comportamento de um sistema e ajud
 
 O diagrama de classe é uma representação da estrutura e relações das classes que servem de modelo para objetos. A seguir, apresentamos o Diagrama de Classe do projeto:
 
+**Figura 1 - Diagrama de Classe** 
 ![Diagrama de Classe](https://i.imgur.com/fICzfTd.png)
+*Fonte: Autor.*
 
 ### 3.2.1 Classe 1: `GoogleClassroomManager`
 
@@ -206,31 +208,45 @@ O Diagrama de Sequência é um diagrama usado em UML que representa a sequência
 ### Diagramas de Sequência
 
 ### 1. **ATUALIZAR CACHE**
+   - **Figura 3 - Atualizar Cache** 
    - ![ATUALIZAR_CACHE](https://i.imgur.com/3piruwa.png)
+   - *Fonte: Autor.*
    - **Descrição**: Descreve a sequência de ações para a atualização do cache do redis com o conteúdo disponível no classroom, se repete a cada 30 minutos para ficar atualizado com os dados do classroom.
 
 ### 2. **AUTENTICAR API**
+   - **Figura 4 - Autenticar API**  
    - ![API](https://i.imgur.com/eJ40r8L.png)
+   - *Fonte: Autor.*
    - **Descrição**: Descreve a sequência de ações para a autenticação com a API do google classroom.
 
 ### 3. **OBTER ALUNOS**
+   - **Figura 5 - Obter Alunos**  
    - ![OBTER_ALUNO](https://i.imgur.com/4Bg9Ah0.png)
+   - *Fonte: Autor.*
    - **Descrição**: Descreve a sequência de ações para a obtenção de um aluno com base no seu ID do discord e uma requisição de uma API externa.
 
 ### 4. **REALIZAR_COMANDO**
+   - **Figura 6 - Realizar Comando**  
    - ![REALIZAR_COMANDO](https://i.imgur.com/VZzDSXc.png)
+   - *Fonte: Autor.*
    - **Descrição**: Descreve a sequência de ações para a realização de um comando, entre os diversos comandos disponíveis e especifica cada uma das suas ações.
 
 ### 5. **UTILIZAR CACHE**
+   - **Figura 7 - Utilizar Cache**  
    - ![TAREFAS](https://i.imgur.com/X1UkR9S.png)
+   - *Fonte: Autor.*
    - **Descrição**: Descve a sequência de ações para a utilização da classe do cache redis e a obtenção ou manipulação dos seus dados armazenados.
 
 ### 6. **VERIFICAR PENDENCIA**
+   - **Figura 8 - Verificar Pendência**  
    - ![VERIFICAR_PENDENCIA](https://i.imgur.com/NsFywL9.png)
+   - *Fonte: Autor.*
    - **Descrição**: Descreve a sequência de ações para a verificação de pendências de tarefas de um aluno. O bot consulta a API do Google Classroom para identificar tarefas que ainda não foram entregues pelo aluno e então informa o usuário sobre essas pendências.
 
 ### 7. **NOTIFICAR USUÁRIO**
+   - **Figura 9 - Notificar Usuário**  
    - ![VERIFICAR_PENDENCIA](https://i.imgur.com/jGckY0X.png)
+   - *Fonte: Autor.*
    - **Descrição**: Descreve a sequência de ações para o envio de notificações automáticas de pendências acadêmicas ao usuário. O bot consulta as preferências de notificação do usuário, verifica as atividades pendentes no Google Classroom e, se as notificações estiverem ativadas, envia uma mensagem direta ao usuário com suas pendências.
 
 ---
@@ -240,13 +256,17 @@ O Diagrama de Sequência é um diagrama usado em UML que representa a sequência
 ### 4.1 WORKFLOW AS-IS 
 AS-IS é a visão dos processos atuais de uma organização, que mostra como uma empresa realiza suas atividades em um determinado momento. Segue na Figura abaixo o diagrama de workflow AS-IS:
 
-![Workflow AS-IS na Notação BPMN](https://i.imgur.com/9qVxWZm.png)
+**Figura 10 - Workflow AS-IS**  
+![Workflow AS-IS](https://i.imgur.com/9qVxWZm.png)  
+*Fonte: Autor.*
 
 
 ### 4.2 WORKFLOW TO-BE 
 TO-BE é a visão dos processos futuros de uma organização, que mostra como uma empresa gostaria que suas atividades em um determinado momento ficassem idealizadas. Segue na Figura abaixo o diagrama de workflow TO-BE:
 
-![Workflow TO-BE na Notação BPMN](https://i.imgur.com/aTUGJwE.png)
+**Figura 11 - Workflow TO-BE**  
+![Workflow TO-BE](https://i.imgur.com/aTUGJwE.png)  
+*Fonte: Autor.*
 
 ---
 
@@ -270,7 +290,9 @@ O ambiente de desenvolvimento será configurado utilizando as seguintes ferramen
 
 O cronograma detalha as etapas e prazos do projeto, garantindo que todas as atividades sejam concluídas dentro do tempo previsto. Segue abaixo o cronograma do projeto:
 
+**Figura 12 - Cronograma do Projeto**  
 ![Cronograma](https://i.imgur.com/poqPykN.png)
+*Fonte: Autor.*
 
 ---
 
